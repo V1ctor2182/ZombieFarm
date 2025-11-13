@@ -1,5 +1,5 @@
 ---
-title: "Farm Module TODO"
+title: 'Farm Module TODO'
 module: Farm (DOMAIN-FARM)
 priority: High
 last updated: 2025-11-12
@@ -10,6 +10,7 @@ last updated: 2025-11-12
 This document tracks all tasks for implementing the Farm module following DOMAIN-FARM.md specifications. All tasks follow TDD methodology: tests first, then implementation.
 
 ## Legend
+
 - `[ ]` Not started
 - `[~]` In progress
 - `[x]` Complete
@@ -20,6 +21,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
 ## Phase 1: Project Setup & Core Infrastructure
 
 ### 1.1 Initial Project Structure
+
 - [ ] Initialize Vite + React + TypeScript project
   - [ ] Configure vite.config.ts with proper aliases
   - [ ] Set up tsconfig.json for strict mode
@@ -29,6 +31,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
   - [ ] Create basic folder structure per ARCHITECTURE.md
 
 ### 1.2 Testing Infrastructure
+
 - [ ] Set up Jest configuration (jest.config.js)
 - [ ] Configure React Testing Library
 - [ ] Install @testing-library/jest-dom
@@ -40,6 +43,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
 - [ ] Create first smoke test (app renders)
 
 ### 1.3 Type Definitions
+
 - [ ] Define core types in `src/types/farm.ts`:
   - [ ] ZombieType enum
   - [ ] ZombieQuality enum (Bronze, Silver, Gold, Diamond)
@@ -55,6 +59,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
 ## Phase 2: Basic Zombie Lifecycle (Planting & Growth)
 
 ### 2.1 Planting System - TEST PHASE
+
 - [ ] Write tests for planting validation:
   - [ ] Test: Cannot plant without seed in inventory
   - [ ] Test: Cannot plant in occupied plot
@@ -64,6 +69,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
   - [ ] Test: Planting fails if no plots available
 
 ### 2.2 Planting System - IMPLEMENTATION
+
 - [ ] Create `features/farm/lib/planting.ts`
   - [ ] Implement validatePlant() function
   - [ ] Implement plantSeed() function
@@ -73,6 +79,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
 - [ ] Integrate with game state
 
 ### 2.3 Growth System - TEST PHASE
+
 - [ ] Write tests for growth mechanics:
   - [ ] Test: Zombie grows after base time elapsed
   - [ ] Test: Watering reduces growth time by X%
@@ -83,6 +90,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
   - [ ] Test: Weather effects on growth (Blood Rain +25%)
 
 ### 2.4 Growth System - IMPLEMENTATION
+
 - [ ] Create `features/farm/lib/growth.ts`
   - [ ] Implement growth timer logic
   - [ ] Implement watering effect calculation
@@ -93,6 +101,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
 - [ ] Create growth tick system (update timers)
 
 ### 2.5 Watering System - TEST & IMPLEMENTATION
+
 - [ ] Test: Blood Well generates water over time
 - [ ] Test: Watering requires Blood Water in inventory
 - [ ] Test: Watering plot reduces growth time
@@ -106,6 +115,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
 ## Phase 3: Harvesting & Active Zombies
 
 ### 3.1 Harvesting - TEST PHASE
+
 - [ ] Write tests for harvesting:
   - [ ] Test: Can harvest when zombie is ready
   - [ ] Test: Cannot harvest growing zombie
@@ -115,6 +125,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
   - [ ] Test: Harvested zombie has correct stats based on quality
 
 ### 3.2 Harvesting - IMPLEMENTATION
+
 - [ ] Create `features/farm/lib/harvesting.ts`
   - [ ] Implement harvestZombie() function
   - [ ] Calculate zombie stats based on growth quality
@@ -125,6 +136,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
 - [ ] Emit zombie.harvested event
 
 ### 3.3 Active Zombie Management - TEST PHASE
+
 - [ ] Write tests for active zombies:
   - [ ] Test: Active zombie count respects capacity limit
   - [ ] Test: Excess zombies auto-send to Crypt
@@ -133,6 +145,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
   - [ ] Test: Zombie responds to player commands (Follow, Guard)
 
 ### 3.4 Active Zombie Management - IMPLEMENTATION
+
 - [ ] Create zombie entity system
   - [ ] Implement capacity checking (starts at 10)
   - [ ] Implement Crypt storage overflow
@@ -145,6 +158,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
 ## Phase 4: Decay & Maintenance Systems
 
 ### 4.1 Decay Mechanics - TEST PHASE
+
 - [ ] Write tests for decay:
   - [ ] Test: Zombie loses 1% stats per day without feeding (Common)
   - [ ] Test: Rare/Epic/Legendary decay at faster rates
@@ -156,6 +170,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
   - [ ] Test: Preservation items reduce decay rate
 
 ### 4.2 Decay System - IMPLEMENTATION
+
 - [ ] Create `features/farm/lib/decay.ts`
   - [ ] Implement daily decay calculation by tier
   - [ ] Implement decay floor enforcement
@@ -168,6 +183,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
 - [ ] Add decay tick to daily cycle
 
 ### 4.3 Happiness System - TEST PHASE
+
 - [ ] Write tests for happiness:
   - [ ] Test: Happiness decreases when not fed
   - [ ] Test: Petting increases happiness (with cooldown)
@@ -179,6 +195,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
   - [ ] Test: Extremely unhappy zombies ignore commands
 
 ### 4.4 Happiness System - IMPLEMENTATION
+
 - [ ] Create `features/farm/lib/happiness.ts`
   - [ ] Implement happiness range (0-100%)
   - [ ] Implement petting mechanic with cooldown
@@ -191,6 +208,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
 - [ ] Implement happiness recovery over time
 
 ### 4.5 Feeding System - TEST & IMPLEMENTATION
+
 - [ ] Test: Feeding consumes Rotten Meat resource
 - [ ] Test: Feeding resets decay counter
 - [ ] Test: Feeding boosts happiness
@@ -205,6 +223,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
 ## Phase 5: Capacity & Crypt Management
 
 ### 5.1 Capacity System - TEST PHASE
+
 - [ ] Write tests for capacity:
   - [ ] Test: Initial capacity is 10 zombies
   - [ ] Test: Harvesting beyond cap sends to Crypt
@@ -215,6 +234,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
   - [ ] Test: Research/upgrades increase capacity
 
 ### 5.2 Crypt Storage - TEST PHASE
+
 - [ ] Write tests for Crypt:
   - [ ] Test: Zombies in Crypt are inactive
   - [ ] Test: Crypt zombies don't decay
@@ -224,6 +244,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
   - [ ] Test: Crypt storage is unlimited
 
 ### 5.3 Crypt System - IMPLEMENTATION
+
 - [ ] Create `features/farm/lib/crypt.ts`
   - [ ] Implement Crypt storage data structure
   - [ ] Implement auto-store overflow logic
@@ -238,6 +259,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
 ## Phase 6: Resources & Farm Economy
 
 ### 6.1 Resource System - TEST PHASE
+
 - [ ] Write tests for resources:
   - [ ] Test: Rotten Wood from chopping dead trees
   - [ ] Test: Bones from digging/clearing
@@ -248,6 +270,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
   - [ ] Test: Inventory limits for each resource
 
 ### 6.2 Resource Gathering - IMPLEMENTATION
+
 - [ ] Create resource node system:
   - [ ] Dead tree nodes (choppable, yield Rotten Wood)
   - [ ] Grave mounds (diggable, yield Bones)
@@ -259,6 +282,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
 - [ ] Add gathering animations
 
 ### 6.3 Composting & Production - TEST & IMPLEMENTATION
+
 - [ ] Test: Corpse Composter converts inputs over time
 - [ ] Test: Composter requires organic waste input
 - [ ] Test: Output ready after X hours
@@ -272,6 +296,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
 ## Phase 7: Farm Structures & Building
 
 ### 7.1 Building System - TEST PHASE
+
 - [ ] Write tests for building:
   - [ ] Test: Building requires resources
   - [ ] Test: Building requires valid placement
@@ -282,6 +307,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
   - [ ] Test: Can upgrade buildings to higher levels
 
 ### 7.2 Core Buildings - IMPLEMENTATION
+
 - [ ] Implement Zombie Plot (basic structure)
   - [ ] Costs Rotten Wood + Bones
   - [ ] Allows planting
@@ -299,6 +325,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
   - [ ] Entertainment/happiness benefit
 
 ### 7.3 Building Placement - TEST & IMPLEMENTATION
+
 - [ ] Test: Grid-based placement validation
 - [ ] Test: Terrain restrictions
 - [ ] Test: Building footprint collision
@@ -308,6 +335,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
 - [ ] Implement rotation (if applicable)
 
 ### 7.4 Farm Expansion - TEST & IMPLEMENTATION
+
 - [ ] Test: Expansion costs Dark Coins + resources
 - [ ] Test: Expansion adds land tiles
 - [ ] Test: New land reveals resource nodes
@@ -321,6 +349,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
 ## Phase 8: Time & Progression Systems
 
 ### 8.1 Day/Night Cycle - TEST PHASE
+
 - [ ] Write tests for time:
   - [ ] Test: Full cycle is 30 min real-time (20 day, 10 night)
   - [ ] Test: Time progresses while offline
@@ -330,6 +359,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
   - [ ] Test: Time-based events trigger correctly
 
 ### 8.2 Time System - IMPLEMENTATION
+
 - [ ] Create game clock system
   - [ ] Real-time to game-time conversion
   - [ ] Day/night state machine
@@ -340,6 +370,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
 - [ ] Add clock UI display
 
 ### 8.3 Weather System - TEST PHASE
+
 - [ ] Write tests for weather:
   - [ ] Test: Blood Rain auto-waters crops
   - [ ] Test: Blood Rain speeds growth by 25%
@@ -349,6 +380,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
   - [ ] Test: Weather transitions smoothly
 
 ### 8.4 Weather System - IMPLEMENTATION
+
 - [ ] Create weather state machine
 - [ ] Implement weather effects on growth
 - [ ] Implement weather effects on happiness
@@ -357,6 +389,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
 - [ ] Add weather events (Blood Rain, etc.)
 
 ### 8.5 Offline Progress - TEST & IMPLEMENTATION
+
 - [ ] Test: Calculate time elapsed during offline
 - [ ] Test: Growth timers advance correctly
 - [ ] Test: Daily decay applied for each day
@@ -370,6 +403,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
 ## Phase 9: Zombie Quality & Mutations
 
 ### 9.1 Quality System - TEST PHASE
+
 - [ ] Write tests for quality:
   - [ ] Test: Quality tiers (Bronze, Silver, Gold, Diamond)
   - [ ] Test: Watering improves quality chance
@@ -379,6 +413,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
   - [ ] Test: Quality visible in UI
 
 ### 9.2 Quality System - IMPLEMENTATION
+
 - [ ] Implement quality calculation algorithm
   - [ ] Factor in watering
   - [ ] Factor in fertilizer use
@@ -388,6 +423,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
 - [ ] Create quality upgrade items (rare)
 
 ### 9.3 Natural Mutations - TEST PHASE
+
 - [ ] Write tests for mutations:
   - [ ] Test: 5% base mutation chance on harvest
   - [ ] Test: Blood Moon doubles mutation chance
@@ -398,6 +434,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
   - [ ] Test: Player is notified of mutations
 
 ### 9.4 Natural Mutations - IMPLEMENTATION
+
 - [ ] Create mutation system
   - [ ] Define mutation types (physical, abilities)
   - [ ] Implement mutation roll on harvest
@@ -412,6 +449,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
 ## Phase 10: Player Progression (Farm-related)
 
 ### 10.1 XP & Leveling - TEST & IMPLEMENTATION
+
 - [ ] Test: Harvesting zombies grants XP
 - [ ] Test: Building structures grants XP
 - [ ] Test: Leveling unlocks new buildings
@@ -422,6 +460,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
 - [ ] Create level-up UI notification
 
 ### 10.2 Quests (Farm) - TEST & IMPLEMENTATION
+
 - [ ] Test: Daily quest generation
 - [ ] Test: Quest objectives tracking
 - [ ] Test: Quest completion rewards
@@ -432,6 +471,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
 - [ ] Implement quest completion logic
 
 ### 10.3 Achievements (Farm) - TEST & IMPLEMENTATION
+
 - [ ] Test: Track farm-related achievements
 - [ ] Test: "Harvest 50 zombies" achievement
 - [ ] Test: "Build all structure types" achievement
@@ -445,6 +485,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
 ## Phase 11: UI/UX Components
 
 ### 11.1 Farm HUD
+
 - [ ] Create main farm HUD component
   - [ ] Resource counters (Wood, Bones, Blood Water, etc.)
   - [ ] Zombie count / capacity display
@@ -453,6 +494,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
   - [ ] Quick action buttons
 
 ### 11.2 Zombie Management UI
+
 - [ ] Create zombie list/panel
   - [ ] Show all active zombies
   - [ ] Display stats, happiness, quality
@@ -463,6 +505,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
   - [ ] Filter/sort options
 
 ### 11.3 Plot Interaction UI
+
 - [ ] Create plot interaction overlay
   - [ ] Plant seed menu
   - [ ] Water action
@@ -471,6 +514,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
   - [ ] Growth progress bar
 
 ### 11.4 Building UI
+
 - [ ] Create build mode interface
   - [ ] Building selection menu
   - [ ] Cost display
@@ -482,6 +526,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
   - [ ] Production status
 
 ### 11.5 Modals & Dialogs
+
 - [ ] Create seed selection modal
 - [ ] Create zombie detail modal
 - [ ] Create resource gathering feedback
@@ -493,6 +538,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
 ## Phase 12: Integration & Polish
 
 ### 12.1 Save/Load System (Farm Data)
+
 - [ ] Test: Farm state serializes correctly
 - [ ] Test: All zombie data persists
 - [ ] Test: Plot states persist
@@ -503,6 +549,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
 - [ ] Add autosave triggers
 
 ### 12.2 Performance Optimization
+
 - [ ] Profile 100 active zombies scenario
 - [ ] Optimize zombie AI updates
 - [ ] Implement zombie pooling if needed
@@ -510,6 +557,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
 - [ ] Add LOD for distant zombies
 
 ### 12.3 Animations & Effects
+
 - [ ] Plant seed animation
 - [ ] Zombie emergence animation (harvest)
 - [ ] Growth stage transitions
@@ -518,12 +566,14 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
 - [ ] Resource collection effects
 
 ### 12.4 Audio (Optional for MVP)
+
 - [ ] Background ambience (farm sounds)
 - [ ] Action sound effects (plant, harvest, feed)
 - [ ] Zombie sounds (idle, happy, hungry)
 - [ ] Weather audio (rain, thunder)
 
 ### 12.5 Tutorial Implementation
+
 - [ ] Create tutorial state machine
 - [ ] Implement step-by-step guide
   - [ ] Plant first zombie seed
@@ -539,6 +589,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
 ## Phase 13: Testing & Quality Assurance
 
 ### 13.1 Comprehensive Testing
+
 - [ ] Achieve 100% coverage for critical farm logic
 - [ ] Achieve 80%+ overall farm module coverage
 - [ ] Write integration tests for full cycles
@@ -549,6 +600,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
 - [ ] Performance benchmarks
 
 ### 13.2 Edge Cases & Error Handling
+
 - [ ] Test: Handle invalid game state gracefully
 - [ ] Test: Handle corrupted save data
 - [ ] Test: Handle extreme values (999 zombies, etc.)
@@ -558,6 +610,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
 - [ ] Add validation to all user inputs
 
 ### 13.3 Documentation
+
 - [ ] Update DOMAIN-FARM.md if implementation differs
 - [ ] Document any deviation from spec with rationale
 - [ ] Add inline code comments for complex logic

@@ -1,5 +1,5 @@
 ---
-title: "Combat Module TODO"
+title: 'Combat Module TODO'
 module: Combat (DOMAIN-COMBAT)
 priority: High
 last updated: 2025-11-12
@@ -10,6 +10,7 @@ last updated: 2025-11-12
 This document tracks all tasks for implementing the Combat module following DOMAIN-COMBAT.md specifications. All tasks follow TDD methodology: tests first, then implementation.
 
 ## Legend
+
 - `[ ]` Not started
 - `[~]` In progress
 - `[x]` Complete
@@ -20,6 +21,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 ## Phase 1: Combat Foundation & Setup
 
 ### 1.1 Combat Types & Interfaces
+
 - [ ] Define combat types in `src/types/combat.ts`:
   - [ ] Unit interface (zombie or enemy)
   - [ ] UnitStats (HP, Attack, Defense, Speed, Range)
@@ -32,6 +34,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 - [ ] Create combat configuration constants
 
 ### 1.2 Combat Testing Setup
+
 - [ ] Create combat test utilities:
   - [ ] Mock unit factory (zombies and enemies)
   - [ ] Battle simulator for testing
@@ -45,6 +48,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 ## Phase 2: Battle Preparation & Deployment
 
 ### 2.1 Target Selection - TEST PHASE
+
 - [ ] Write tests for raid initiation:
   - [ ] Test: Can select valid target on world map
   - [ ] Test: Cannot attack locked locations
@@ -53,6 +57,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
   - [ ] Test: Target information displayed correctly
 
 ### 2.2 Target Selection - IMPLEMENTATION
+
 - [ ] Create `features/combat/lib/targeting.ts`
   - [ ] Implement canAttackTarget() validation
   - [ ] Implement prerequisite checking
@@ -61,6 +66,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 - [ ] Add target selection interface
 
 ### 2.3 Squad Selection - TEST PHASE
+
 - [ ] Write tests for squad deployment:
   - [ ] Test: Squad size respects limit (3 early, 10+ late)
   - [ ] Test: Only active farm zombies available
@@ -70,6 +76,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
   - [ ] Test: Command Center level affects squad size
 
 ### 2.4 Squad Selection - IMPLEMENTATION
+
 - [ ] Create `features/combat/lib/deployment.ts`
   - [ ] Implement squad size calculation
   - [ ] Create zombie availability filter
@@ -83,6 +90,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 - [ ] Add squad composition suggestions
 
 ### 2.5 Enemy Composition - TEST & IMPLEMENTATION
+
 - [ ] Test: Each location has defined enemy units
 - [ ] Test: Enemy stats loaded correctly
 - [ ] Test: Fortifications (walls, towers, traps) load
@@ -96,6 +104,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 ## Phase 3: Core Battle Mechanics
 
 ### 3.1 Battle Initialization - TEST PHASE
+
 - [ ] Write tests for battle start:
   - [ ] Test: Zombies spawn on left side
   - [ ] Test: Enemies spawn on right side
@@ -105,6 +114,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
   - [ ] Test: First wave enemies present
 
 ### 3.2 Battle State Machine - IMPLEMENTATION
+
 - [ ] Create battle state machine (XState)
   - [ ] States: Preparation, Active, Victory, Defeat, Retreat
   - [ ] Transitions between states
@@ -114,6 +124,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 - [ ] Set up unit spawning
 
 ### 3.3 Movement System - TEST PHASE
+
 - [ ] Write tests for movement:
   - [ ] Test: Zombies advance rightward
   - [ ] Test: Enemies advance leftward (melee)
@@ -124,6 +135,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
   - [ ] Test: Formation changes based on movement
 
 ### 3.4 Movement System - IMPLEMENTATION
+
 - [ ] Create `features/combat/lib/movement.ts`
   - [ ] Implement movement tick handler
   - [ ] Apply speed modifiers
@@ -133,6 +145,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 - [ ] Add movement animations
 
 ### 3.5 Targeting & Engagement - TEST PHASE
+
 - [ ] Write tests for targeting:
   - [ ] Test: Melee units target nearest enemy
   - [ ] Test: Ranged units stop at max range
@@ -144,6 +157,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
   - [ ] Test: Priests heal allies or target high-threat
 
 ### 3.6 Targeting System - IMPLEMENTATION
+
 - [ ] Create `features/combat/lib/targeting.ts`
   - [ ] Implement range checking
   - [ ] Create AI priority logic per unit type
@@ -157,6 +171,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 ## Phase 4: Damage & Combat Resolution
 
 ### 4.1 Basic Damage Calculation - TEST PHASE
+
 - [ ] Write tests for damage:
   - [ ] Test: Physical damage = Attack - Defense (min 1)
   - [ ] Test: Attack cooldown per unit type
@@ -166,6 +181,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
   - [ ] Test: Surviving units retarget after kill
 
 ### 4.2 Damage System - IMPLEMENTATION
+
 - [ ] Create `features/combat/lib/damage.ts`
   - [ ] Implement base damage formula
   - [ ] Apply attack cooldowns
@@ -176,6 +192,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 - [ ] Create death animations
 
 ### 4.3 Damage Types - TEST PHASE
+
 - [ ] Write tests for each damage type:
   - [ ] Test: Physical - reduced by armor
   - [ ] Test: Toxic - bypasses armor, applies Poison
@@ -186,6 +203,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
   - [ ] Test: Damage type resistances applied
 
 ### 4.4 Damage Types - IMPLEMENTATION
+
 - [ ] Extend damage calculator for types
   - [ ] Physical damage modifier
   - [ ] Toxic damage (armor bypass)
@@ -201,6 +219,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 ## Phase 5: Status Effects
 
 ### 5.1 Status Effect Framework - TEST PHASE
+
 - [ ] Write tests for status effects:
   - [ ] Test: Poisoned - continuous damage over time
   - [ ] Test: Burning - high DoT, spreads to adjacent
@@ -212,6 +231,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
   - [ ] Test: Status can be cleansed/resisted
 
 ### 5.2 Status Effect System - IMPLEMENTATION
+
 - [ ] Create `features/combat/lib/statusEffects.ts`
   - [ ] Implement status effect data structure
   - [ ] Create status application logic
@@ -223,6 +243,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 - [ ] Add status visual effects (poison bubbles, fire, etc.)
 
 ### 5.3 Individual Status Effects - IMPLEMENTATION
+
 - [ ] Implement Poisoned effect
   - [ ] DoT calculation (-2% HP/sec for 10 sec)
   - [ ] Stacking/refresh logic
@@ -246,6 +267,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 ## Phase 6: Special Abilities
 
 ### 6.1 Unit Abilities - TEST PHASE
+
 - [ ] Write tests for special abilities:
   - [ ] Test: Zombie Brute smash AoE attack
   - [ ] Test: Paladin heal/shield ability
@@ -256,6 +278,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
   - [ ] Test: Abilities auto-cast (no player input)
 
 ### 6.2 Ability System - IMPLEMENTATION
+
 - [ ] Create ability framework
   - [ ] Define ability interface
   - [ ] Implement ability trigger conditions
@@ -274,6 +297,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 ## Phase 7: Battle Outcomes
 
 ### 7.1 Victory Conditions - TEST PHASE
+
 - [ ] Write tests for victory:
   - [ ] Test: Victory when all enemies defeated
   - [ ] Test: Objectives completed = victory
@@ -283,6 +307,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
   - [ ] Test: Loot area after victory
 
 ### 7.2 Victory System - IMPLEMENTATION
+
 - [ ] Create victory condition checker
 - [ ] Implement survivor tracking
 - [ ] Create battle result summary
@@ -290,6 +315,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 - [ ] Create victory UI screen
 
 ### 7.3 Defeat Conditions - TEST PHASE
+
 - [ ] Write tests for defeat:
   - [ ] Test: Defeat when all zombies destroyed
   - [ ] Test: Time limit defeat (if applicable)
@@ -298,6 +324,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
   - [ ] Test: Location remains unconquered
 
 ### 7.4 Defeat System - IMPLEMENTATION
+
 - [ ] Create defeat condition checker
 - [ ] Implement permadeath logic
 - [ ] Track lost zombies
@@ -305,6 +332,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 - [ ] Add defeat consequences
 
 ### 7.5 Retreat Mechanic - TEST PHASE
+
 - [ ] Write tests for retreat:
   - [ ] Test: Can retreat if any zombie alive
   - [ ] Test: 10-second countdown after retreat trigger
@@ -315,6 +343,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
   - [ ] Test: Cooldown or cost for reattempt
 
 ### 7.6 Retreat System - IMPLEMENTATION
+
 - [ ] Implement retreat button/trigger
 - [ ] Create retreat countdown timer
 - [ ] Handle zombie survival during retreat
@@ -326,6 +355,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 ## Phase 8: Post-Battle Systems
 
 ### 8.1 Experience & Leveling - TEST PHASE
+
 - [ ] Write tests for XP:
   - [ ] Test: Survivors gain base XP for participation
   - [ ] Test: Bonus XP per kill
@@ -335,6 +365,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
   - [ ] Test: Dead zombies don't gain XP
 
 ### 8.2 XP System - IMPLEMENTATION
+
 - [ ] Create `features/combat/lib/experience.ts`
   - [ ] Calculate XP earned
   - [ ] Apply XP to survivors
@@ -344,6 +375,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 - [ ] Add level-up animations
 
 ### 8.3 Battle Rewards - TEST PHASE
+
 - [ ] Write tests for rewards:
   - [ ] Test: Dark Coins reward per location
   - [ ] Test: Resource rewards based on location
@@ -354,6 +386,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
   - [ ] Test: Rewards added to inventory
 
 ### 8.4 Rewards System - IMPLEMENTATION
+
 - [ ] Create rewards calculator
   - [ ] Base Dark Coins per location
   - [ ] Resource loot tables
@@ -364,6 +397,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 - [ ] Create rewards summary UI
 
 ### 8.5 Post-Battle State - TEST PHASE
+
 - [ ] Write tests for post-battle:
   - [ ] Test: Survivors return to farm
   - [ ] Test: HP carries over (not auto-healed)
@@ -374,6 +408,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
   - [ ] Test: Farm morale affected (victory/defeat)
 
 ### 8.6 Post-Battle Integration - IMPLEMENTATION
+
 - [ ] Update farm state with results
   - [ ] Return survivors with HP
   - [ ] Remove casualties permanently
@@ -388,6 +423,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 ## Phase 9: Enemy AI & Behaviors
 
 ### 9.1 Enemy AI - TEST PHASE
+
 - [ ] Write tests for enemy behaviors:
   - [ ] Test: Peasants attack nearest zombie
   - [ ] Test: Archers prioritize low-armor targets
@@ -398,6 +434,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
   - [ ] Test: Boss units have unique patterns
 
 ### 9.2 Enemy AI - IMPLEMENTATION
+
 - [ ] Create AI behavior system
   - [ ] Peasant AI (basic melee)
   - [ ] Archer AI (ranged, target selection)
@@ -414,6 +451,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 ## Phase 10: Fortifications & Obstacles
 
 ### 10.1 Fortifications - TEST PHASE
+
 - [ ] Write tests for fortifications:
   - [ ] Test: Gates block zombie advance
   - [ ] Test: Gates have high HP and armor
@@ -423,6 +461,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
   - [ ] Test: Destroying structure grants progress
 
 ### 10.2 Fortifications - IMPLEMENTATION
+
 - [ ] Implement structure types:
   - [ ] Gate (blockage, high HP)
   - [ ] Wall (cover, HP)
@@ -432,6 +471,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 - [ ] Implement structure destruction
 
 ### 10.3 Traps - TEST PHASE
+
 - [ ] Write tests for traps:
   - [ ] Test: Spike pit triggers on proximity
   - [ ] Test: Trap deals instant damage/kill
@@ -440,6 +480,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
   - [ ] Test: Traps are expended after trigger
 
 ### 10.4 Traps - IMPLEMENTATION
+
 - [ ] Create trap system
   - [ ] Spike pit (instant damage)
   - [ ] Fire trap (burning AoE)
@@ -453,6 +494,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 ## Phase 11: Battle Rendering (Phaser Integration)
 
 ### 11.1 Phaser Scene Setup
+
 - [ ] Create combat Phaser scene
 - [ ] Set up battlefield dimensions
 - [ ] Implement camera controls
@@ -460,6 +502,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 - [ ] Add UI overlays
 
 ### 11.2 Unit Rendering
+
 - [ ] Create sprite system for units
   - [ ] Zombie sprites per type
   - [ ] Enemy sprites per type
@@ -469,6 +512,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 - [ ] Create unit selection/highlight
 
 ### 11.3 Effects Rendering
+
 - [ ] Implement damage numbers
 - [ ] Create projectile systems
   - [ ] Arrows (archers)
@@ -479,6 +523,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 - [ ] Implement death/destruction effects
 
 ### 11.4 UI Overlays
+
 - [ ] Create battle HUD
   - [ ] Unit count display
   - [ ] Wave indicator
@@ -493,6 +538,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 ## Phase 12: Advanced Combat Features
 
 ### 12.1 Multi-Wave Battles - TEST & IMPLEMENTATION
+
 - [ ] Test: Waves spawn after timer
 - [ ] Test: Waves spawn when previous defeated
 - [ ] Test: Wave composition defined per location
@@ -501,6 +547,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 - [ ] Create reinforcement mechanics
 
 ### 12.2 Boss Battles - TEST & IMPLEMENTATION
+
 - [ ] Test: Boss units have enhanced stats
 - [ ] Test: Boss has special abilities
 - [ ] Test: Boss triggers phase changes
@@ -510,6 +557,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 - [ ] Add boss health bar UI
 
 ### 12.3 Battle Modifiers
+
 - [ ] Weather effects in combat
   - [ ] Blood Rain: zombies regen slowly
   - [ ] Fog: zombies faster, ranged less accurate
@@ -525,6 +573,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 ## Phase 13: Combat UI/UX
 
 ### 13.1 Pre-Battle UI
+
 - [ ] Create target selection screen
   - [ ] World map with locations
   - [ ] Location info panel
@@ -537,6 +586,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
   - [ ] Stats comparison
 
 ### 13.2 Battle UI
+
 - [ ] Create in-battle HUD
 - [ ] Add pause/play controls
 - [ ] Add speed controls (1x, 2x, 4x)
@@ -544,6 +594,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 - [ ] Add mini-map (optional)
 
 ### 13.3 Post-Battle UI
+
 - [ ] Create victory screen
   - [ ] Rewards summary
   - [ ] XP gains per zombie
@@ -559,6 +610,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 ## Phase 14: Integration & Polish
 
 ### 14.1 Combat-Farm Integration
+
 - [ ] Test: Zombies sent to combat leave farm
 - [ ] Test: Combat updates zombie stats on farm
 - [ ] Test: Dead zombies removed from farm
@@ -568,6 +620,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 - [ ] Add event bridge between modules
 
 ### 14.2 Save/Load (Combat Data)
+
 - [ ] Test: Battle state can be paused/saved
 - [ ] Test: Can resume interrupted battles
 - [ ] Test: Battle history persists
@@ -576,6 +629,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 - [ ] Add battle resume logic
 
 ### 14.3 Performance Optimization
+
 - [ ] Profile 10v10+ battles
 - [ ] Optimize damage calculations
 - [ ] Implement unit pooling
@@ -584,6 +638,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 - [ ] Reduce memory allocations in battle loop
 
 ### 14.4 Animations & Effects
+
 - [ ] Attack animations per unit type
 - [ ] Death animations
 - [ ] Ability cast animations
@@ -592,6 +647,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 - [ ] Slow-mo on critical moments
 
 ### 14.5 Audio
+
 - [ ] Battle background music
 - [ ] Attack sound effects
 - [ ] Ability sounds
@@ -604,6 +660,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 ## Phase 15: Testing & Quality Assurance
 
 ### 15.1 Comprehensive Combat Testing
+
 - [ ] Achieve 100% coverage for critical combat logic
 - [ ] Achieve 80%+ overall combat module coverage
 - [ ] Integration tests for full battle scenarios
@@ -616,6 +673,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 - [ ] Performance benchmarks
 
 ### 15.2 Balance Testing
+
 - [ ] Test zombie vs enemy balance
 - [ ] Ensure progression curve feels fair
 - [ ] Verify no unbeatable encounters
@@ -623,6 +681,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 - [ ] Validate reward scaling
 
 ### 15.3 Edge Cases & Error Handling
+
 - [ ] Test: Invalid battle state recovery
 - [ ] Test: Unit with 0 or negative stats
 - [ ] Test: Extremely long battles (timeout?)
@@ -631,6 +690,7 @@ This document tracks all tasks for implementing the Combat module following DOMA
 - [ ] Validate all battle inputs
 
 ### 15.4 Documentation
+
 - [ ] Update DOMAIN-COMBAT.md if needed
 - [ ] Document any balance changes
 - [ ] Add inline comments for complex logic

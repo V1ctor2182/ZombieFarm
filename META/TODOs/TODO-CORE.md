@@ -1,5 +1,5 @@
 ---
-title: "Core Systems TODO"
+title: 'Core Systems TODO'
 module: Core (Infrastructure & Integration)
 priority: Critical (Foundation)
 last updated: 2025-11-12
@@ -10,6 +10,7 @@ last updated: 2025-11-12
 This document tracks all tasks for implementing the core infrastructure, state management, and cross-module integration following ARCHITECTURE.md. These systems must be built first as they provide the foundation for Farm and Combat modules.
 
 ## Legend
+
 - `[ ]` Not started
 - `[~]` In progress
 - `[x]` Complete
@@ -20,6 +21,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 ## Phase 1: Project Initialization
 
 ### 1.1 Repository & Environment Setup
+
 - [ ] Initialize Git repository
   - [ ] Create .gitignore (node_modules, dist, .env, etc.)
   - [ ] Initial commit with documentation
@@ -35,6 +37,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
   - [ ] Install VS Code extensions (ESLint, Prettier, etc.)
 
 ### 1.2 Build Tool Configuration
+
 - [ ] Initialize Vite project
   - [ ] Create vite.config.ts
   - [ ] Configure path aliases (@features, @lib, @components)
@@ -43,9 +46,10 @@ This document tracks all tasks for implementing the core infrastructure, state m
   - [ ] Enable HMR (Hot Module Replacement)
 - [ ] Configure environment variables
   - [ ] Create .env.example template
-  - [ ] Set up VITE_ prefixed variables
+  - [ ] Set up VITE\_ prefixed variables
 
 ### 1.3 TypeScript Configuration
+
 - [ ] Create tsconfig.json
   - [ ] Enable strict mode
   - [ ] Configure path mappings
@@ -56,6 +60,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 - [ ] Set up TypeScript checking in CI
 
 ### 1.4 Code Quality Tools
+
 - [ ] Set up ESLint
   - [ ] Install ESLint + TypeScript parser
   - [ ] Configure rules (.eslintrc)
@@ -72,6 +77,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 - [ ] Create lint-staged config
 
 ### 1.5 Testing Framework Setup
+
 - [ ] Install Jest
   - [ ] Configure jest.config.js
   - [ ] Set up jsdom environment
@@ -94,6 +100,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 ## Phase 2: Core Dependencies & UI Foundation
 
 ### 2.1 React Setup
+
 - [ ] Install React 18
 - [ ] Install React DOM
 - [ ] Install React Router (for future routing)
@@ -102,6 +109,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 - [ ] Set up React StrictMode
 
 ### 2.2 Styling System (Tailwind CSS)
+
 - [ ] Install Tailwind CSS
 - [ ] Create tailwind.config.js
   - [ ] Configure content paths
@@ -115,6 +123,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 - [ ] Create PostCSS config
 
 ### 2.3 Phaser Integration
+
 - [ ] Install Phaser 3
 - [ ] Create Phaser wrapper component
   - [ ] React component that hosts Phaser canvas
@@ -127,6 +136,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 - [ ] Test Phaser renders in React
 
 ### 2.4 State Management (XState)
+
 - [ ] Install XState + React integration
 - [ ] Create state machine utilities
   - [ ] Type helpers for machines
@@ -139,6 +149,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 ## Phase 3: Core Game State Architecture
 
 ### 3.1 Global Type Definitions
+
 - [ ] Create `src/types/` directory structure
   - [ ] global.ts (GameState, Player, etc.)
   - [ ] farm.ts (delegated to Farm module)
@@ -158,6 +169,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
   - [ ] unlocks, tutorial progress
 
 ### 3.2 Game Configuration
+
 - [ ] Create `src/lib/config/zombieFarmConfig.ts`
   - [ ] Game constants (tick rates, limits, etc.)
   - [ ] Zombie type definitions
@@ -168,6 +180,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 - [ ] Add config validation
 
 ### 3.3 Core State Machine - TEST PHASE
+
 - [ ] Write tests for game machine:
   - [ ] Test: Game initializes in "loading" state
   - [ ] Test: Transitions to "tutorial" on first play
@@ -179,6 +192,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
   - [ ] Test: Events dispatch properly
 
 ### 3.4 Core State Machine - IMPLEMENTATION
+
 - [ ] Create `src/features/game/gameMachine.ts`
   - [ ] Define states: loading, tutorial, farm, combat, paused, gameOver
   - [ ] Define transitions between states
@@ -189,6 +203,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 - [ ] Add machine visualization (XState visualizer)
 
 ### 3.5 Game Context Provider
+
 - [ ] Create `src/features/game/GameProvider.tsx`
   - [ ] Wrap game machine in React context
   - [ ] Provide state and send function
@@ -202,6 +217,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 ## Phase 4: Event System
 
 ### 4.1 Event Architecture - TEST PHASE
+
 - [ ] Write tests for event system:
   - [ ] Test: Event is dispatched to machine
   - [ ] Test: Event triggers state transition
@@ -212,6 +228,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
   - [ ] Test: Event history is tracked (for debugging)
 
 ### 4.2 Event System - IMPLEMENTATION
+
 - [ ] Create `src/lib/events/eventBus.ts`
   - [ ] Central event dispatcher
   - [ ] Event subscription system
@@ -226,6 +243,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 - [ ] Add event debugging tools
 
 ### 4.3 Event Handlers
+
 - [ ] Create handler registration system
 - [ ] Implement handler middleware (validation, logging)
 - [ ] Create error handling for failed events
@@ -236,6 +254,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 ## Phase 5: Persistence & Save System
 
 ### 5.1 Local Storage Save System - TEST PHASE
+
 - [ ] Write tests for save/load:
   - [ ] Test: Game state serializes to JSON
   - [ ] Test: Serialized state saves to localStorage
@@ -247,6 +266,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
   - [ ] Test: Multiple save slots supported
 
 ### 5.2 Save System - IMPLEMENTATION
+
 - [ ] Create `src/lib/storage/localSaveSystem.ts`
   - [ ] Serialize GameState to JSON
   - [ ] Compress save data (optional, LZ-string)
@@ -264,6 +284,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
   - [ ] Save before closing window (onbeforeunload)
 
 ### 5.3 Save UI
+
 - [ ] Create save/load menu
   - [ ] Manual save button
   - [ ] Load save button
@@ -278,6 +299,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 ## Phase 6: Resource & Inventory System
 
 ### 6.1 Resource System - TEST PHASE
+
 - [ ] Write tests for resources:
   - [ ] Test: Resources tracked in inventory
   - [ ] Test: Add resource increases count
@@ -287,6 +309,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
   - [ ] Test: Currency (Dark Coins) tracked separately
 
 ### 6.2 Resource System - IMPLEMENTATION
+
 - [ ] Create `src/features/game/lib/resources.ts`
   - [ ] Define resource types (Wood, Bones, Blood Water, etc.)
   - [ ] Create inventory data structure
@@ -298,6 +321,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 - [ ] Add resource change notifications
 
 ### 6.3 Inventory UI Components
+
 - [ ] Create resource counter component
   - [ ] Display resource icon + count
   - [ ] Compact mode for HUD
@@ -315,6 +339,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 ## Phase 7: Time & Day/Night System
 
 ### 7.1 Time System - TEST PHASE
+
 - [ ] Write tests for time:
   - [ ] Test: Time progresses in real-time
   - [ ] Test: 30 min real = 1 full day/night cycle
@@ -326,6 +351,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
   - [ ] Test: Time speed can be changed (debug)
 
 ### 7.2 Time System - IMPLEMENTATION
+
 - [ ] Create `src/features/game/lib/timeSystem.ts`
   - [ ] Game clock (tracks in-game time)
   - [ ] Real-time to game-time conversion
@@ -342,6 +368,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
   - [ ] Cap at 7 days for safety
 
 ### 7.3 Day/Night Cycle Effects
+
 - [ ] Create day/night modifier system
   - [ ] Zombies +stats at night
   - [ ] Humans +stats at day
@@ -352,6 +379,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
   - [ ] Shadow changes (Phaser)
 
 ### 7.4 Time UI
+
 - [ ] Create time display widget
   - [ ] Show current in-game time
   - [ ] Show day counter
@@ -365,6 +393,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 ## Phase 8: Utility Libraries
 
 ### 8.1 Math & Random Utilities - TEST & IMPLEMENTATION
+
 - [ ] Test and implement `src/lib/utils/math.ts`
   - [ ] Clamp function (min, max)
   - [ ] Linear interpolation (lerp)
@@ -374,6 +403,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 - [ ] Test edge cases (NaN, Infinity, etc.)
 
 ### 8.2 Formatting Utilities - TEST & IMPLEMENTATION
+
 - [ ] Test and implement `src/lib/utils/format.ts`
   - [ ] Number formatting (1000 -> 1K)
   - [ ] Time formatting (seconds to HH:MM:SS)
@@ -382,6 +412,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 - [ ] Test localization (future-proof)
 
 ### 8.3 Validation Utilities - TEST & IMPLEMENTATION
+
 - [ ] Test and implement `src/lib/utils/validation.ts`
   - [ ] Type guards
   - [ ] Data schema validation
@@ -390,6 +421,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 - [ ] Create validation error types
 
 ### 8.4 Array & Object Utilities
+
 - [ ] Common array operations (shuffle, sample, etc.)
 - [ ] Deep clone function
 - [ ] Deep merge function
@@ -400,6 +432,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 ## Phase 9: UI Component Library
 
 ### 9.1 Base Components
+
 - [ ] Create Button component
   - [ ] Variants (primary, secondary, danger, ghost)
   - [ ] Sizes (sm, md, lg)
@@ -424,6 +457,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
   - [ ] Color variants
 
 ### 9.2 Game-Specific Components
+
 - [ ] Create Card component (for items, zombies, etc.)
 - [ ] Create IconButton component
 - [ ] Create Badge component (counters, notifications)
@@ -432,12 +466,14 @@ This document tracks all tasks for implementing the core infrastructure, state m
 - [ ] Create Slider component
 
 ### 9.3 Layout Components
+
 - [ ] Create Panel component (bordered containers)
 - [ ] Create Grid layout component
 - [ ] Create Stack component (flex container)
 - [ ] Create Divider component
 
 ### 9.4 Feedback Components
+
 - [ ] Create Toast/Notification system
   - [ ] Success, error, info, warning variants
   - [ ] Auto-dismiss timers
@@ -452,6 +488,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 ## Phase 10: Audio System
 
 ### 10.1 Audio Manager - TEST PHASE
+
 - [ ] Write tests for audio:
   - [ ] Test: Can load audio files
   - [ ] Test: Can play/pause/stop sounds
@@ -462,6 +499,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
   - [ ] Test: Audio settings persist
 
 ### 10.2 Audio Manager - IMPLEMENTATION
+
 - [ ] Create `src/lib/audio/audioManager.ts`
   - [ ] Load audio assets
   - [ ] Play sound effects
@@ -475,6 +513,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 - [ ] Create audio preloader
 
 ### 10.3 Audio Assets (Placeholder)
+
 - [ ] Create placeholder audio files
   - [ ] Button click sound
   - [ ] Success/error sounds
@@ -486,6 +525,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
   - [ ] /public/audio/ambient/
 
 ### 10.4 Audio UI
+
 - [ ] Create audio settings panel
   - [ ] Master volume slider
   - [ ] SFX volume slider
@@ -498,6 +538,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 ## Phase 11: Asset Management
 
 ### 11.1 Asset Loading System
+
 - [ ] Create asset loader
   - [ ] Image preloader
   - [ ] Audio preloader
@@ -509,6 +550,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 - [ ] Create asset manifest (list of all assets)
 
 ### 11.2 Sprite Management
+
 - [ ] Set up sprite atlas system
   - [ ] Combine small sprites into atlases
   - [ ] Generate atlas JSON metadata
@@ -520,6 +562,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
   - [ ] /public/sprites/environment/
 
 ### 11.3 Placeholder Assets
+
 - [ ] Create placeholder images
   - [ ] Zombie sprites (basic shapes/colors)
   - [ ] UI icons (resource icons, buttons)
@@ -531,6 +574,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 ## Phase 12: Debug & Development Tools
 
 ### 12.1 Debug Panel
+
 - [ ] Create debug mode toggle (ENV var)
 - [ ] Create debug overlay panel
   - [ ] FPS counter
@@ -542,6 +586,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 - [ ] Add keyboard shortcuts (F1 for debug, etc.)
 
 ### 12.2 State Inspection Tools
+
 - [ ] Create state inspector
   - [ ] View full game state (JSON viewer)
   - [ ] Export state to clipboard
@@ -550,6 +595,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 - [ ] Add Redux DevTools support (if using Redux)
 
 ### 12.3 Testing Utilities
+
 - [ ] Create test data factories
   - [ ] Create mock game state
   - [ ] Create mock zombies
@@ -562,6 +608,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 ## Phase 13: Performance Optimization
 
 ### 13.1 React Performance
+
 - [ ] Profile React renders (React DevTools)
 - [ ] Identify unnecessary re-renders
 - [ ] Implement React.memo where needed
@@ -570,18 +617,21 @@ This document tracks all tasks for implementing the core infrastructure, state m
 - [ ] Implement virtual scrolling for long lists
 
 ### 13.2 State Management Performance
+
 - [ ] Minimize state updates frequency
 - [ ] Batch state updates where possible
 - [ ] Use selectors to prevent unnecessary re-renders
 - [ ] Profile state machine transitions
 
 ### 13.3 Asset Optimization
+
 - [ ] Compress images (PNG -> WebP)
 - [ ] Create multiple sprite sizes (responsive)
 - [ ] Lazy load non-critical assets
 - [ ] Implement asset caching strategy
 
 ### 13.4 Bundle Optimization
+
 - [ ] Code splitting by route (future)
 - [ ] Tree-shaking verification
 - [ ] Minimize bundle size
@@ -593,6 +643,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 ## Phase 14: Error Handling & Monitoring
 
 ### 14.1 Error Boundaries
+
 - [ ] Create React error boundary
 - [ ] Display fallback UI on error
 - [ ] Log errors to console
@@ -600,6 +651,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 - [ ] Preserve game state if possible
 
 ### 14.2 Error Logging
+
 - [ ] Create error logger
   - [ ] Log to console in dev
   - [ ] Send to monitoring service in prod (future)
@@ -608,6 +660,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 - [ ] Create error reporting UI (user feedback)
 
 ### 14.3 Validation & Safety
+
 - [ ] Add input validation everywhere
 - [ ] Prevent negative resources
 - [ ] Prevent invalid state transitions
@@ -619,6 +672,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 ## Phase 15: Cross-Module Integration
 
 ### 15.1 Farm-Core Integration - TEST PHASE
+
 - [ ] Write integration tests:
   - [ ] Test: Farm state updates in game state
   - [ ] Test: Farm events flow through event bus
@@ -627,6 +681,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
   - [ ] Test: Time system affects farm mechanics
 
 ### 15.2 Farm-Core Integration - IMPLEMENTATION
+
 - [ ] Create integration layer
   - [ ] Farm state adapter for game state
   - [ ] Farm event handlers in game machine
@@ -635,6 +690,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 - [ ] Add integration tests
 
 ### 15.3 Combat-Core Integration - TEST PHASE
+
 - [ ] Write integration tests:
   - [ ] Test: Combat state updates in game state
   - [ ] Test: Combat uses zombie data from farm
@@ -643,6 +699,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
   - [ ] Test: Zombie deaths remove from farm
 
 ### 15.4 Combat-Core Integration - IMPLEMENTATION
+
 - [ ] Create integration layer
   - [ ] Combat state adapter
   - [ ] Combat event handlers
@@ -652,6 +709,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 - [ ] Add integration tests
 
 ### 15.5 Module Communication
+
 - [ ] Define clear module boundaries
 - [ ] Create interface contracts
 - [ ] Document module interactions
@@ -663,6 +721,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 ## Phase 16: Polish & UX Enhancements
 
 ### 16.1 Loading & Transitions
+
 - [ ] Create smooth scene transitions
   - [ ] Farm <-> Combat
   - [ ] Menu <-> Game
@@ -671,6 +730,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 - [ ] Optimize perceived performance
 
 ### 16.2 Feedback & Juice
+
 - [ ] Add visual feedback for all actions
   - [ ] Button press animations
   - [ ] Resource gain/loss animations
@@ -680,6 +740,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 - [ ] Screen shake for impact
 
 ### 16.3 Accessibility
+
 - [ ] Ensure keyboard navigation works
 - [ ] Add ARIA labels
 - [ ] Ensure color contrast (WCAG AA)
@@ -687,6 +748,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 - [ ] Test with accessibility tools
 
 ### 16.4 Responsive Design
+
 - [ ] Test on different screen sizes
 - [ ] Adjust UI for mobile (future)
 - [ ] Handle window resize gracefully
@@ -697,12 +759,14 @@ This document tracks all tasks for implementing the core infrastructure, state m
 ## Phase 17: Documentation
 
 ### 17.1 Code Documentation
+
 - [ ] Add JSDoc comments to all public APIs
 - [ ] Document complex algorithms
 - [ ] Create module READMEs
 - [ ] Document architecture decisions
 
 ### 17.2 Developer Documentation
+
 - [ ] Update ARCHITECTURE.md with implementation details
 - [ ] Document state machine diagram
 - [ ] Document event flow
@@ -710,6 +774,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 - [ ] Create troubleshooting guide
 
 ### 17.3 User Documentation (Future)
+
 - [ ] Create in-game help system
 - [ ] Write player guide
 - [ ] Create tutorial tooltips
@@ -720,6 +785,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 ## Phase 18: Testing & Quality Assurance
 
 ### 18.1 Comprehensive Testing
+
 - [ ] Achieve 80%+ overall code coverage
 - [ ] Achieve 100% coverage for critical core logic
 - [ ] Write integration tests for all modules
@@ -727,12 +793,14 @@ This document tracks all tasks for implementing the core infrastructure, state m
 - [ ] Performance benchmarks
 
 ### 18.2 Cross-Browser Testing
+
 - [ ] Test in Chrome/Edge (Chromium)
 - [ ] Test in Firefox
 - [ ] Test in Safari
 - [ ] Document browser compatibility
 
 ### 18.3 Quality Checks
+
 - [ ] Run ESLint with no errors
 - [ ] Run Prettier on all files
 - [ ] TypeScript compiles with no errors
@@ -744,6 +812,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 ## Phase 19: CI/CD & Deployment
 
 ### 19.1 Continuous Integration
+
 - [ ] Set up GitHub Actions (or similar)
   - [ ] Run tests on every PR
   - [ ] Run linting on every PR
@@ -753,6 +822,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 - [ ] Add status badges to README
 
 ### 19.2 Deployment Setup
+
 - [ ] Configure production build
   - [ ] Optimize bundle
   - [ ] Minify code
@@ -762,6 +832,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 - [ ] Configure custom domain (optional)
 
 ### 19.3 Versioning
+
 - [ ] Implement semantic versioning
 - [ ] Create CHANGELOG.md
 - [ ] Tag releases in Git
@@ -810,6 +881,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 ## Dependencies
 
 ### Farm Module depends on:
+
 - Phase 3: Game State Architecture
 - Phase 4: Event System
 - Phase 5: Persistence
@@ -818,6 +890,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 - Phase 9: UI Components
 
 ### Combat Module depends on:
+
 - Phase 3: Game State Architecture
 - Phase 4: Event System
 - Phase 5: Persistence
@@ -826,6 +899,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 - Phase 11: Asset Management (sprites)
 
 ### Minimum Viable Core (MVC):
+
 **For Farm to start:** Phases 1-7 must be complete
 **For Combat to start:** Phases 1-7 + Phase 11 (basic sprites)
 
@@ -839,7 +913,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 - **Phase 8-9:** ~3-4 days (utilities and UI components)
 - **Phase 10-11:** ~2-3 days (audio and assets)
 - **Phase 12-14:** ~2-3 days (debugging and error handling)
-- **Phase 15:** ~2-3 days (module integration) - *after Farm and Combat exist*
+- **Phase 15:** ~2-3 days (module integration) - _after Farm and Combat exist_
 - **Phase 16-19:** ~3-5 days (polish and deployment)
 
 **Total Core Development:** ~20-30 days (not including Farm/Combat integration phase)

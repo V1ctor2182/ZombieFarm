@@ -2,18 +2,32 @@
   "name": "zombiefarm",
   "version": "1.0.0",
   "description": "A dark twist on farming simulation games where you grow zombies instead of crops, manage an undead horde, and send them into strategic auto-battler combat to defend your necromantic empire.",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --ext .ts,.tsx --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix",
+    "format": "prettier --write \"src/**/*.{ts,tsx,json,css,md}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,json,css,md}\"",
+    "type-check": "tsc --noEmit",
+    "test": "echo \"Tests will be configured by test agent\" && exit 0",
+    "prepare": "husky"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/V1ctor2182/ZombieFarm.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
+  "keywords": [
+    "zombie",
+    "farming",
+    "auto-battler",
+    "game",
+    "strategy"
+  ],
+  "author": "Solo Dev",
+  "license": "UNLICENSED",
   "bugs": {
     "url": "https://github.com/V1ctor2182/ZombieFarm/issues"
   },
@@ -27,6 +41,17 @@
   "devDependencies": {
     "@types/react": "^19.2.4",
     "@types/react-dom": "^19.2.3",
+    "@typescript-eslint/eslint-plugin": "^8.46.4",
+    "@typescript-eslint/parser": "^8.46.4",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.4.24",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.6",
+    "prettier": "^3.6.2",
     "typescript": "^5.9.3"
   }
 }
