@@ -22,25 +22,27 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
 
 ### 1.1 Initial Project Structure
 
-- [ ] Initialize Vite + React + TypeScript project
-  - [ ] Configure vite.config.ts with proper aliases
-  - [ ] Set up tsconfig.json for strict mode
-  - [ ] Install core dependencies (React 18, TypeScript 5)
-  - [ ] Configure Tailwind CSS with zombie theme
-  - [ ] Set up Jest + React Testing Library
-  - [ ] Create basic folder structure per ARCHITECTURE.md
+- [x] Initialize Vite + React + TypeScript project (COMPLETED BY CORE AGENT)
+  - [x] Configure vite.config.ts with proper aliases
+  - [x] Set up tsconfig.json for strict mode
+  - [x] Install core dependencies (React 18, TypeScript 5)
+  - [ ] Configure Tailwind CSS with zombie theme (pending in Core Phase 2.2)
+  - [!] Set up Jest + React Testing Library (delegated to test-qa-guardian)
+  - [x] Create basic folder structure per ARCHITECTURE.md
 
 ### 1.2 Testing Infrastructure
 
-- [ ] Set up Jest configuration (jest.config.js)
-- [ ] Configure React Testing Library
-- [ ] Install @testing-library/jest-dom
-- [ ] Create test utilities folder with helpers
-  - [ ] TEST_FARM fixture factory
-  - [ ] Mock zombie generator
-  - [ ] Time manipulation helpers (fake timers)
-- [ ] Set up coverage reporting
-- [ ] Create first smoke test (app renders)
+- [!] DELEGATED TO TEST AGENT (test-qa-guardian)
+  - [!] See TODO-TEST.md Phase 1-3 for complete testing setup
+  - [ ] Set up Jest configuration (jest.config.js)
+  - [ ] Configure React Testing Library
+  - [ ] Install @testing-library/jest-dom
+  - [ ] Create test utilities folder with helpers
+    - [ ] TEST_FARM fixture factory
+    - [ ] Mock zombie generator
+    - [ ] Time manipulation helpers (fake timers)
+  - [ ] Set up coverage reporting
+  - [ ] Create first smoke test (app renders)
 
 ### 1.3 Type Definitions
 
@@ -648,7 +650,14 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
 
 ## Current Status
 
-**Phase:** Not started
-**Next Task:** Phase 1.1 - Initialize project structure
-**Blockers:** None
-**Notes:** Project starting from scratch - no src directory yet
+**Phase:** Phase 1.1 Complete (Core dependency) ✅
+**Next Task:** Phase 1.2 - Testing Infrastructure (waiting for test agent)
+**Blockers:**
+
+- Waiting for test-qa-guardian to complete TODO-TEST.md Phase 1-3
+- Tailwind CSS pending (Core Phase 2.2)
+  **Notes:**
+- Project structure created by Core agent (Phase 1.6)
+- Vite + React + TypeScript configured and working
+- src/ directory structure ready per ARCHITECTURE.md
+- Ready to begin Farm-specific type definitions (Phase 1.3) once testing infrastructure is ready

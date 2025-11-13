@@ -729,8 +729,18 @@ This document tracks all tasks for implementing the Combat module following DOMA
 
 ## Current Status
 
-**Phase:** Not started (awaiting Core and Farm foundation)
-**Next Task:** Phase 1.1 - Define combat types and interfaces
-**Blockers:** Requires Core module game state and Farm module zombie data
-**Dependencies:** Core Phase 1-3, Farm Phase 1-3 minimum
-**Notes:** Combat module should start after core systems and basic farm are functional
+**Phase:** Not started (awaiting Core Phases 1-7 + Farm Phases 1-3)
+**Next Task:** Phase 1.1 - Define combat types and interfaces (when dependencies met)
+**Blockers:**
+
+- Core Phase 1 ✅ COMPLETE
+- Core Phases 2-7 (in progress)
+- Farm Phases 1-3 (not started, waiting on test infrastructure)
+  **Dependencies:**
+- Core Phase 1-7 (Phase 1 ✅, rest pending)
+- Farm Phase 1-3 (Phase 1.1 ✅, rest pending)
+  **Notes:**
+- Core Phase 1 complete: project structure ready
+- Testing infrastructure being set up by test-qa-guardian
+- Can begin type definitions (Phase 1.1) once Core Phase 3 (Game State) is complete
+- Combat module will need zombie data contracts from Farm module

@@ -33,16 +33,15 @@ export default defineConfig({
           // Split vendor code for better caching
           'react-vendor': ['react', 'react-dom'],
           // Game engine in separate chunk
-          // 'phaser-vendor': ['phaser'], // Uncomment when Phaser is added
+          'phaser-vendor': ['phaser'],
           // State management in separate chunk
-          // 'xstate-vendor': ['xstate', '@xstate/react'], // Uncomment when XState is added
+          'xstate-vendor': ['xstate', '@xstate/react'],
         },
       },
     },
   },
 
   optimizeDeps: {
-    include: ['react', 'react-dom'],
-    // Add 'phaser', 'xstate' when installed
+    include: ['react', 'react-dom', 'phaser', 'xstate', '@xstate/react'],
   },
 });

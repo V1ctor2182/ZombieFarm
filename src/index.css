@@ -1,30 +1,196 @@
-/* Base styles and CSS reset */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+/* Tailwind CSS Directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Zombie Theme CSS Variables */
+:root {
+  /* Color semantic variables */
+  --color-bg-primary: #0f0f0f;
+  --color-bg-secondary: #1a1a1a;
+  --color-bg-panel: #242424;
+  --color-border: #333333;
+  --color-border-hover: #444444;
+  --color-text-primary: #e5e5e5;
+  --color-text-secondary: #999999;
+  --color-text-dim: #666666;
+
+  /* Game-specific colors */
+  --color-zombie-primary: #3a4a2d;
+  --color-blood: #3a0303;
+  --color-toxic: #1fbf1f;
+  --color-necro: #5b21b6;
+  --color-soul: #0ea5e9;
+
+  /* Spacing */
+  --spacing-unit: 8px;
+
+  /* Border radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 300ms ease;
+  --transition-slow: 500ms ease;
 }
 
-html,
-body {
-  height: 100%;
-  width: 100%;
+/* Base Layer Customizations */
+@layer base {
+  html,
+  body {
+    @apply h-full w-full;
+    @apply bg-dark-bg text-dark-text;
+    @apply overflow-hidden; /* Game should fill viewport */
+  }
+
+  body {
+    @apply antialiased;
+    font-family:
+      -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
+      'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  }
+
+  #root {
+    @apply h-full w-full;
+  }
+
+  /* Custom scrollbars for zombie theme */
+  ::-webkit-scrollbar {
+    @apply w-2 h-2;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-dark-surface rounded;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-zombie-flesh-500 rounded;
+    @apply hover:bg-zombie-flesh-400;
+  }
+
+  ::-webkit-scrollbar-thumb:active {
+    @apply bg-zombie-flesh-600;
+  }
+
+  /* Selection color */
+  ::selection {
+    @apply bg-necro-500 text-white;
+  }
+
+  /* Focus outlines */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-zombie-toxic-500 ring-offset-2 ring-offset-dark-bg;
+  }
 }
 
-body {
-  font-family:
-    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
-    'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* Component Layer - Reusable patterns */
+@layer components {
+  /* Button base styles */
+  .btn {
+    @apply px-4 py-2 rounded-md font-medium;
+    @apply transition-all duration-200;
+    @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
+    @apply disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-primary {
+    @apply bg-zombie-flesh-500 text-white;
+    @apply hover:bg-zombie-flesh-400;
+    @apply focus:ring-zombie-flesh-500;
+  }
+
+  .btn-danger {
+    @apply bg-zombie-blood-500 text-white;
+    @apply hover:bg-zombie-blood-400;
+    @apply focus:ring-zombie-blood-500;
+  }
+
+  .btn-ghost {
+    @apply bg-transparent text-dark-text;
+    @apply hover:bg-dark-hover;
+  }
+
+  /* Panel/Card styles */
+  .panel {
+    @apply bg-dark-panel border border-dark-border rounded-lg;
+    @apply shadow-lg;
+  }
+
+  .panel-glow {
+    @apply panel;
+    @apply shadow-glow-green;
+  }
+
+  /* Input styles */
+  .input {
+    @apply bg-dark-surface border border-dark-border rounded-md;
+    @apply px-3 py-2 text-dark-text;
+    @apply focus:border-zombie-toxic-500 focus:ring-1 focus:ring-zombie-toxic-500;
+    @apply placeholder-dark-textDim;
+    @apply transition-colors;
+  }
+
+  /* Badge styles */
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .badge-success {
+    @apply bg-zombie-toxic-500/20 text-zombie-toxic-500;
+  }
+
+  .badge-danger {
+    @apply bg-zombie-blood-500/20 text-zombie-blood-300;
+  }
+
+  .badge-info {
+    @apply bg-soul-500/20 text-soul-400;
+  }
 }
 
-#root {
-  height: 100%;
-  width: 100%;
-}
+/* Utility Layer - Custom utilities */
+@layer utilities {
+  /* Text gradients */
+  .text-gradient-zombie {
+    @apply bg-gradient-to-r from-zombie-flesh-400 to-zombie-toxic-500;
+    @apply bg-clip-text text-transparent;
+  }
 
-/* Tailwind CSS will be added in Phase 2 */
-/* For now, we have basic styles for the placeholder app */
+  .text-gradient-necro {
+    @apply bg-gradient-to-r from-necro-500 to-necro-700;
+    @apply bg-clip-text text-transparent;
+  }
+
+  /* Glow effects */
+  .glow-toxic {
+    text-shadow: 0 0 10px #1fbf1f;
+  }
+
+  .glow-blood {
+    text-shadow: 0 0 10px #3a0303;
+  }
+
+  /* Backdrop blur for modals */
+  .backdrop-game {
+    @apply backdrop-blur-sm bg-black/50;
+  }
+
+  /* Hide scrollbar but keep functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Game UI specific */
+  .hud-element {
+    @apply bg-dark-panel/90 border border-dark-border;
+    @apply backdrop-blur-sm;
+    @apply shadow-lg;
+  }
+}
