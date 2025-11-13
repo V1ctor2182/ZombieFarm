@@ -1,0 +1,159 @@
+/* 🧟 ZOMBIE FARM DARK THEME 🧟 */
+
+:root {
+  /* Dark color palette */
+  --zombie-primary: #8B0000;      /* Dark red */
+  --zombie-secondary: #4B0082;    /* Dark purple */
+  --zombie-accent: #228B22;       /* Dark green */
+  --zombie-bg: #0d0d0d;          /* Near black */
+  --zombie-surface: #1a1a1a;     /* Dark gray */
+  --zombie-text: #e0e0e0;        /* Light gray */
+  --zombie-blood: #660000;       /* Blood red */
+  --zombie-toxic: #4B5320;       /* Toxic green */
+}
+
+/* Global dark theme override */
+body.zombie-theme {
+  background: var(--zombie-bg) !important;
+  color: var(--zombie-text) !important;
+
+  /* REMOVED - Filter was too aggressive, making game black */
+  /* filter: brightness(0.85) contrast(1.1); */
+}
+
+/* Dark UI panels */
+.zombie-theme .bg-white,
+.zombie-theme .bg-gray-100 {
+  background: var(--zombie-surface) !important;
+  border-color: var(--zombie-primary) !important;
+}
+
+/* Text color overrides */
+.zombie-theme h1,
+.zombie-theme h2,
+.zombie-theme h3,
+.zombie-theme p,
+.zombie-theme span {
+  color: var(--zombie-text) !important;
+}
+
+/* Button reskins */
+.zombie-theme button {
+  background: linear-gradient(135deg, var(--zombie-primary), var(--zombie-blood)) !important;
+  border: 2px solid var(--zombie-blood) !important;
+  color: var(--zombie-text) !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+}
+
+.zombie-theme button:hover {
+  filter: brightness(1.2);
+  transform: scale(1.05);
+}
+
+/* Resource bar colors */
+.zombie-theme .bg-green-500 { background: var(--zombie-toxic) !important; }
+.zombie-theme .bg-blue-500 { background: var(--zombie-secondary) !important; }
+.zombie-theme .bg-yellow-500 { background: var(--zombie-primary) !important; }
+
+/* Crop/Zombie asset filters (temporary) */
+.zombie-theme img[src*="sunflower"] {
+  filter: grayscale(1) brightness(0.3) sepia(1) hue-rotate(280deg);
+}
+.zombie-theme img[src*="potato"] {
+  filter: hue-rotate(90deg) saturate(2) brightness(0.7);
+}
+.zombie-theme img[src*="carrot"] {
+  filter: invert(0.8) hue-rotate(180deg);
+}
+.zombie-theme img[src*="corn"] {
+  filter: grayscale(1) brightness(0.5);
+}
+.zombie-theme img[src*="chicken"] {
+  filter: hue-rotate(120deg) brightness(0.6) saturate(1.5);
+}
+
+/* Map/terrain darkening */
+.zombie-theme canvas {
+  filter: brightness(0.7) contrast(1.2);
+}
+
+/* Inventory slots */
+.zombie-theme .bg-brown-200 {
+  background: #2a2a2a !important;
+  border: 1px solid var(--zombie-primary) !important;
+}
+
+/* Modal/popup styling */
+.zombie-theme .modal-content,
+.zombie-theme [class*="modal"] {
+  background: var(--zombie-surface) !important;
+  border: 3px solid var(--zombie-blood) !important;
+  box-shadow: 0 0 30px rgba(139, 0, 0, 0.5);
+}
+
+/* Loading screen */
+.zombie-theme .loading-screen {
+  background: radial-gradient(circle at center, var(--zombie-blood), var(--zombie-bg));
+}
+
+/* Animations */
+@keyframes zombiePulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes zombieGlow {
+  0%, 100% { box-shadow: 0 0 5px var(--zombie-toxic); }
+  50% { box-shadow: 0 0 20px var(--zombie-toxic), 0 0 40px var(--zombie-toxic); }
+}
+
+/* Zombie-specific elements */
+.grave-plot {
+  animation: zombiePulse 3s infinite;
+}
+
+.zombie-ready {
+  animation: zombieGlow 2s infinite;
+}
+
+/* Blood splatter effect */
+.blood-splatter {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  background: radial-gradient(circle, var(--zombie-blood) 30%, transparent 70%);
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: splatter 0.5s ease-out;
+}
+
+@keyframes splatter {
+  0% { transform: scale(0); opacity: 1; }
+  100% { transform: scale(2); opacity: 0; }
+}
+
+/* Fog overlay effect - DISABLED (was blocking view) */
+/*
+.zombie-theme::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(75, 0, 130, 0.1) 50%,
+    rgba(139, 0, 0, 0.2) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+*/
+
+/* Text replacements via CSS */
+.zombie-theme [class*="Sunflower"]:after { content: "Zombie" !important; }
+.zombie-theme [class*="Farm"]:after { content: "Graveyard" !important; }
+.zombie-theme [class*="Plant"]:after { content: "Spawn" !important; }
+.zombie-theme [class*="Harvest"]:after { content: "Raise" !important; }
