@@ -552,42 +552,61 @@ This document tracks all tasks for implementing the core infrastructure, state m
 
 ---
 
-## Phase 8: Utility Libraries
+## Phase 8: Utility Libraries ✅ COMPLETE (2025-11-13)
 
-### 8.1 Math & Random Utilities - TEST & IMPLEMENTATION
+### 8.1 Math & Random Utilities - ✅ COMPLETE
 
-- [ ] Test and implement `src/lib/utils/math.ts`
-  - [ ] Clamp function (min, max)
-  - [ ] Linear interpolation (lerp)
-  - [ ] Percentage calculations
-  - [ ] Random number generators
-  - [ ] Weighted random (for loot tables)
-- [ ] Test edge cases (NaN, Infinity, etc.)
+- [x] Test and implement `src/lib/utils/math.ts` (45 tests passing)
+  - [x] Clamp function (min, max)
+  - [x] Linear interpolation (lerp)
+  - [x] Percentage calculations
+  - [x] Random number generators (int, float, boolean, array)
+  - [x] Weighted random (for loot tables)
+  - [x] SeededRandom class for deterministic testing
+- [x] Test edge cases (NaN, Infinity, circular refs)
 
-### 8.2 Formatting Utilities - TEST & IMPLEMENTATION
+### 8.2 Formatting Utilities - ✅ COMPLETE
 
-- [ ] Test and implement `src/lib/utils/format.ts`
-  - [ ] Number formatting (1000 -> 1K)
-  - [ ] Time formatting (seconds to HH:MM:SS)
-  - [ ] Percentage formatting
-  - [ ] Currency formatting
-- [ ] Test localization (future-proof)
+- [x] Test and implement `src/lib/utils/format.ts` (45 tests passing)
+  - [x] Number formatting (1000 -> 1K, with thousands separators)
+  - [x] Time formatting (seconds to HH:MM:SS, short format)
+  - [x] Percentage formatting (with precision control)
+  - [x] Currency formatting (Dark Coins 💰, Soul Essence 👻)
+  - [x] Duration formatting (compact and verbose)
+  - [x] Countdown formatting ("Ready!" for zero)
+- [x] Edge case handling (negative, large numbers, infinity)
 
-### 8.3 Validation Utilities - TEST & IMPLEMENTATION
+### 8.3 Validation Utilities - ✅ COMPLETE
 
-- [ ] Test and implement `src/lib/utils/validation.ts`
-  - [ ] Type guards
-  - [ ] Data schema validation
-  - [ ] Enum validation
-  - [ ] Range validation
-- [ ] Create validation error types
+- [x] Test and implement `src/lib/utils/validation.ts` (57 tests passing)
+  - [x] Type guards (string, number, boolean, object, array, function, null, undefined)
+  - [x] Data schema validation (validateSchema function)
+  - [x] Enum validation (string and number enums)
+  - [x] Range validation (min/max, positive, non-negative, integer)
+  - [x] Property validation (hasProperty, hasProperties)
+- [x] ValidationError class with field tracking
+- [x] SchemaValidator class for reusable validation
 
-### 8.4 Array & Object Utilities
+### 8.4 Array & Object Utilities - ✅ COMPLETE
 
-- [ ] Common array operations (shuffle, sample, etc.)
-- [ ] Deep clone function
-- [ ] Deep merge function
-- [ ] Object diff function (for debugging)
+- [x] Test and implement `src/lib/utils/collections.ts` (62 tests passing)
+  - [x] Common array operations (shuffle, sample, unique, chunk, flatten)
+  - [x] Deep clone function (handles circular references, Date, RegExp)
+  - [x] Deep merge function (immutable, recursive)
+  - [x] Object diff function (for debugging state changes)
+  - [x] Pick and omit functions
+  - [x] GroupBy function
+
+**Total: 209 tests passing, 97% code coverage**
+
+Files created:
+
+- `src/lib/utils/math.ts` (278 lines)
+- `src/lib/utils/format.ts` (253 lines)
+- `src/lib/utils/validation.ts` (408 lines)
+- `src/lib/utils/collections.ts` (350 lines)
+- `src/lib/utils/index.ts` (80 lines)
+- Complete test suites in `src/lib/utils/__tests__/`
 
 ---
 
