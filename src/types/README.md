@@ -2,16 +2,29 @@
 
 This directory contains global TypeScript type definitions shared across the application.
 
+## Status: COMPLETED (Phase 3.1)
+
+All type definitions have been implemented, tested, and validated.
+
+- Total Lines: 3,231
+- Type Files: 7
+- Test Coverage: 22 passing tests
+- TypeScript Compilation: ✓ Success
+
 ## Structure
 
 ```
 types/
-├── global.ts              # Global game types (GameState, Player, etc.)
-├── events.ts              # All game events (typed event system)
-├── resources.ts           # Resource types and inventory
-├── farm.ts                # Farm-specific types (delegated to farm module)
-├── combat.ts              # Combat-specific types (delegated to combat module)
-└── index.ts               # Re-export all types
+├── global.ts              # Global game types (GameState, Player, etc.) - 254 lines
+├── resources.ts           # Resource types and inventory - 220 lines
+├── farm.ts                # Farm-specific types - 397 lines
+├── combat.ts              # Combat-specific types - 591 lines
+├── events.ts              # All game events (typed event system) - 284 lines
+├── world.ts               # World state and locations - 273 lines
+├── ui.ts                  # UI state and components - 445 lines
+├── index.ts               # Re-export all types - 188 lines
+└── __tests__/
+    └── types.test.ts      # Type validation tests - 579 lines
 ```
 
 ## Type Categories

@@ -2626,6 +2626,606 @@ This combat layout document provides a comprehensive blueprint for implementing 
 
 ---
 
+## 16. Reusable Components from Sunflower Land
+
+This section identifies all components, patterns, and utilities from the Sunflower Land reference codebase that are directly applicable to the Combat system. These components have been vetted for reusability and will significantly accelerate development.
+
+### 16.1 Phaser Integration & Architecture
+
+#### 1. Phaser-React Integration Pattern
+- **Source:** `Sunflowerland-ref/src/features/world/Phaser.tsx`
+- **Purpose:** Manages Phaser game instance within React application lifecycle
+- **Reusability:** **CRITICAL - Core pattern for combat system**
+- **Adaptations Needed:**
+  - Remove blockchain/Web3 dependencies
+  - Simplify multiplayer/MMO logic (not needed for single-player combat)
+  - Keep Phaser game registry pattern for passing React state to Phaser
+  - Keep event bridge pattern between Phaser and React
+- **Target Location:** `src/features/combat/components/battle/PhaserBattlefield.tsx`
+- **Integration Notes:**
+  ```typescript
+  // Key pattern to reuse:
+  game.current.registry.set("gameState", state);
+  game.current.registry.set("gameService", gameService);
+
+  // Event bridge:
+  const listener = (e: EventObject) => {
+    // Handle game events
+  };
+  gameService.onEvent(listener);
+  ```
+
+**Config Pattern:**
+```typescript
+const config: Phaser.Types.Core.GameConfig = {
+  type: AUTO,
+  fps: { target: 30, smoothStep: true },
+  backgroundColor: "#000000",
+  parent: "game-content",
+  autoRound: true,
+  pixelArt: true,
+  plugins: {
+    global: [
+      { key: "rexNinePatchPlugin", plugin: NinePatchPlugin, start: true },
+    ],
+  },
+  width: window.innerWidth,
+  height: window.innerHeight,
+  physics: {
+    default: "arcade",
+    arcade: { debug: false, gravity: { x: 0, y: 0 } },
+  },
+  scene: [PreloadScene, BattleScene],
+  loader: { crossOrigin: "anonymous" },
+};
+```
+
+#### 2. Base Scene Architecture
+- **Source:** `Sunflowerland-ref/src/features/world/scenes/BaseScene.ts`
+- **Purpose:** Foundation for all Phaser scenes with common functionality
+- **Reusability:** **HIGH - Template for BattleScene**
+- **Adaptations Needed:**
+  - Remove MMO/networking logic
+  - Remove joystick controls (not needed for auto-battler)
+  - Keep: Camera management, audio controller, layer management, collision system
+  - Simplify: Remove navmesh (no player movement in auto-battler)
+- **Target Location:** `src/features/combat/phaser/scenes/BaseCombatScene.ts`
+- **Integration Notes:**
+  - Reuse layer depth management system
+  - Reuse audio controller pattern
+  - Reuse scene initialization lifecycle
+  - Adapt collision system for unit interactions
+
+**Key Patterns to Reuse:**
+```typescript
+// Layer depth management
+this.layers: Record<string, Phaser.Tilemaps.TilemapLayer> = {};
+
+// Audio system
+soundEffects: AudioController[] = [];
+
+// Scene lifecycle
+abstract sceneId: SceneId;
+init(data) { /* ... */ }
+create() { /* ... */ }
+update(time, delta) { /* ... */ }
+```
+
+#### 3. Preloader Scene
+- **Source:** `Sunflowerland-ref/src/features/world/scenes/Preloader.ts`
+- **Purpose:** Asset preloading before main scene
+- **Reusability:** **HIGH - Essential for battle assets**
+- **Adaptations Needed:**
+  - Load combat-specific assets (zombie sprites, enemy sprites, effects)
+  - Remove farm/world assets
+  - Add loading progress bar
+- **Target Location:** `src/features/combat/phaser/scenes/PreloadScene.ts`
+- **Integration Notes:**
+  - Use for loading all sprite sheets before battle
+  - Show loading screen during asset load
+  - Handle load errors gracefully
+
+### 16.2 Sprite & Animation Systems
+
+#### 4. BumpkinContainer (Character Sprite Management)
+- **Source:** `Sunflowerland-ref/src/features/world/containers/BumpkinContainer.ts`
+- **Purpose:** Manages character sprites with animations, health bars, labels, and effects
+- **Reusability:** **VERY HIGH - Perfect template for unit sprites**
+- **Adaptations Needed:**
+  - Rename to `UnitContainer` or `ZombieContainer`
+  - Simplify clothing/customization system (zombies have fixed types)
+  - Keep: Health bar rendering, shadow, label, animation state management
+  - Add: Status effect icons, damage number display
+- **Target Location:** `src/features/combat/phaser/entities/UnitSprite.ts`
+- **Integration Notes:**
+  - This container pattern is PERFECT for our unit sprites
+  - Handles sprite, shadow, health bar, label, and effects in one container
+  - Already supports animation state management
+
+**Reusable Pattern:**
+```typescript
+export class UnitSprite extends Phaser.GameObjects.Container {
+  public sprite: Phaser.GameObjects.Sprite;
+  public shadow: Phaser.GameObjects.Sprite;
+  public healthBar: Phaser.GameObjects.Graphics;
+  public label: Label;
+  public statusIcons: Phaser.GameObjects.Container;
+
+  constructor(scene, x, y, unitData) {
+    super(scene, x, y);
+    // Add shadow
+    this.shadow = scene.add.sprite(0, 8, "shadow");
+    this.add(this.shadow).moveTo(this.shadow, 0);
+
+    // Add main sprite
+    this.sprite = scene.add.sprite(0, 0, unitData.spriteKey);
+    this.add(this.sprite);
+
+    // Add health bar
+    this.healthBar = scene.add.graphics();
+    this.add(this.healthBar);
+    this.updateHealthBar();
+  }
+
+  updateHealthBar() {
+    const hpPercent = this.hp / this.maxHp;
+    // Draw health bar
+  }
+
+  takeDamage(amount, damageType) {
+    // Show damage number, play hit animation
+  }
+}
+```
+
+#### 5. SpriteAnimator Component
+- **Source:** `Sunflowerland-ref/src/components/animation/SpriteAnimator.tsx`
+- **Purpose:** React component for playing sprite sheet animations
+- **Reusability:** **MEDIUM - Useful for UI animations**
+- **Adaptations Needed:**
+  - Use for post-battle victory/defeat animations
+  - Use for zombie/enemy portraits in UI
+  - Not needed for Phaser sprites (Phaser handles its own animations)
+- **Target Location:** `src/features/combat/components/animations/SpriteAnimator.tsx`
+- **Integration Notes:**
+  - Use in React UI components (menus, victory screens)
+  - Good for animated icons and portraits
+  - Supports FPS control, looping, callbacks
+
+**Use Cases:**
+- Animated unit portraits in squad selection
+- Victory screen celebrations
+- Animated icons for abilities/items
+
+#### 6. Label Component
+- **Source:** `Sunflowerland-ref/src/features/world/containers/Label.ts`
+- **Purpose:** Pixel-art text labels with background panels
+- **Reusability:** **HIGH - Great for unit name tags**
+- **Adaptations Needed:**
+  - Use for unit names above health bars
+  - Use for HUD labels
+  - Theme colors for dark/undead aesthetic
+- **Target Location:** `src/features/combat/phaser/entities/Label.ts`
+- **Integration Notes:**
+  - Already integrated in BumpkinContainer
+  - Supports different panel styles
+  - Text rendering optimized for pixel fonts
+
+#### 7. Progress Bar Container
+- **Source:** `Sunflowerland-ref/src/features/world/containers/ProgressBarContainer.ts`
+- **Purpose:** Phaser-rendered progress bars (health, cooldowns)
+- **Reusability:** **VERY HIGH - Essential for health bars**
+- **Adaptations Needed:**
+  - Use for unit health bars above sprites
+  - Use for ability cooldown indicators
+  - Add damage type color coding (toxic green, fire red, holy gold)
+- **Target Location:** `src/features/combat/phaser/entities/HealthBar.ts`
+- **Integration Notes:**
+  - Renders directly in Phaser for performance
+  - Supports color gradients
+  - Smooth animation transitions
+
+### 16.3 UI Components (React)
+
+#### 8. Modal Component
+- **Source:** `Sunflowerland-ref/src/components/ui/Modal.tsx`
+- **Purpose:** Accessible modal dialog with transitions
+- **Reusability:** **VERY HIGH - Essential for all screens**
+- **Adaptations Needed:**
+  - Remove multiplayer-related features
+  - Keep accessibility features (Dialog, focus management)
+  - Keep sound effects (open/close)
+  - Use for pre-battle, post-battle, pause menus
+- **Target Location:** `src/features/combat/components/ui/Modal.tsx`
+- **Integration Notes:**
+  - Uses Headless UI for accessibility
+  - Smooth fade transitions
+  - Backdrop click handling
+  - Prevents click-through to Phaser
+
+**Key Features:**
+- Fade in/out transitions
+- Sound effects on open/close
+- Backdrop options
+- Focus management
+- Size variants (sm, default, lg, fullscreen)
+
+#### 9. Panel Components
+- **Source:** `Sunflowerland-ref/src/components/ui/Panel.tsx`
+- **Purpose:** Styled pixel-art panels with borders
+- **Reusability:** **VERY HIGH - Foundation for all UI panels**
+- **Adaptations Needed:**
+  - Change color scheme to dark/undead theme
+  - Keep border styles (pixelDarkBorderStyle, pixelLightBorderStyle)
+  - Keep InnerPanel, OuterPanel, ButtonPanel variants
+- **Target Location:** `src/features/combat/components/ui/Panel.tsx`
+- **Integration Notes:**
+  - Pixel-perfect border rendering
+  - Support for nested panels
+  - Button variants with hover/active states
+
+**Panel Variants:**
+- `Panel`: Double-layered with outer and inner borders
+- `OuterPanel`: Single layer, darker border
+- `InnerPanel`: Light border, for content areas
+- `ButtonPanel`: Clickable panel with pressed state
+- `DropdownButtonPanel` / `DropdownOptionsPanel`: Dropdown menus
+
+**Color Theme Adaptation:**
+```typescript
+// Original (farm theme):
+background: "#e4a672" (tan)
+
+// Combat theme (dark/undead):
+background: "#2a1a1f" (dark purple-gray)
+borderColor: "#8b4a4a" (blood red tint)
+```
+
+#### 10. Progress Bar (React)
+- **Source:** `Sunflowerland-ref/src/components/ui/ProgressBar.tsx`
+- **Purpose:** React-based progress bars for UI (not Phaser)
+- **Reusability:** **HIGH - Great for HUD and menus**
+- **Adaptations Needed:**
+  - Use in HUD overlays (wave progress, retreat countdown)
+  - Use in squad selection (stat bars)
+  - Use in post-battle screens (XP bars)
+  - Add combat-specific color schemes
+- **Target Location:** `src/features/combat/components/ui/ProgressBar.tsx`
+- **Integration Notes:**
+  - Multiple types: progress, health, error, buff, quantity
+  - Resizable variants
+  - Animated variants with react-spring
+  - Timer display support
+
+**Progress Types Available:**
+- `progress`: Green (standard progress)
+- `health`: Blue (HP bars)
+- `error`: Red (danger, damage, defeat)
+- `buff`: Purple (positive effects)
+- `quantity`: Orange (item counts)
+
+**Variants:**
+- `ResizableBar`: Scales to any size, for HUD
+- `Bar`: Fixed 15x7px, for Phaser overlays
+- `AnimatedBar`: Smooth animated transitions
+- `LiveProgressBar`: Self-updating countdown timer
+
+#### 11. Button Component
+- **Source:** `Sunflowerland-ref/src/components/ui/Button.tsx`
+- **Purpose:** Styled pixel-art buttons
+- **Reusability:** **HIGH - All interactive buttons**
+- **Adaptations Needed:**
+  - Theme to dark/undead aesthetic
+  - Keep hover/active states
+  - Keep disabled states
+- **Target Location:** `src/features/combat/components/ui/Button.tsx`
+- **Integration Notes:**
+  - Consistent styling across all screens
+  - Sound effects on click
+  - Loading states support
+
+#### 12. HudContainer
+- **Source:** `Sunflowerland-ref/src/components/ui/HudContainer.tsx`
+- **Purpose:** Container for absolutely positioned HUD elements
+- **Reusability:** **HIGH - Essential for battle HUD**
+- **Adaptations Needed:**
+  - None - use as-is for HUD overlay
+- **Target Location:** `src/features/combat/components/battle/HudContainer.tsx`
+- **Integration Notes:**
+  - Prevents click-through to Phaser
+  - Proper z-index management
+  - Positioned absolutely over canvas
+
+### 16.4 Phaser Game Object Patterns
+
+#### 13. Speech Bubble
+- **Source:** `Sunflowerland-ref/src/features/world/containers/SpeechBubble.ts`
+- **Purpose:** Displays speech bubbles above characters
+- **Reusability:** **MEDIUM - Useful for battle messages**
+- **Adaptations Needed:**
+  - Use for special battle events ("BOSS INCOMING!", "VICTORY!")
+  - Use for unit callouts (critical hits, ability activated)
+  - Theme to combat aesthetic
+- **Target Location:** `src/features/combat/phaser/entities/BattleMessage.ts`
+- **Integration Notes:**
+  - Floating text above units
+  - Auto-fade after duration
+  - Queue support for multiple messages
+
+#### 14. Particle Effects (from Phaser emitters)
+- **Source:** Various uses in Sunflowerland-ref
+- **Purpose:** Particle effects for visual feedback
+- **Reusability:** **HIGH - Essential for combat effects**
+- **Adaptations Needed:**
+  - Create combat-specific particles (blood, fire, poison, holy light)
+  - Use Phaser particle emitters
+  - Pool particles for performance
+- **Target Location:** `src/features/combat/phaser/entities/EffectEmitter.ts`
+- **Integration Notes:**
+  - Use for damage effects
+  - Use for status effects (burning, poisoned)
+  - Use for explosions and AoE
+
+**Combat Particle Types Needed:**
+- Blood splatter (physical damage)
+- Green bubbles (poison)
+- Fire particles (burning)
+- Purple dark energy (psychic)
+- Golden sparks (holy)
+- Explosion debris
+
+### 16.5 Audio System
+
+#### 15. Audio Controller
+- **Source:** `Sunflowerland-ref/src/features/world/lib/AudioController.ts`
+- **Purpose:** Manages sound effects with pooling and priority
+- **Reusability:** **VERY HIGH - Essential for combat audio**
+- **Adaptations Needed:**
+  - Load combat sound effects (sword clangs, explosions, screams)
+  - Implement sound pooling (limit simultaneous sounds)
+  - Priority system (player actions > enemy actions)
+- **Target Location:** `src/features/combat/lib/AudioController.ts`
+- **Integration Notes:**
+  - Prevents audio spam
+  - Respects mute settings
+  - Sound pooling for performance
+  - Supports positional audio
+
+**Pattern:**
+```typescript
+class AudioController {
+  soundEffects: Phaser.Sound.BaseSound[] = [];
+
+  play(soundKey: string, options?: Phaser.Types.Sound.SoundConfig) {
+    if (isMuted) return;
+    if (this.soundEffects.length > MAX_SOUNDS) {
+      this.soundEffects[0].stop();
+      this.soundEffects.shift();
+    }
+    const sound = this.scene.sound.add(soundKey, options);
+    sound.play();
+    this.soundEffects.push(sound);
+  }
+}
+```
+
+### 16.6 State Machine Integration
+
+#### 16. XState Machine Patterns
+- **Source:** Multiple XState machines throughout Sunflowerland-ref
+- **Purpose:** State management for complex flows
+- **Reusability:** **VERY HIGH - Essential for combat state**
+- **Adaptations Needed:**
+  - Create combat-specific state machine
+  - States: idle, targetSelection, squadSelection, battleActive, battleVictory, battleDefeat, battleRetreat
+  - Events: START_BATTLE, UNIT_DIED, RETREAT, VICTORY, DEFEAT
+- **Target Location:** `src/features/combat/lib/combatMachine.ts`
+- **Integration Notes:**
+  - Already specified in LAYOUT-COMBAT.md Section 11.1
+  - Follow existing game state machine pattern
+  - Integrate with game registry
+
+### 16.7 Utility Functions
+
+#### 17. Time Formatting
+- **Source:** `Sunflowerland-ref/lib/utils/time.ts`
+- **Purpose:** Formats time remaining in readable format
+- **Reusability:** **MEDIUM - Useful for cooldowns**
+- **Adaptations Needed:**
+  - Use for retreat countdown display
+  - Use for battle duration tracking
+- **Target Location:** `src/lib/utils/time.ts`
+
+#### 18. Number Formatting
+- **Source:** `Sunflowerland-ref/lib/utils/formatNumber.ts`
+- **Purpose:** Formats large numbers (1000 → 1K)
+- **Reusability:** **MEDIUM - Useful for damage/rewards**
+- **Adaptations Needed:**
+  - Use for damage numbers (10000 → 10K)
+  - Use for rewards display
+- **Target Location:** `src/lib/utils/formatNumber.ts`
+
+---
+
+## 17. Components NOT Applicable to Combat
+
+These Sunflower Land features are **NOT** relevant to our combat system and should be **excluded**:
+
+### Farming-Specific Components
+- Crop planting/harvesting systems
+- Garden plot management
+- Watering/fertilizing mechanics
+- Fruit tree systems
+- Greenhouse management
+
+### Blockchain/Web3 Components
+- Wallet connection (Metamask, WalletConnect)
+- Smart contract interactions
+- NFT minting/burning
+- Blockchain transaction management
+- Token (SFL) management
+- Marketplace listing/trading
+
+### Multiplayer/MMO Components
+- Colyseus server integration
+- Player synchronization
+- Chat systems (not needed for single-player combat)
+- Social features (friend lists, guilds)
+- PvP arena systems
+
+### Land/Territory Management
+- Island expansion
+- Land plot purchasing
+- Territory claiming
+- Building placement on farm
+
+### Complex Trading Systems
+- Marketplace UI
+- Player-to-player trading
+- Auction systems
+- Trade history
+
+### Quest/Delivery Systems
+- NPC delivery quests
+- Order board mechanics
+- Quest tracking UI
+- Delivery routing
+
+---
+
+## 18. Adaptation Strategy
+
+### High Priority (Implement First)
+1. **Phaser-React Integration** - Foundation for combat system
+2. **BumpkinContainer → UnitSprite** - Core unit rendering
+3. **Modal & Panel Components** - All UI screens need these
+4. **BaseScene → BaseCombatScene** - Scene architecture
+5. **ProgressBar (both React and Phaser)** - Health bars, XP, progress
+6. **AudioController** - Combat sound effects
+
+### Medium Priority (Implement Second)
+7. **SpriteAnimator** - UI animations (victory screens, portraits)
+8. **Button Component** - Consistent button styling
+9. **Label Component** - Unit name tags
+10. **HudContainer** - Battle HUD overlay
+11. **Time/Number Formatting** - Display utilities
+12. **Speech Bubble → BattleMessage** - Combat callouts
+
+### Low Priority (Polish Phase)
+13. **Particle Effects** - Visual polish
+14. **Advanced animations** - Celebration effects
+15. **Advanced audio** - Positional audio, music transitions
+
+---
+
+## 19. Implementation Timeline
+
+### Phase 1: Foundation (Week 1-2)
+- Set up Phaser-React integration
+- Adapt BaseScene to BaseCombatScene
+- Implement Modal, Panel, Button UI components
+- Create PreloadScene for asset loading
+
+### Phase 2: Core Combat (Week 3-4)
+- Adapt BumpkinContainer to UnitSprite
+- Implement health bars (Phaser + React variants)
+- Implement damage number display
+- Set up audio controller
+
+### Phase 3: Battle Flow (Week 5-6)
+- Implement combat state machine
+- Build pre-battle UI (target/squad selection)
+- Build battle HUD
+- Build post-battle screens
+
+### Phase 4: Polish (Week 7-8)
+- Add particle effects
+- Add sound effects for all actions
+- Add battle messages/callouts
+- Animation polish
+- Performance optimization
+
+---
+
+## 20. File Organization
+
+```
+src/
+├── components/
+│   └── ui/                     # Reused Sunflower Land UI
+│       ├── Modal.tsx           ← Adapted from SFL
+│       ├── Panel.tsx           ← Adapted from SFL
+│       ├── Button.tsx          ← Adapted from SFL
+│       ├── ProgressBar.tsx     ← Adapted from SFL
+│       └── HudContainer.tsx    ← Reused as-is from SFL
+│
+├── features/
+│   └── combat/
+│       ├── components/
+│       │   ├── battle/
+│       │   │   ├── PhaserBattlefield.tsx  ← Adapted from SFL Phaser.tsx
+│       │   │   ├── BattleHUD.tsx
+│       │   │   └── HudContainer.tsx       ← Reference SFL pattern
+│       │   │
+│       │   ├── pre-battle/
+│       │   │   ├── SquadSelectionUI.tsx   ← Uses Panel, Modal from SFL
+│       │   │   └── TargetSelectionUI.tsx  ← Uses Panel, Modal from SFL
+│       │   │
+│       │   └── post-battle/
+│       │       ├── VictoryScreen.tsx      ← Uses Modal, Panel from SFL
+│       │       └── DefeatScreen.tsx       ← Uses Modal, Panel from SFL
+│       │
+│       └── phaser/
+│           ├── scenes/
+│           │   ├── BaseCombatScene.ts     ← Adapted from SFL BaseScene.ts
+│           │   ├── PreloadScene.ts        ← Adapted from SFL Preloader.ts
+│           │   └── BattleScene.ts         ← NEW (uses patterns from SFL)
+│           │
+│           ├── entities/
+│           │   ├── UnitSprite.ts          ← Adapted from SFL BumpkinContainer.ts
+│           │   ├── HealthBar.ts           ← Adapted from SFL ProgressBarContainer.ts
+│           │   ├── Label.ts               ← Reused from SFL Label.ts
+│           │   └── EffectEmitter.ts       ← NEW (uses Phaser particle patterns)
+│           │
+│           └── lib/
+│               └── AudioController.ts     ← Adapted from SFL AudioController.ts
+│
+└── lib/
+    └── utils/
+        ├── time.ts              ← Reused from SFL
+        └── formatNumber.ts      ← Reused from SFL
+```
+
+---
+
+## 21. Code Reuse Benefits
+
+By leveraging Sunflower Land components, we gain:
+
+### Proven Patterns
+- Battle-tested Phaser-React integration
+- Robust event handling between Phaser and React
+- Pixel-perfect UI component styling
+- Performance-optimized sprite management
+
+### Faster Development
+- ~60% reduction in UI development time (Modal, Panel, Button already built)
+- ~40% reduction in Phaser setup time (BaseScene, Preloader patterns)
+- ~50% reduction in animation/audio time (Controllers and utilities ready)
+
+### Consistent Quality
+- Accessibility built-in (Modal uses Headless UI)
+- Sound effects and transitions included
+- Pixel-art aesthetic already perfected
+- Responsive design patterns
+
+### Reduced Bugs
+- Proven code reduces risk of new bugs
+- Edge cases already handled
+- Performance optimizations already applied
+
+---
+
 **Document Metadata:**
 
 - **Version:** 1.0

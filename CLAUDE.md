@@ -40,6 +40,14 @@ This document serves as the central reference guide for all Claude AI subagents 
 | **DOMAIN-COMBAT.md** | `/META/DOMAIN-COMBAT.md` | Combat mechanics & rules | Combat agent, Test agent |
 | **UIUX.md** | `/META/UIUX.md` | UI/UX design guidelines | UI/UX agent (currently empty) |
 
+### Layout Documents
+
+| Document | Location | Purpose | Primary Users |
+|----------|----------|---------|---------------|
+| **LAYOUT-CORE.md** | `/META/LAYOUTS/LAYOUT-CORE.md` | Main game UI and navigation design | Core agent, UI/UX agent |
+| **LAYOUT-FARM.md** | `/META/LAYOUTS/LAYOUT-FARM.md` | Farm system visual layout and interactions | Farm agent, UI/UX agent |
+| **LAYOUT-COMBAT.md** | `/META/LAYOUTS/LAYOUT-COMBAT.md` | Combat system battlefield and UI design | Combat agent, UI/UX agent |
+
 ### Reference Materials
 
 | Document | Location | Purpose |
@@ -366,7 +374,111 @@ This document serves as the central reference guide for all Claude AI subagents 
 
 ---
 
-### 10. Reference Materials
+### 10. LAYOUT-CORE.md
+
+**File:** `/META/LAYOUTS/LAYOUT-CORE.md`
+**Full Name:** Core Layout Design - Main Island
+**Purpose:** Defines main game screen structure, HUD components, and navigation patterns
+**When to Use:**
+- Implementing the main game container
+- Building HUD overlays
+- Creating scene transitions
+- Understanding component hierarchy
+
+**Contents:**
+- Main game screen layout (header, canvas, footer)
+- HUD components and positioning
+- Scene transition patterns
+- Modal layer architecture
+- Notification system structure
+- State flow between UI and game logic
+- Responsive behavior guidelines
+- Technical implementation notes
+
+**Key Features:**
+- Top bar with resources and game info
+- Main canvas area for Phaser scenes
+- Bottom bar for quick actions
+- Modal and notification layers
+- Context-aware UI (shows/hides based on mode)
+
+---
+
+### 11. LAYOUT-FARM.md
+
+**File:** `/META/LAYOUTS/LAYOUT-FARM.md`
+**Full Name:** Farm Layout & Mechanisms
+**Purpose:** Complete specification of farm visual layout and interaction systems
+**When to Use:**
+- Implementing farm rendering (Phaser FarmScene)
+- Building farm-related UI components
+- Understanding plot placement mechanics
+- Implementing zombie management UI
+- Creating building placement systems
+
+**Contents:**
+- Farm grid system (tile-based, 32x32px tiles)
+- Farm zones and areas (plots, buildings, resource nodes)
+- Plot system mechanics and UI
+- Zombie management interface design
+- Building placement system and validation
+- Resource gathering UI and interactions
+- Farm HUD components
+- Time and weather visual effects
+- UI component hierarchy
+- State flow diagrams
+- Sunflower Land reusable components identified
+
+**Key Systems:**
+- Tile-based grid with coordinate system
+- Plot interaction overlays (plant, water, harvest)
+- Active zombie roster and Crypt management
+- Building menu and placement preview
+- Resource node indicators
+- Day/night and weather overlays
+
+---
+
+### 12. LAYOUT-COMBAT.md
+
+**File:** `/META/LAYOUTS/LAYOUT-COMBAT.md`
+**Full Name:** Combat System Layout & Mechanisms
+**Purpose:** Complete specification of combat battlefield, unit rendering, and battle UI
+**When to Use:**
+- Implementing combat rendering (Phaser CombatScene)
+- Building pre-battle squad selection UI
+- Creating battle HUD and controls
+- Implementing damage effects and animations
+- Designing post-battle screens
+
+**Contents:**
+- Battlefield visual layout (1920x1080, side-scrolling)
+- Zone breakdown (zombie spawn, combat, enemy spawn)
+- Pre-battle screen design (target selection, squad formation)
+- Battle screen layout and HUD
+- Combat flow mechanics (movement, targeting, damage)
+- Unit rendering and animation system
+- Damage type visual effects (fire, toxic, holy, etc.)
+- Status effect indicators (poison, burning, stunned, etc.)
+- Fortification and obstacle layout
+- Victory/defeat screen design
+- UI component hierarchy
+- Phaser scene structure
+- Performance considerations
+- Integration points with Farm and Core
+- Sunflower Land reusable components identified
+
+**Key Systems:**
+- Side-scrolling battlefield with spawn zones
+- Unit sprite rendering with health bars
+- Damage numbers and projectile systems
+- Status effect visual feedback
+- Wave indicator and battle progress
+- Post-battle rewards summary
+
+---
+
+### 13. Reference Materials
 
 #### sunflowerland-ref.md
 **File:** `/sunflowerland-ref.md`
@@ -393,9 +505,10 @@ This document serves as the central reference guide for all Claude AI subagents 
 
 **Primary Documents:**
 1. ARCHITECTURE.md - System design reference
-2. WORKFLOW.md - Development process
-3. Zombie-Farm-PRD.md - Feature understanding
-4. Sunflowerland-ref/ - Reference patterns
+2. LAYOUT-CORE.md - Main game UI architecture
+3. WORKFLOW.md - Development process
+4. Zombie-Farm-PRD.md - Feature understanding
+5. Sunflowerland-ref/ - Reference patterns
 
 **Responsibilities:**
 - Design module structure and APIs
@@ -449,11 +562,14 @@ This document serves as the central reference guide for all Claude AI subagents 
 ### For UI/UX Agent
 
 **Primary Documents:**
-1. UIUX.md - Design guidelines (to be populated)
-2. Zombie-Farm-PRD.md - Feature requirements and flows
-3. ARCHITECTURE.md - Component structure
-4. GLOSSARY.md - Terminology
-5. Sunflowerland-ref/ - UI component examples
+1. LAYOUT-CORE.md - Main game UI structure
+2. LAYOUT-FARM.md - Farm UI and interactions
+3. LAYOUT-COMBAT.md - Combat UI and battlefield
+4. UIUX.md - Design guidelines (to be populated)
+5. Zombie-Farm-PRD.md - Feature requirements and flows
+6. ARCHITECTURE.md - Component structure
+7. GLOSSARY.md - Terminology
+8. Sunflowerland-ref/ - UI component examples
 
 **Responsibilities:**
 - Implement React components
@@ -483,10 +599,11 @@ This document serves as the central reference guide for all Claude AI subagents 
 
 **Primary Documents:**
 1. DOMAIN-FARM.md - **PRIMARY AUTHORITY** for farm mechanics
-2. TESTING.md - Testing standards
-3. ARCHITECTURE.md - Module structure
-4. Zombie-Farm-PRD.md - Overall game context
-5. GLOSSARY.md - Terminology
+2. LAYOUT-FARM.md - Farm visual layout and UI design
+3. TESTING.md - Testing standards
+4. ARCHITECTURE.md - Module structure
+5. Zombie-Farm-PRD.md - Overall game context
+6. GLOSSARY.md - Terminology
 
 **Responsibilities:**
 - Implement all farm-related features
@@ -517,10 +634,11 @@ This document serves as the central reference guide for all Claude AI subagents 
 
 **Primary Documents:**
 1. DOMAIN-COMBAT.md - **PRIMARY AUTHORITY** for combat mechanics
-2. TESTING.md - Testing standards
-3. ARCHITECTURE.md - Module structure
-4. Zombie-Farm-PRD.md - Overall game context
-5. GLOSSARY.md - Terminology
+2. LAYOUT-COMBAT.md - Combat battlefield and UI design
+3. TESTING.md - Testing standards
+4. ARCHITECTURE.md - Module structure
+5. Zombie-Farm-PRD.md - Overall game context
+6. GLOSSARY.md - Terminology
 
 **Responsibilities:**
 - Implement all combat-related features
@@ -736,6 +854,12 @@ If documents conflict:
 ---
 
 ## Version History
+
+- **v1.1** (2025-11-12) - Layout Documents Addition
+  - Added Layout Documents section (LAYOUT-CORE, LAYOUT-FARM, LAYOUT-COMBAT)
+  - Updated agent-specific guides to reference layout documents
+  - Added detailed descriptions for all three layout documents
+  - Created META/LAYOUTS/README.md index file
 
 - **v1.0** (2025-11-12) - Initial creation
   - Complete documentation directory

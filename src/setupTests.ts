@@ -9,6 +9,10 @@
 // Adds custom matchers like toBeInTheDocument(), toHaveTextContent(), etc.
 import '@testing-library/jest-dom';
 
+// Import and register custom game-specific matchers
+import { registerCustomMatchers } from './lib/test-utils/matchers';
+registerCustomMatchers();
+
 // Global test configuration
 // Configure fake timers by default (can be overridden in individual tests)
 beforeEach(() => {
@@ -24,19 +28,31 @@ afterEach(() => {
   }
 });
 
-// Suppress console errors in tests unless explicitly testing error handling
-// This keeps test output clean while still allowing intentional error logging
+// Suppress console output in tests to keep test output clean
 const originalError = console.error;
+const originalLog = console.log;
+const originalWarn = console.warn;
+
 beforeAll(() => {
+  // Suppress console.log in tests
+  console.log = jest.fn();
+
+  // Suppress console.warn in tests
+  console.warn = jest.fn();
+
+  // Suppress console.error but allow specific errors through
   console.error = (...args: unknown[]) => {
     // Allow specific expected errors through
     const message = args[0]?.toString() || '';
 
-    // Suppress React 18 act() warnings that are often false positives
+    // Suppress React act() warnings that are often false positives with async effects
     if (message.includes('Warning: ReactDOM.render')) {
       return;
     }
     if (message.includes('Not implemented: HTMLFormElement.prototype.submit')) {
+      return;
+    }
+    if (message.includes('act(')) {
       return;
     }
 
@@ -47,6 +63,8 @@ beforeAll(() => {
 
 afterAll(() => {
   console.error = originalError;
+  console.log = originalLog;
+  console.warn = originalWarn;
 });
 
 // Global test utilities can be added here as needed

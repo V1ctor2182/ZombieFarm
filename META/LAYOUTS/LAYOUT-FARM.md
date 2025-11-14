@@ -1637,16 +1637,964 @@ This document should be used alongside:
 
 ---
 
+## 11. Reusable Components from Sunflower Land
+
+This section identifies components from the Sunflower Land reference codebase that can be adapted for Zombie Farm's implementation. All components will need blockchain/Web3 logic removed and theming adjusted to match the zombie/undead aesthetic.
+
+### 11.1 Animation Systems
+
+#### SpriteAnimator
+
+- **Source:** `Sunflowerland-ref/src/components/animation/SpriteAnimator.tsx`
+- **Purpose:** Core sprite sheet animation component that handles frame-by-frame animation playback
+- **Current Usage in SFL:** Animates crops growing, character movements, building interactions, particle effects
+- **Reusability for Zombie Farm:** HIGH PRIORITY - Essential for zombie emergence, plot growth stages, roaming zombie animations
+- **Adaptations Needed:**
+  - No blockchain dependencies to remove (pure animation logic)
+  - Update sprite sheet paths to use zombie-themed assets
+  - Integrate with our zombie growth stages (Bone Sprout → Rising Corpse → Half-Risen → Ready)
+  - Support for zombie idle/walk/interaction animation cycles
+- **Key Features:**
+  - FPS control (adjustable frame rate)
+  - Loop/autoplay options
+  - Callback hooks: onPlay, onPause, onLoopComplete, onEachFrame, onEnterFrame
+  - Direction control (forward/rewind)
+  - Responsive scaling with zoom support
+  - Start/end frame control for animation segments
+- **Target Location:** `src/components/animation/SpriteAnimator.tsx`
+- **Integration Notes:**
+  - Use for zombie emergence animation when harvesting (2s climb-out animation)
+  - Implement plot growth visual progression (5 stages from planted to ready)
+  - Zombie roaming AI animations (idle, walk, social, task states)
+  - Building construction animations
+  - Weather particle effects (blood rain, bone storm)
+- **Example Usage:**
+```tsx
+<Spritesheet
+  image="/assets/zombies/shambler_spritesheet.png"
+  widthFrame={64}
+  heightFrame={64}
+  steps={12} // 12 frames in animation
+  fps={10}
+  autoplay={true}
+  loop={true}
+  onLoopComplete={(instance) => {
+    // Zombie fully emerged, transition to roaming state
+  }}
+/>
+```
+
+#### ResourceDropAnimator
+
+- **Source:** `Sunflowerland-ref/src/components/animation/ResourceDropAnimator.tsx`
+- **Purpose:** Animates resources popping out and floating up with count when collected
+- **Current Usage in SFL:** Shows crops/resources being collected with visual feedback
+- **Reusability for Zombie Farm:** HIGH PRIORITY - Visual feedback for resource gathering
+- **Adaptations Needed:**
+  - Change resource images from crops to bones/blood water/corpse dust
+  - Adjust animation timing to feel slightly heavier/darker (zombie theme)
+  - Support for zombie-specific resources (Soul Fragments, Dark Coins, etc.)
+- **Key Features:**
+  - Floating "+X" text animation
+  - Resource icon display with drop animation
+  - Random left/right direction
+  - Fade-out after 2 seconds
+  - Opacity transitions
+- **Target Location:** `src/components/animation/ResourceDropAnimator.tsx`
+- **Integration Notes:**
+  - Use when harvesting plots (bones, blood water drops)
+  - Gathering resource nodes (chopping dead trees, digging graves)
+  - Collecting from buildings (Blood Well generation, Composter output)
+  - Looting from combat (post-battle rewards)
+- **Example Usage:**
+```tsx
+<ResourceDropAnimator
+  resourceName="Bones"
+  resourceAmount={5}
+/>
+```
+
+### 11.2 UI Component Library
+
+#### Modal System
+
+- **Source:** `Sunflowerland-ref/src/components/ui/Modal.tsx`
+- **Purpose:** Reusable modal dialog with backdrop, transitions, sound effects
+- **Current Usage in SFL:** All popup dialogs, info panels, confirmation screens
+- **Reusability for Zombie Farm:** HIGH PRIORITY - Core UI pattern
+- **Adaptations Needed:**
+  - Replace "open" and "close" sound effects with zombie-themed sounds (creaking, moaning)
+  - Adjust backdrop opacity for darker theme
+  - No blockchain logic (clean component)
+- **Key Features:**
+  - Size variants (sm, md, lg, fullscreen)
+  - Backdrop control (true, false, "static" for no-close)
+  - Transition animations with Headless UI
+  - Sound integration (open/close)
+  - onShow, onHide, onExited callbacks
+  - Prevents click-through to Phaser layer
+- **Target Location:** `src/components/ui/Modal.tsx`
+- **Integration Notes:**
+  - Use for all modal interactions: seed selection, zombie info, building UIs
+  - Seed Selection Modal (plot planting)
+  - Zombie Info Panel (stats, actions)
+  - Crypt Management UI
+  - Building Interaction Modals (Composter, Blood Well, etc.)
+  - Confirmation Dialogs (remove building, send zombie to crypt)
+- **Example Usage:**
+```tsx
+<Modal show={seedModalOpen} onHide={() => closeSeedModal()} size="lg">
+  <Panel>
+    <div className="p-2">
+      <Label>Select Zombie Seed</Label>
+      {/* Seed grid here */}
+    </div>
+  </Panel>
+</Modal>
+```
+
+#### Panel
+
+- **Source:** `Sunflowerland-ref/src/components/ui/Panel.tsx`
+- **Purpose:** Styled container panel with border and background for modal content
+- **Reusability:** HIGH - Visual consistency across all UI
+- **Adaptations Needed:**
+  - Adjust border/background colors to zombie theme (dark grays, browns, blood-red accents)
+  - Panel variants for different contexts (info, warning, success)
+
+#### Button
+
+- **Source:** `Sunflowerland-ref/src/components/ui/Button.tsx`
+- **Purpose:** Primary action button with hover/active states
+- **Reusability:** HIGH - Standard interaction element
+- **Adaptations Needed:**
+  - Zombie theme colors (bone-white text, blood-red hover, decay-green active)
+  - Disabled state styling (grayed out, semi-transparent)
+
+#### Label
+
+- **Source:** `Sunflowerland-ref/src/components/ui/Label.tsx`
+- **Purpose:** Styled text label with icon support
+- **Reusability:** HIGH - Headers, section titles
+- **Adaptations Needed:**
+  - Dark theme text colors
+  - Support for zombie-themed icons
+
+#### ProgressBar
+
+- **Source:** `Sunflowerland-ref/src/components/ui/ProgressBar.tsx`
+- **Purpose:** Visual progress indicator (percentage-based)
+- **Reusability:** HIGH - Growth timers, construction, processing
+- **Adaptations Needed:**
+  - Zombie-themed fill colors (toxic green, blood red)
+- **Integration Notes:**
+  - Plot growth progress displays
+  - Building construction timers
+  - Composter processing status
+  - Zombie XP/level bars
+
+#### Box & SmallBox
+
+- **Source:** `Sunflowerland-ref/src/components/ui/Box.tsx`, `SmallBox.tsx`
+- **Purpose:** Item display containers with image and count
+- **Reusability:** HIGH - Inventory, shop, crafting displays
+- **Adaptations Needed:**
+  - Adjust box styling for zombie theme
+  - Support for zombie resource icons
+
+#### CountdownLabel & TimeLeftPanel
+
+- **Source:** `Sunflowerland-ref/src/components/ui/CountdownLabel.tsx`, `TimeLeftPanel.tsx`
+- **Purpose:** Displays time remaining until event completion
+- **Reusability:** HIGH - Plot growth, building construction, weather changes
+- **Adaptations Needed:**
+  - Dark theme styling
+  - Support for in-game time (30-minute day/night cycle)
+- **Integration Notes:**
+  - Show time until plot ready to harvest
+  - Construction completion countdown
+  - Next weather event warning
+  - Day/night cycle timer
+
+#### IngredientsPopover & RequirementsLabel
+
+- **Source:** `Sunflowerland-ref/src/components/ui/IngredientsPopover.tsx`, `RequirementsLabel.tsx`
+- **Purpose:** Shows required resources for crafting/building
+- **Reusability:** MEDIUM - Building placement, seed requirements
+- **Adaptations Needed:**
+  - Replace crop/farming resources with zombie resources
+  - Visual styling for dark theme
+
+#### ConfirmationModal
+
+- **Source:** `Sunflowerland-ref/src/components/ui/ConfirmationModal.tsx`
+- **Purpose:** Simple yes/no confirmation dialog
+- **Reusability:** HIGH - Destructive actions (remove building, sell zombie)
+- **Adaptations Needed:**
+  - Zombie theme styling
+  - Creepy confirmation sounds
+
+#### NumberInput & TextInput
+
+- **Source:** `Sunflowerland-ref/src/components/ui/NumberInput.tsx`, `TextInput.tsx`
+- **Purpose:** Form input controls
+- **Reusability:** MEDIUM - Naming zombies, quantity selection
+- **Adaptations Needed:**
+  - Dark theme input styling
+  - Zombie-themed placeholder text
+
+### 11.3 Farming-Specific Components
+
+#### Plot Component
+
+- **Source:** `Sunflowerland-ref/src/features/island/plots/Plot.tsx`
+- **Purpose:** Complete plot implementation with planting, watering, fertilizing, harvesting
+- **Current Usage in SFL:** Main crop growing interface
+- **Reusability for Zombie Farm:** VERY HIGH PRIORITY - Core farm mechanic
+- **Adaptations Needed:**
+  - **Remove blockchain logic:**
+    - No Web3 wallet connections
+    - No on-chain transactions for planting/harvesting
+    - Remove authentication/verification checks
+  - **Theme changes:**
+    - Replace crop sprites with zombie emergence sprites
+    - Grave plot visuals instead of soil
+    - Dark/eerie particle effects instead of bright/cheerful
+  - **Mechanic adjustments:**
+    - Support zombie seed types instead of crop types
+    - Implement zombie quality calculation (bronze/silver/gold/iridium)
+    - Mutation chance mechanics (not in SFL)
+    - Decay prevention through watering (blood water instead of regular water)
+    - Fertilizer types specific to undead farming
+- **Key Features to Preserve:**
+  - State machine pattern (empty → planted → growing → ready → harvested)
+  - Growth progress tracking with visual stages
+  - Watering/fertilizing mechanics
+  - Hover tooltip with progress info
+  - Click interactions for planting/harvesting
+  - Integration with game state (XState)
+  - Sprite animation for growth stages
+  - Reward collection on harvest
+- **Target Location:** `src/features/farm/plots/Plot.tsx`
+- **Integration Notes:**
+  - Integrate with FarmScene.ts (Phaser rendering)
+  - Connect to farm state machine
+  - Emit events: plot.planted, plot.watered, plot.fertilized, plot.harvested
+  - Support 1x1 tile footprint
+  - Pathfinding avoidance (zombies can't walk through plots)
+- **Implementation Priority:** PHASE 1 - Critical path
+- **Dependencies:**
+  - SpriteAnimator for growth animation
+  - Modal for plot interaction UI
+  - Game state machine integration
+  - Resource inventory system
+- **Blockchain Removal Checklist:**
+  - [x] Remove wallet connection requirements
+  - [x] Remove Web3 provider dependencies
+  - [x] Remove transaction signing for actions
+  - [x] Remove NFT/token checks
+  - [x] Replace server-side validation with local state
+
+#### FertilePlot vs NonFertilePlot
+
+- **Source:** `Sunflowerland-ref/src/features/island/plots/components/FertilePlot.tsx`, `NonFertilePlot.tsx`
+- **Purpose:** Visual distinction between usable and unusable plots
+- **Reusability:** MEDIUM - Plot capacity management
+- **Adaptations Needed:**
+  - Replace with "Consecrated Ground" (fertile) vs "Cursed Ground" (non-fertile)
+  - Visual: Dead grass with grave markers vs rocky/barren ground
+- **Integration Notes:**
+  - Use to show locked plots until player expands capacity
+  - Fertile plots available from start (3 plots tutorial)
+  - Non-fertile plots unlock via upgrades or farm expansion
+
+### 11.4 Resource Management Components
+
+#### Tree Component (Resource Node Pattern)
+
+- **Source:** `Sunflowerland-ref/src/features/game/expansion/components/resources/tree/Tree.tsx`
+- **Purpose:** Harvestable resource node with states: Ready → Depleting → Depleted → Recovering → Ready
+- **Current Usage in SFL:** Trees for wood gathering
+- **Reusability for Zombie Farm:** HIGH - Dead trees, grave mounds, bone piles
+- **Adaptations Needed:**
+  - **Dead Tree:**
+    - Sprite: Gnarled, leafless dead tree
+    - Resource: Rotten Wood (5-8 per chop)
+    - Tool: Axe or Scythe
+    - States: Standing → Chopping animation → Depleted (stump) → Regrown
+  - **Grave Mound:**
+    - Sprite: Small dirt mound with skull marker
+    - Resource: Bones (3-6 per dig)
+    - Tool: Shovel
+    - States: Full → Digging → Depleted (empty hole) → Refilled
+  - **Bone Pile:**
+    - Sprite: Scattered bones and skulls
+    - Resource: Bones (4-7 per collect)
+    - Tool: None (click to collect)
+    - States: Full → Depleted → Respawned
+- **Key Features:**
+  - State machine for resource lifecycle
+  - Respawn timers (2 hours for trees, 90 min for graves)
+  - Visual state changes (depleting animation, depleted sprite, recovering sprite)
+  - Click interaction with tool requirement
+  - Progress bar during gathering
+  - Resource drop animation on completion
+- **Target Location:** `src/features/farm/resources/`
+  - `DeadTree.tsx`
+  - `GraveMound.tsx`
+  - `BonePile.tsx`
+  - `BloodPuddle.tsx` (for Blood Water)
+- **Integration Notes:**
+  - Place 8-12 dead trees on initial farm layout
+  - Place 5-8 grave mounds scattered around
+  - Respawn logic in farm state machine
+  - Emit events: resource.gather_start, resource.gather_complete, resource.depleted, resource.respawn
+- **Implementation Priority:** PHASE 2 - After plots are functional
+- **Related Components:**
+  - `DepletedTree.tsx`, `DepletingTree.tsx`, `RecoveredTree.tsx` (state components)
+  - Apply same pattern to all resource types
+- **Blockchain Removal:** Already local-only, no blockchain dependencies
+
+#### Beehive (Time-Based Resource Generator)
+
+- **Source:** `Sunflowerland-ref/src/features/game/expansion/components/resources/beehive/Beehive.tsx`
+- **Purpose:** Generates resources over time, click to collect
+- **Current Usage in SFL:** Honey production
+- **Reusability for Zombie Farm:** HIGH - Blood Well, Corpse Composter
+- **Adaptations Needed:**
+  - **Blood Well:**
+    - Sprite: 2x2 stone well filled with blood
+    - Generation: 1 Blood Water per 5 minutes
+    - Max Capacity: 10 Blood Water stored
+    - Visual: Blood level rises as it fills, drip animation
+    - Interaction: Click to collect all stored
+  - **Corpse Composter:**
+    - Sprite: 2x2 wooden grinding structure
+    - Processing: Convert 10 Rotten Meat → 5 Corpse Dust (1 hour)
+    - States: Idle (empty) → Processing (with timer) → Ready (glowing)
+    - Interaction: Click to open UI, add input, start process, collect output
+- **Key Features:**
+  - Time-based accumulation logic
+  - Max capacity handling (stops generating when full)
+  - Visual indicators of fullness/readiness
+  - State machine: empty → generating → full
+  - Notification when ready to collect
+  - Click interaction to collect
+- **Target Location:**
+  - `src/features/farm/buildings/BloodWell.tsx`
+  - `src/features/farm/buildings/CorpseComposter.tsx`
+- **Integration Notes:**
+  - BloodWell state tracked in building state machine
+  - Accumulation continues during offline play (calculate on load)
+  - Emit events: bloodwell.full, bloodwell.collected, composter.complete
+  - Support for multiple instances (player can build multiple wells)
+- **Implementation Priority:** PHASE 2 - Core resource generation
+- **Dependencies:**
+  - Building placement system
+  - Time system (farm state machine)
+  - Modal for composter UI
+
+### 11.5 HUD & Layout Components
+
+#### HudContainer
+
+- **Source:** `Sunflowerland-ref/src/components/ui/HudContainer.tsx`
+- **Purpose:** Container for HUD elements with proper z-indexing
+- **Reusability:** HIGH - Overlay UI structure
+- **Adaptations Needed:**
+  - Minimal - mostly layout logic
+  - Adjust positioning for our HUD design
+
+#### Balances Component
+
+- **Source:** `Sunflowerland-ref/src/components/Balances.tsx`
+- **Purpose:** Top bar display of currencies and resources
+- **Reusability:** HIGH - Resource/currency display
+- **Adaptations Needed:**
+  - **Remove blockchain:**
+    - No wallet balance checks
+    - No SFL/token displays
+  - **Replace with zombie resources:**
+    - Rotten Wood, Bones, Blood Water, Corpse Dust, Soul Fragments
+    - Dark Coins, Soul Essence
+  - **Visual changes:**
+    - Dark theme colors
+    - Zombie-themed resource icons
+  - **Features to preserve:**
+    - Animated number changes (+/- indicators)
+    - Hover tooltips with resource names
+    - Color coding for low resources (warning)
+- **Target Location:** `src/components/farm/ResourceDisplay.tsx`
+- **Integration Notes:**
+  - Subscribe to farm state for resource counts
+  - Emit animation events on resource gain/loss
+  - Support 5 primary resources + 2 currencies
+  - Compact display on mobile (stack or scroll)
+- **Implementation Priority:** PHASE 1 - Core HUD
+
+#### ZoomProvider
+
+- **Source:** `Sunflowerland-ref/src/components/ZoomProvider.tsx`
+- **Purpose:** Context provider for camera zoom controls
+- **Reusability:** MEDIUM - Camera zoom system
+- **Adaptations Needed:**
+  - Integrate with our camera system (0.5x to 2.0x zoom)
+  - Keyboard shortcuts (= and - keys)
+  - Mouse wheel support
+  - Mobile pinch gesture support
+- **Target Location:** `src/components/ZoomProvider.tsx`
+- **Integration Notes:**
+  - Wrap FarmScreen component
+  - Provide zoom level to Phaser camera
+  - Smooth zoom transitions (300ms ease)
+- **Implementation Priority:** PHASE 3 - Polish
+
+### 11.6 State Machine Patterns
+
+#### cropMachine (State Machine for Plots)
+
+- **Source:** `Sunflowerland-ref/src/features/island/buildings/components/building/cropMachine/lib/cropMachine.ts`
+- **Purpose:** XState machine for crop lifecycle management
+- **Reusability:** VERY HIGH - Plot state management
+- **Adaptations Needed:**
+  - Rename from cropMachine to plotMachine or zombiePlotMachine
+  - **States:**
+    - `empty` (default)
+    - `planted` (seed placed, timer started)
+    - `growing` (progress 0-99%)
+    - `ready` (progress 100%, harvestable)
+    - `harvesting` (animation playing)
+  - **Events:**
+    - `PLANT_SEED` (with seedType param)
+    - `WATER_PLOT`
+    - `FERTILIZE_PLOT` (with fertilizerType)
+    - `HARVEST` (trigger harvest)
+    - `TICK` (update timers)
+  - **Context:**
+    ```typescript
+    {
+      plotId: string;
+      seedType: ZombieSeedType | null;
+      plantedAt: timestamp;
+      growthProgress: 0-100;
+      watered: boolean;
+      fertilized: FertilizerType | null;
+      qualityModifier: number;
+    }
+    ```
+  - **Actions:**
+    - `startGrowth`: Set plantedAt, start timer
+    - `updateProgress`: Calculate growth based on elapsed time, water, fertilizer, weather
+    - `applyWater`: Set watered flag, apply +20% growth speed
+    - `applyFertilizer`: Set fertilized type, apply bonus
+    - `calculateYield`: On harvest, determine zombie quality (bronze/silver/gold/iridium)
+    - `checkMutation`: Random mutation roll on harvest
+    - `resetPlot`: Clear plot to empty state
+  - **Guards:**
+    - `canPlant`: Check plot is empty, player has seed in inventory
+    - `canWater`: Check plot is planted/growing, not already watered today
+    - `canFertilize`: Check plot is planted, not already fertilized
+    - `canHarvest`: Check plot is in ready state
+    - `hasSpace`: Check active zombie capacity not exceeded
+- **Target Location:** `src/features/farm/lib/plotMachine.ts`
+- **Integration Notes:**
+  - Spawn machine instance for each plot
+  - Integrate with core game state machine as child machine
+  - Persist state in farm state context
+  - Sync with Phaser Plot sprite visuals
+- **Implementation Priority:** PHASE 1 - Critical for plot system
+- **Dependencies:**
+  - XState library
+  - Time system for growth calculations
+  - Weather system for growth modifiers
+
+#### gameMachine (Core Game State)
+
+- **Source:** `Sunflowerland-ref/src/features/game/lib/gameMachine.ts`
+- **Purpose:** Top-level game state machine orchestrating all systems
+- **Reusability:** HIGH - Architecture pattern, not direct copy
+- **Adaptations Needed:**
+  - **Remove blockchain states:**
+    - No wallet connection states
+    - No transaction states (loading, minting, etc.)
+    - No authentication states (already handled locally)
+  - **Keep architecture patterns:**
+    - Event-driven state management
+    - Child machine invocation (farm, combat, world)
+    - Parallel state machines (time, weather, decay)
+    - Save/load actions
+    - Autosave triggers
+  - **Zombie Farm states:**
+    - `tutorial` → first-time intro
+    - `farm` → main farm gameplay (delegate to farmMachine)
+    - `combat` → battle preparation and execution (delegate to combatMachine)
+    - `world` → exploration/map view
+    - `upgrading` → building construction, research
+  - **Events:**
+    - `START_TUTORIAL`
+    - `COMPLETE_TUTORIAL`
+    - `ENTER_FARM`
+    - `INITIATE_RAID`
+    - `RETURN_FROM_COMBAT`
+    - `SAVE_GAME`
+    - `LOAD_GAME`
+    - `TICK` (global game loop)
+  - **Context:**
+    ```typescript
+    {
+      state: GameState; // Current farm state (plots, zombies, buildings, resources)
+      player: PlayerState; // Level, XP, necromancer customization
+      settings: GameSettings; // Audio, graphics, offline progress
+      lastSaved: timestamp;
+    }
+    ```
+  - **Actions:**
+    - `loadGame`: Restore state from localStorage
+    - `saveGame`: Persist state to localStorage
+    - `simulateOfflineProgress`: Calculate time elapsed while offline, simulate growth/generation
+    - `emitEvent`: Send events to child machines (farm, combat)
+- **Target Location:** `src/features/game/lib/gameMachine.ts`
+- **Integration Notes:**
+  - Top-level state machine wrapping entire game
+  - React Context Provider exposes game service
+  - All domain agents (Farm, Combat, UI) interact through events
+  - Save triggers: harvest, build, end of day, manual save
+- **Implementation Priority:** PHASE 1 - Foundation
+- **Blockchain Removal:**
+  - Remove all Web3 imports
+  - Remove wallet/provider states
+  - Remove transaction handlers
+  - Remove NFT/token logic
+  - Keep local storage persistence only
+
+### 11.7 Phaser Scene Patterns
+
+#### FarmScene / IslandScene
+
+- **Source:** `Sunflowerland-ref/src/features/game/expansion/Game.tsx` (references Phaser scenes)
+- **Purpose:** Phaser scene for rendering farm, handling camera, input
+- **Reusability:** MEDIUM - Architecture reference, not direct code
+- **Adaptations Needed:**
+  - Create FarmScene.ts extending Phaser.Scene
+  - **Responsibilities:**
+    - Load and render farm tilemap/sprites
+    - Render plots (sprite for each state)
+    - Render zombies (animated sprites with AI)
+    - Render buildings (static/animated sprites)
+    - Render resource nodes (trees, mounds, piles)
+    - Camera controls (pan, zoom)
+    - Input handling (click detection on plots/zombies/buildings)
+    - Pathfinding for zombies (A* algorithm)
+    - Particle systems (weather effects)
+    - Lighting system (day/night)
+  - **Phaser Components:**
+    - Tilemap for farm grid background
+    - Sprite groups for plots, zombies, buildings
+    - Cameras with zoom and follow
+    - Input plugin for mouse/touch
+    - Particle emitters for rain, fog, storm
+    - Tween animations for smooth movements
+  - **Communication with React:**
+    - Phaser → React: Emit custom events (plot clicked, zombie selected)
+    - React → Phaser: Scene update methods (add zombie, update plot state)
+    - Bridge via game service (XState machine)
+- **Target Location:** `src/features/world/FarmScene.ts`
+- **Integration Notes:**
+  - Create Phaser game instance in FarmScreen.tsx
+  - Pass game state reference to scene
+  - Update scene on state changes via subscriptions
+  - Emit events back to state machine for actions
+- **Implementation Priority:** PHASE 1 - Core rendering
+- **Dependencies:**
+  - Phaser 3 library
+  - Farm state machine
+  - Asset loading (sprites, tilesets)
+
+#### Sprite and Animation Management
+
+- **Source:** Throughout Sunflowerland codebase, e.g., zombie sprites in `public/world/` directory
+- **Purpose:** Asset organization for sprites, spritesheets, animations
+- **Reusability:** ARCHITECTURE - Learn patterns, not copy assets
+- **Adaptations Needed:**
+  - **Asset Structure:**
+    ```
+    /public/assets/
+      /zombies/
+        /shambler/
+          shambler_idle.png (sprite sheet)
+          shambler_walk.png
+          shambler_social.png
+        /runner/
+        /brute/
+        ...
+      /plots/
+        empty.png
+        planted.png
+        bone_sprout.png
+        rising_corpse.png
+        half_risen.png
+        ready.png (with glow)
+      /buildings/
+        necromancer_hut.png (3x3)
+        crypt.png (2x2)
+        blood_well.png (2x2)
+        ...
+      /resources/
+        dead_tree.png
+        dead_tree_chopping.png (animation frames)
+        dead_tree_stump.png
+        grave_mound.png
+        ...
+      /effects/
+        blood_rain_particle.png
+        fog_particle.png
+        bone_particle.png
+        sparkle.png (ready indicator)
+        ...
+    ```
+  - **Sprite Sheet Format:**
+    - Use Aseprite or TexturePacker for sprite sheet creation
+    - JSON atlas for frame definitions
+    - Consistent frame sizes (32x32 for tiles, 64x64 for zombies)
+    - Transparent backgrounds
+  - **Animation Definitions:**
+    - Define in Phaser Scene preload:
+    ```typescript
+    this.anims.create({
+      key: 'zombie_walk',
+      frames: this.anims.generateFrameNumbers('shambler_walk', { start: 0, end: 7 }),
+      frameRate: 10,
+      repeat: -1 // Loop
+    });
+    ```
+- **Target Location:** `/public/assets/`, `/src/lib/animations.ts` (definitions)
+- **Implementation Priority:** PHASE 1 - Needed for rendering
+- **Asset Creation:**
+  - Commission pixel art for zombie sprites (matching SFL aesthetic but undead theme)
+  - Create plot growth stages
+  - Design building sprites
+  - Weather particle effects
+
+### 11.8 Interaction Patterns
+
+#### Click/Tap Handlers
+
+- **Source:** Plot.tsx, various building components
+- **Purpose:** Unified interaction pattern for clickable farm objects
+- **Reusability:** HIGH - Architecture pattern
+- **Pattern:**
+  ```typescript
+  // In Phaser Scene
+  plotSprite.setInteractive();
+  plotSprite.on('pointerdown', () => {
+    this.events.emit('plot:clicked', { plotId: plot.id });
+  });
+
+  // In React (subscribe to Phaser events)
+  useEffect(() => {
+    const scene = phaserGame.scene.getScene('FarmScene');
+    scene.events.on('plot:clicked', ({ plotId }) => {
+      dispatch({ type: 'SELECT_PLOT', plotId });
+    });
+
+    return () => scene.events.off('plot:clicked');
+  }, []);
+  ```
+- **Apply to:**
+  - Plots (plant, water, fertilize, harvest)
+  - Zombies (select, pet, feed, command)
+  - Buildings (interact, collect, open UI)
+  - Resource nodes (gather, chop, dig)
+- **Integration Notes:**
+  - Consistent event naming: `[object]:[action]`
+  - Always include relevant IDs in event data
+  - Bridge Phaser and React via event bus
+  - State updates trigger Phaser visual updates
+
+#### Hover Tooltips
+
+- **Source:** Various components with hover info
+- **Purpose:** Show contextual information on hover
+- **Reusability:** MEDIUM - UI pattern
+- **Pattern:**
+  ```tsx
+  <div
+    onMouseEnter={() => setTooltip({ x, y, content: "Shambler - 65% grown" })}
+    onMouseLeave={() => setTooltip(null)}
+  >
+    {/* Plot or object */}
+  </div>
+
+  {tooltip && (
+    <Tooltip x={tooltip.x} y={tooltip.y}>
+      {tooltip.content}
+    </Tooltip>
+  )}
+  ```
+- **Apply to:**
+  - Plot hover: "Shambler (Growing) - 65% - 3m 12s remaining"
+  - Zombie hover: "Shambler #7 - Level 3 - Happy"
+  - Building hover: "Blood Well - 7/10 Blood Water"
+  - Resource hover: "Dead Tree - 6 Rotten Wood"
+- **Target Location:** `src/components/ui/Tooltip.tsx`
+- **Implementation Priority:** PHASE 2 - UX enhancement
+
+### 11.9 Utility Functions
+
+#### Time Formatting
+
+- **Source:** `formatNumber` in `lib/utils/formatNumber.ts`
+- **Purpose:** Format numbers with commas, abbreviations (1K, 1M)
+- **Reusability:** HIGH - Everywhere numbers are displayed
+- **Target Location:** `src/lib/utils/formatNumber.ts`
+- **Copy directly:** No adaptations needed (pure utility)
+
+#### Timer/Countdown Logic
+
+- **Source:** Various countdown components
+- **Purpose:** Calculate and format time remaining
+- **Reusability:** HIGH - Growth timers, construction, countdowns
+- **Pattern:**
+  ```typescript
+  function formatTimeRemaining(targetTimestamp: number): string {
+    const now = Date.now();
+    const remaining = Math.max(0, targetTimestamp - now);
+    const seconds = Math.floor(remaining / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+
+    if (hours > 0) return `${hours}h ${minutes % 60}m`;
+    if (minutes > 0) return `${minutes}m ${seconds % 60}s`;
+    return `${seconds}s`;
+  }
+  ```
+- **Target Location:** `src/lib/utils/time.ts`
+
+#### Random Utilities
+
+- **Source:** `lib/utils/random.ts`
+- **Purpose:** Seeded random number generation, randomInt, randomID
+- **Reusability:** HIGH - Mutations, weather, loot drops
+- **Target Location:** `src/lib/utils/random.ts`
+- **Copy directly:** Pure utility functions
+
+### 11.10 Implementation Priority Matrix
+
+| Priority | Component | Phase | Dependencies | Estimated Effort |
+|----------|-----------|-------|--------------|------------------|
+| **CRITICAL** | SpriteAnimator | 1 | None | 1 day |
+| **CRITICAL** | Modal System | 1 | UI components | 2 days |
+| **CRITICAL** | Plot Component | 1 | SpriteAnimator, Modal, plotMachine | 5 days |
+| **CRITICAL** | plotMachine (State Machine) | 1 | XState | 3 days |
+| **CRITICAL** | gameMachine (Core State) | 1 | XState | 4 days |
+| **CRITICAL** | FarmScene (Phaser) | 1 | Phaser, sprites | 5 days |
+| **CRITICAL** | ResourceDisplay (HUD) | 1 | State machine | 2 days |
+| **HIGH** | ResourceDropAnimator | 2 | SpriteAnimator | 1 day |
+| **HIGH** | Resource Nodes (Tree pattern) | 2 | State machine | 3 days |
+| **HIGH** | Blood Well / Beehive pattern | 2 | State machine | 3 days |
+| **HIGH** | Button, Panel, Label UI | 2 | None | 2 days |
+| **HIGH** | ProgressBar, Countdown | 2 | Time utils | 1 day |
+| **MEDIUM** | Corpse Composter | 2 | Modal, Blood Well | 2 days |
+| **MEDIUM** | Tooltip system | 2 | None | 1 day |
+| **MEDIUM** | ZoomProvider | 3 | Phaser camera | 1 day |
+| **MEDIUM** | FertilePlot pattern | 3 | Plot component | 1 day |
+| **LOW** | Confirmation modals | 3 | Modal | 1 day |
+| **LOW** | Form inputs | 3 | UI components | 1 day |
+
+**Total Estimated Effort (Critical + High):** ~40 days (solo developer)
+**Parallelization potential:** UI components can be built alongside state logic
+
+### 11.11 Blockchain Removal Checklist
+
+Components that require blockchain stripping:
+
+#### High-Risk Components (Heavy Blockchain Dependencies)
+- **gameMachine.ts:**
+  - [x] Remove Web3 provider initialization
+  - [x] Remove wallet connection states
+  - [x] Remove transaction states (minting, sending, etc.)
+  - [x] Remove smart contract calls
+  - [x] Remove blockchain event listeners
+  - [x] Keep: Save/load to localStorage, autosave, offline progress
+
+- **Plot.tsx:**
+  - [x] Remove NFT/token checks for planting
+  - [x] Remove server-side validation calls
+  - [x] Remove transaction signing for harvest
+  - [x] Keep: Planting, watering, fertilizing, harvesting logic (local state)
+
+- **Resource Components:**
+  - [x] Remove on-chain resource tracking
+  - [x] Remove token/NFT gating
+  - [x] Keep: Local resource accumulation, collection
+
+#### Low-Risk Components (Minimal/No Blockchain)
+- **Animation components (SpriteAnimator, ResourceDropAnimator):** Clean, no blockchain
+- **UI components (Modal, Button, Panel, etc.):** Clean, no blockchain
+- **Utility functions (time, random, format):** Clean, no blockchain
+
+#### Verification Steps After Removal:
+1. Search for imports from `lib/blockchain/`, `features/auth/lib/` - remove or replace
+2. Search for `wallet`, `web3`, `ethereum` keywords - remove
+3. Search for `sign`, `transaction`, `mint` keywords - remove
+4. Test save/load with localStorage only
+5. Ensure all actions work offline
+
+### 11.12 Asset Adaptation Requirements
+
+Replace Sunflower Land assets with zombie-themed alternatives:
+
+#### Sprites to Commission
+
+**Zombie Types (64x64 sprites, 8-12 frames per animation):**
+- Shambler (slow, hunched)
+  - Idle animation (4 frames, breathing)
+  - Walk animation (8 frames, shuffling)
+  - Social animation (6 frames, head turn/gesture)
+  - Emerge animation (12 frames, climbing out of ground)
+- Runner (lean, fast)
+- Brute (large, muscular)
+- Spitter (toxic)
+- Boomer (explosive)
+- Crawler (low, fast)
+- Ghoul (agile)
+- Wraith (ethereal)
+- Inferno (burning)
+- Colossus (huge, slow)
+
+**Plot Growth Stages (32x32 tiles):**
+- Empty grave (tilled soil with grave marker)
+- Planted (fresh grave)
+- Bone Sprout (skeletal fingers poking through)
+- Rising Corpse (arm extended from ground)
+- Half-Risen (upper body visible)
+- Ready (fully formed, glowing green aura)
+
+**Buildings (various sizes):**
+- Necromancer's Hut (3x3, 96x96px) - player home
+- Crypt (2x2, 64x64px) - storage entrance
+- Blood Well (2x2) - stone well with blood
+- Corpse Composter (2x2) - wooden grinding structure
+- Mausoleum (3x3) - ornate crypt
+- Training Dummy (1x1) - scarecrow target
+- Command Center (4x4) - war room
+- Mutation Lab (3x3) - green glowing windows
+- Guard Tower (2x2) - defensive structure
+
+**Resource Nodes (32x32 or 64x64):**
+- Dead Tree (standing, chopping animation, stump)
+- Grave Mound (full, digging, empty)
+- Bone Pile (scattered bones)
+- Blood Puddle (small pool)
+- Debris Pile (rubble)
+
+**Weather Particles (16x16 or smaller):**
+- Blood Rain droplet (red)
+- Fog particle (gray-white, large)
+- Bone shard (for Bone Storm)
+- Lightning flash
+- Sparkle/glow (ready indicator)
+
+**UI Elements:**
+- Dark-themed panel borders (brown/black with blood-red accents)
+- Button states (normal, hover, active, disabled)
+- Icons for resources (32x32):
+  - Rotten Wood icon
+  - Bones icon
+  - Blood Water icon
+  - Corpse Dust icon
+  - Soul Fragments icon
+  - Dark Coins icon
+  - Soul Essence icon
+
+#### Art Style Guidelines
+- **Pixel art aesthetic** matching Sunflower Land's quality
+- **Dark, muted color palette**: grays, browns, dark greens, blood reds
+- **Top-down orthogonal perspective** (not isometric)
+- **32x32 or 64x64 base sizes** for consistent scaling
+- **Smooth animations** (8-12 frames for complex actions)
+- **Transparent backgrounds** (PNG with alpha)
+- **Readable at various zoom levels** (0.5x to 2.0x)
+
+#### Asset Pipeline
+1. Create placeholder sprites (colored rectangles with labels)
+2. Implement systems with placeholders
+3. Commission professional pixel art in batches:
+   - Batch 1 (MVP): Plots, 1 zombie type, Necromancer Hut, basic resources
+   - Batch 2: Additional zombie types, buildings
+   - Batch 3: Weather effects, polish
+4. Integrate final art, test scaling/animations
+5. Optimize sprite sheets for performance
+
+---
+
+## 12. Documentation References
+
+### Sunflower Land Codebase Structure
+
+**Key Directories:**
+- `/src/features/game/` - Core game logic, state machines
+- `/src/features/farming/` - Farming-specific features (animals, plots)
+- `/src/features/island/` - Island/farm rendering and interactions
+- `/src/components/` - Reusable UI components
+- `/src/components/animation/` - Animation utilities
+- `/src/components/ui/` - UI component library
+- `/public/` - Asset storage (sprites, sounds, images)
+
+**State Management:**
+- XState for state machines (see `gameMachine.ts`, `cropMachine.ts`)
+- React Context for global state access
+- Local component state for UI-only concerns
+
+**Rendering:**
+- Phaser 3 for 2D game world rendering
+- React for UI overlay
+- Communication via event emitters
+
+**Patterns to Study:**
+- Plot component as reference for our zombie plots
+- Resource node pattern for harvestable objects
+- Modal system for all popups
+- State machine architecture for complex lifecycles
+- Animation integration (Phaser + React)
+
+### Integration Workflow
+
+1. **Study Component:** Read SFL source, understand purpose and dependencies
+2. **Remove Blockchain:** Identify and strip Web3/wallet code
+3. **Adapt Theme:** Change visuals, colors, assets to zombie theme
+4. **Adjust Logic:** Modify game rules to match DOMAIN-FARM.md specifications
+5. **Test Locally:** Ensure component works without server/blockchain
+6. **Document:** Update LAYOUT-FARM.md with implementation notes
+7. **Commit:** Descriptive commit for component adaptation
+
+---
+
 **Version History:**
 
 - v1.0 (2025-11-12): Initial comprehensive farm layout design
+- v1.1 (2025-11-12): Added comprehensive Sunflower Land reusable components section
 
 **Next Steps:**
 
-1. Implement farm grid and tile system (Phaser + React state)
-2. Create plot state machine with growth timers
-3. Build zombie roaming AI with pathfinding
-4. Develop building placement system with validation
-5. Design and implement HUD components
-6. Integrate day/night and weather systems
-7. Test on mobile devices for responsive layout
+1. **Phase 1 - Core Systems (Critical):**
+   - Implement SpriteAnimator for zombie animations
+   - Build plotMachine state machine with XState
+   - Adapt Plot component for zombie planting/harvesting
+   - Create gameMachine with farm sub-machine
+   - Build FarmScene in Phaser for rendering
+   - Implement ResourceDisplay HUD component
+
+2. **Phase 2 - Resources & Buildings (High):**
+   - Adapt ResourceDropAnimator for feedback
+   - Implement Dead Tree/Grave Mound resource nodes
+   - Build Blood Well (Beehive pattern)
+   - Create Corpse Composter with processing UI
+   - Implement UI component library (Button, Panel, Modal, etc.)
+
+3. **Phase 3 - Polish & Enhancement (Medium/Low):**
+   - Add ZoomProvider for camera controls
+   - Implement tooltip system
+   - Create confirmation modals
+   - Add form inputs for naming/customization
+   - Test on mobile devices for responsive layout

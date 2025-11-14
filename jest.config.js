@@ -16,6 +16,8 @@ export default {
     '^@components/(.*)$': '<rootDir>/src/components/$1',
     '^@types/(.*)$': '<rootDir>/src/types/$1',
     '^@assets/(.*)$': '<rootDir>/src/assets/$1',
+    // Mock Phaser to avoid canvas API errors in jsdom
+    '^phaser$': '<rootDir>/src/__mocks__/phaser.ts',
   },
 
   // Transform configuration for TypeScript files
