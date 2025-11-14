@@ -1,8 +1,8 @@
 ---
-title: "Zombie Farm - Claude Agent Documentation Directory"
-last updated: 2025-11-12
+title: 'Zombie Farm - Claude Agent Documentation Directory'
+last updated: 2025-11-14
 author: Claude (AI Assistant)
-version: 1.0
+version: 1.2
 ---
 
 # CLAUDE.md - Documentation Directory for AI Subagents
@@ -23,37 +23,47 @@ This document serves as the central reference guide for all Claude AI subagents 
 
 ### Core Documents (Read These First)
 
-| Document | Location | Purpose | Primary Users |
-|----------|----------|---------|---------------|
-| **CLAUDE.md** | `/CLAUDE.md` | This file - Agent documentation directory | All agents |
-| **Zombie-Farm-PRD.md** | `/Zombie-Farm-PRD.md` | Complete game design document | All agents |
-| **ARCHITECTURE.md** | `/META/ARCHITECTURE.md` | System architecture & tech stack | Architecture, all dev agents |
-| **WORKFLOW.md** | `/META/WORKFLOW.md` | Development process & TDD methodology | All agents |
-| **TESTING.md** | `/META/TESTING.md` | Testing standards & practices | Test agent, all dev agents |
-| **GLOSSARY.md** | `/META/GLOSSARY.md` | Terminology definitions | All agents |
+| Document               | Location                | Purpose                                   | Primary Users                |
+| ---------------------- | ----------------------- | ----------------------------------------- | ---------------------------- |
+| **CLAUDE.md**          | `/CLAUDE.md`            | This file - Agent documentation directory | All agents                   |
+| **Zombie-Farm-PRD.md** | `/Zombie-Farm-PRD.md`   | Complete game design document             | All agents                   |
+| **ARCHITECTURE.md**    | `/META/ARCHITECTURE.md` | System architecture & tech stack          | Architecture, all dev agents |
+| **WORKFLOW.md**        | `/META/WORKFLOW.md`     | Development process & TDD methodology     | All agents                   |
+| **TESTING.md**         | `/META/TESTING.md`      | Testing standards & practices             | Test agent, all dev agents   |
+| **GLOSSARY.md**        | `/META/GLOSSARY.md`     | Terminology definitions                   | All agents                   |
 
 ### Domain-Specific Documents
 
-| Document | Location | Purpose | Primary Users |
-|----------|----------|---------|---------------|
-| **DOMAIN-FARM.md** | `/META/DOMAIN-FARM.md` | Farm mechanics & rules | Farm agent, Test agent |
-| **DOMAIN-COMBAT.md** | `/META/DOMAIN-COMBAT.md` | Combat mechanics & rules | Combat agent, Test agent |
-| **UIUX.md** | `/META/UIUX.md` | UI/UX design guidelines | UI/UX agent (currently empty) |
+| Document             | Location                 | Purpose                  | Primary Users                 |
+| -------------------- | ------------------------ | ------------------------ | ----------------------------- |
+| **DOMAIN-FARM.md**   | `/META/DOMAIN-FARM.md`   | Farm mechanics & rules   | Farm agent, Test agent        |
+| **DOMAIN-COMBAT.md** | `/META/DOMAIN-COMBAT.md` | Combat mechanics & rules | Combat agent, Test agent      |
+| **UIUX.md**          | `/META/UIUX.md`          | UI/UX design guidelines  | UI/UX agent (currently empty) |
 
 ### Layout Documents
 
-| Document | Location | Purpose | Primary Users |
-|----------|----------|---------|---------------|
-| **LAYOUT-CORE.md** | `/META/LAYOUTS/LAYOUT-CORE.md` | Main game UI and navigation design | Core agent, UI/UX agent |
-| **LAYOUT-FARM.md** | `/META/LAYOUTS/LAYOUT-FARM.md` | Farm system visual layout and interactions | Farm agent, UI/UX agent |
-| **LAYOUT-COMBAT.md** | `/META/LAYOUTS/LAYOUT-COMBAT.md` | Combat system battlefield and UI design | Combat agent, UI/UX agent |
+| Document             | Location                         | Purpose                                    | Primary Users             |
+| -------------------- | -------------------------------- | ------------------------------------------ | ------------------------- |
+| **LAYOUT-CORE.md**   | `/META/LAYOUTS/LAYOUT-CORE.md`   | Main game UI and navigation design         | Core agent, UI/UX agent   |
+| **LAYOUT-FARM.md**   | `/META/LAYOUTS/LAYOUT-FARM.md`   | Farm system visual layout and interactions | Farm agent, UI/UX agent   |
+| **LAYOUT-COMBAT.md** | `/META/LAYOUTS/LAYOUT-COMBAT.md` | Combat system battlefield and UI design    | Combat agent, UI/UX agent |
 
 ### Reference Materials
 
-| Document | Location | Purpose |
-|----------|----------|---------|
-| **sunflowerland-ref.md** | `/sunflowerland-ref.md` | Directory structure of reference codebase |
-| **Sunflowerland-ref/** | `/Sunflowerland-ref/` | Complete Sunflower Land reference codebase |
+| Document                         | Location                | Purpose                                    |
+| -------------------------------- | ----------------------- | ------------------------------------------ |
+| **sunflowerland-ref.md**         | `/sunflowerland-ref.md` | Directory structure of reference codebase  |
+| **Sunflowerland-ref/**           | `/Sunflowerland-ref/`   | Complete Sunflower Land reference codebase |
+| **PHASE-8-UTILITY-LIBRARIES.md** | `/META/TEST-SPECS/`     | Test specifications for utility libraries  |
+
+### Utility Libraries (Core Infrastructure)
+
+| Library            | Location                        | Purpose                                              | Primary Users     |
+| ------------------ | ------------------------------- | ---------------------------------------------------- | ----------------- |
+| **math.ts**        | `/src/lib/utils/math.ts`        | Math operations, random generation, weighted random  | All agents        |
+| **format.ts**      | `/src/lib/utils/format.ts`      | Number/time/currency/percentage formatting           | UI/UX, all agents |
+| **validation.ts**  | `/src/lib/utils/validation.ts`  | Type guards, schema validation, enum validation      | All agents        |
+| **collections.ts** | `/src/lib/utils/collections.ts` | Array operations, deep clone/merge, object utilities | All agents        |
 
 ---
 
@@ -64,11 +74,13 @@ This document serves as the central reference guide for all Claude AI subagents 
 **File:** `/CLAUDE.md`
 **Purpose:** Central navigation and reference guide for all Claude AI subagents
 **When to Use:**
+
 - First document to read when starting any task
 - When uncertain which document to reference
 - When onboarding new agents to the project
 
 **Contents:**
+
 - Documentation map and directory
 - Agent-specific usage guidelines
 - Document hierarchy and relationships
@@ -82,12 +94,14 @@ This document serves as the central reference guide for all Claude AI subagents 
 **Full Name:** Zombie Farm - Product Requirements Document / Game Design Document
 **Purpose:** Complete specification of game design, mechanics, and features
 **When to Use:**
+
 - Understanding overall game vision and goals
 - Clarifying game mechanics and rules
 - Validating feature implementation against design intent
 - Resolving ambiguities in domain documents
 
 **Contents:**
+
 - Core concept and game overview
 - Tutorial and onboarding flow
 - Zombie growth system (planting, harvesting, mutations)
@@ -102,6 +116,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 - Detailed mechanics (decay, weather, territory)
 
 **Key Sections for Agents:**
+
 - Farm Agent: Sections 3-5, 7-8, 13.1-13.2
 - Combat Agent: Section 6, 6.5, parts of 13.3
 - UI/UX Agent: All sections (for interface design)
@@ -118,6 +133,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 **Full Name:** System Architecture
 **Purpose:** Technical architecture, project structure, and technology stack
 **When to Use:**
+
 - Understanding system design patterns
 - Adding new modules or features
 - Refactoring code
@@ -125,6 +141,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 - Understanding data flow
 
 **Contents:**
+
 - Project overview and architectural principles
 - Project structure (src/ organization)
 - Module interaction and boundaries
@@ -135,6 +152,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 - Event-driven architecture
 
 **Key Principles:**
+
 - Modular, domain-driven architecture
 - Event-driven state management with XState
 - Clear separation of concerns (Farm, Combat, World, UI)
@@ -143,6 +161,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 - Local-only (no blockchain/server)
 
 **For New Features:**
+
 1. Check project structure to understand where code belongs
 2. Review module interaction patterns
 3. Follow event-driven architecture
@@ -156,6 +175,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 **Full Name:** Development Workflow
 **Purpose:** Defines how developers and AI agents collaborate using TDD
 **When to Use:**
+
 - Starting any new task
 - Understanding the TDD cycle
 - Knowing when to invoke which agent
@@ -163,6 +183,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 - Handling test failures
 
 **Contents:**
+
 - Roles of AI sub-agents (Architecture, Test, UI/UX, Farm, Combat)
 - Test-Driven Development cycle (Red-Green-Refactor)
 - Using agents effectively
@@ -171,6 +192,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 - Example workflow scenarios
 
 **TDD Cycle (Core Workflow):**
+
 1. **Red:** Write failing test for new feature
 2. **Green:** Implement code to pass test (use appropriate agent)
 3. **Blue:** Refactor if needed (ensure tests still pass)
@@ -178,6 +200,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 5. **Document:** Update relevant documentation
 
 **Agent Invocation Guidelines:**
+
 - **Architecture Agent:** Major features, refactoring, system design
 - **Test Agent:** Generate test cases, edge cases, test scenarios
 - **UI/UX Agent:** Implement UI components, styling, layout
@@ -192,6 +215,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 **Full Name:** Testing Standards
 **Purpose:** Testing methodology, standards, and best practices
 **When to Use:**
+
 - Writing any test
 - Understanding coverage goals
 - Setting up test utilities
@@ -199,6 +223,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 - Ensuring test quality
 
 **Contents:**
+
 - Tools and setup (Jest, React Testing Library)
 - Test structure and naming conventions
 - What to test (domain logic, UI, integration, regression)
@@ -208,6 +233,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 - Continuous testing practices
 
 **Key Standards:**
+
 - Use Jest for unit/integration tests
 - Use React Testing Library for component tests
 - Name test files: `*.test.ts` or `*.test.tsx`
@@ -217,6 +243,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 - Use fake timers for time-dependent logic
 
 **Coverage Requirements:**
+
 - Critical code (Farm, Combat logic): ~100%
 - Overall project: 80%+ (statements, functions, lines)
 - UI: Meaningful tests over snapshot tests
@@ -229,6 +256,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 **Full Name:** Glossary
 **Purpose:** Definitions of game terminology and technical terms
 **When to Use:**
+
 - Clarifying unfamiliar terms
 - Ensuring consistent terminology
 - Understanding game-specific concepts
@@ -237,6 +265,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 **Contents:**
 
 **Game Terminology:**
+
 - Auto-Battler, Crypt, Dark Coins, Decay, Happiness
 - HP, Necromancer, Mutation, Permadeath
 - Plot, Raid, Resources, Soul Essence
@@ -244,6 +273,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 - Zombie quality tiers
 
 **Technical Terms:**
+
 - AI (agent vs game AI), Claude, CI/CD, DOM
 - DoT (Damage over Time), FPS, HUD
 - Jest, React, RTL, TDD, TypeScript
@@ -259,6 +289,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 **Full Name:** Farm Domain Rules
 **Purpose:** Authoritative specification of all farm-related game mechanics
 **When to Use:**
+
 - Implementing any farm feature
 - Understanding zombie lifecycle
 - Implementing decay/maintenance systems
@@ -268,6 +299,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 **Contents:**
 
 **Zombie Lifecycle:**
+
 - Planting (seeds, plots, requirements)
 - Growth (timers, watering, fertilizing)
 - Harvesting (emergence, yields)
@@ -275,6 +307,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 - Death on farm (rare conditions)
 
 **Decay and Maintenance:**
+
 - Stat decay mechanics (daily percentage loss)
 - Happiness system (factors, effects, recovery)
 - Feeding (prevents decay, boosts happiness)
@@ -282,17 +315,20 @@ This document serves as the central reference guide for all Claude AI subagents 
 - Decay floor (minimum stat values)
 
 **Capacity Management:**
+
 - Active zombie cap (starts at 10, expandable to ~100)
 - Crypt storage (unlimited, no decay, no resource consumption)
 - Increasing capacity (structures, upgrades, research)
 
 **Resources and Structures:**
+
 - Primary farm resources (Rotten Wood, Bones, Blood Water, Corpse Dust, Soul Fragments)
 - Resource gathering mechanics
 - Building and construction
 - Farm expansion
 
 **Time and Progression:**
+
 - Day/night cycle (30 min real-time: 20 day, 10 night)
 - Weather system (Blood Rain, Bright Sunlight, Fog)
 - Offline progress
@@ -308,6 +344,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 **Full Name:** Combat Domain Rules
 **Purpose:** Authoritative specification of all combat-related game mechanics
 **When to Use:**
+
 - Implementing any combat feature
 - Understanding battle flow
 - Implementing damage calculations
@@ -317,12 +354,14 @@ This document serves as the central reference guide for all Claude AI subagents 
 **Contents:**
 
 **Battle Preparation:**
+
 - Initiating raids (target selection, prerequisites)
 - Squad selection (size limits, deployment order, formation)
 - Enemy composition (types, stats, fortifications)
 - Beginning of battle (spawn positions, waves)
 
 **Real-Time Combat Mechanics:**
+
 - Movement and formation
 - Engagement and targeting (range, AI priorities)
 - Attack and damage (cooldowns, calculations, formulas)
@@ -337,11 +376,13 @@ This document serves as the central reference guide for all Claude AI subagents 
 - Unit special abilities
 
 **Battle Outcomes:**
+
 - Victory conditions (eliminate all enemies)
 - Defeat conditions (all zombies destroyed)
 - Retreat mechanics (save survivors, 10-second countdown)
 
 **Post-Battle:**
+
 - Permadeath (zombies at 0 HP are lost forever)
 - Experience gain (XP for survivors)
 - Rewards (Dark Coins, resources, seeds, blueprints, Soul Essence)
@@ -359,12 +400,14 @@ This document serves as the central reference guide for all Claude AI subagents 
 **Purpose:** UI/UX design standards, patterns, and guidelines
 **Status:** Currently empty (to be populated)
 **When to Use:**
+
 - Implementing UI components
 - Designing layouts
 - Applying consistent styling
 - Creating user interactions
 
 **Future Contents (Planned):**
+
 - Design system and theme (dark/undead aesthetic)
 - Component library
 - Layout patterns
@@ -380,12 +423,14 @@ This document serves as the central reference guide for all Claude AI subagents 
 **Full Name:** Core Layout Design - Main Island
 **Purpose:** Defines main game screen structure, HUD components, and navigation patterns
 **When to Use:**
+
 - Implementing the main game container
 - Building HUD overlays
 - Creating scene transitions
 - Understanding component hierarchy
 
 **Contents:**
+
 - Main game screen layout (header, canvas, footer)
 - HUD components and positioning
 - Scene transition patterns
@@ -396,6 +441,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 - Technical implementation notes
 
 **Key Features:**
+
 - Top bar with resources and game info
 - Main canvas area for Phaser scenes
 - Bottom bar for quick actions
@@ -410,6 +456,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 **Full Name:** Farm Layout & Mechanisms
 **Purpose:** Complete specification of farm visual layout and interaction systems
 **When to Use:**
+
 - Implementing farm rendering (Phaser FarmScene)
 - Building farm-related UI components
 - Understanding plot placement mechanics
@@ -417,6 +464,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 - Creating building placement systems
 
 **Contents:**
+
 - Farm grid system (tile-based, 32x32px tiles)
 - Farm zones and areas (plots, buildings, resource nodes)
 - Plot system mechanics and UI
@@ -430,6 +478,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 - Sunflower Land reusable components identified
 
 **Key Systems:**
+
 - Tile-based grid with coordinate system
 - Plot interaction overlays (plant, water, harvest)
 - Active zombie roster and Crypt management
@@ -445,6 +494,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 **Full Name:** Combat System Layout & Mechanisms
 **Purpose:** Complete specification of combat battlefield, unit rendering, and battle UI
 **When to Use:**
+
 - Implementing combat rendering (Phaser CombatScene)
 - Building pre-battle squad selection UI
 - Creating battle HUD and controls
@@ -452,6 +502,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 - Designing post-battle screens
 
 **Contents:**
+
 - Battlefield visual layout (1920x1080, side-scrolling)
 - Zone breakdown (zombie spawn, combat, enemy spawn)
 - Pre-battle screen design (target selection, squad formation)
@@ -469,6 +520,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 - Sunflower Land reusable components identified
 
 **Key Systems:**
+
 - Side-scrolling battlefield with spawn zones
 - Unit sprite rendering with health bars
 - Damage numbers and projectile systems
@@ -481,14 +533,17 @@ This document serves as the central reference guide for all Claude AI subagents 
 ### 13. Reference Materials
 
 #### sunflowerland-ref.md
+
 **File:** `/sunflowerland-ref.md`
 **Purpose:** Directory structure listing of Sunflower Land reference codebase
 **When to Use:** Quick reference to find specific assets or components in the reference codebase
 
 #### Sunflowerland-ref/
+
 **Directory:** `/Sunflowerland-ref/`
 **Purpose:** Complete Sunflower Land codebase for reference
 **When to Use:**
+
 - Finding reusable components
 - Understanding implementation patterns
 - Borrowing UI elements
@@ -504,6 +559,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 ### For Architecture Agent
 
 **Primary Documents:**
+
 1. ARCHITECTURE.md - System design reference
 2. LAYOUT-CORE.md - Main game UI architecture
 3. WORKFLOW.md - Development process
@@ -511,6 +567,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 5. Sunflowerland-ref/ - Reference patterns
 
 **Responsibilities:**
+
 - Design module structure and APIs
 - Plan major features and refactoring
 - Ensure architectural consistency
@@ -518,6 +575,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 - Guide technology choices
 
 **Workflow:**
+
 1. Review ARCHITECTURE.md for current patterns
 2. Consult PRD for feature requirements
 3. Check Sunflowerland-ref/ for proven patterns
@@ -529,6 +587,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 ### For Test Agent
 
 **Primary Documents:**
+
 1. TESTING.md - Testing standards and practices
 2. DOMAIN-FARM.md - Farm logic to test
 3. DOMAIN-COMBAT.md - Combat logic to test
@@ -536,6 +595,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 5. GLOSSARY.md - Terminology
 
 **Responsibilities:**
+
 - Generate comprehensive test cases
 - Write edge case scenarios
 - Ensure coverage goals met
@@ -543,6 +603,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 - Validate implementations against specs
 
 **Workflow:**
+
 1. Review feature specification in PRD or DOMAIN docs
 2. Identify all scenarios (normal, edge, error cases)
 3. Follow TESTING.md standards (naming, structure, AAA pattern)
@@ -552,6 +613,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 7. Check coverage reports
 
 **Test Categories:**
+
 - Unit tests for domain logic (farm rules, combat calculations)
 - Component tests for UI (RTL)
 - Integration tests for workflows
@@ -562,6 +624,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 ### For UI/UX Agent
 
 **Primary Documents:**
+
 1. LAYOUT-CORE.md - Main game UI structure
 2. LAYOUT-FARM.md - Farm UI and interactions
 3. LAYOUT-COMBAT.md - Combat UI and battlefield
@@ -572,6 +635,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 8. Sunflowerland-ref/ - UI component examples
 
 **Responsibilities:**
+
 - Implement React components
 - Apply consistent styling (Tailwind CSS)
 - Create responsive layouts
@@ -579,6 +643,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 - Ensure accessibility
 
 **Workflow:**
+
 1. Review feature requirements in PRD
 2. Check UIUX.md for design patterns (when populated)
 3. Follow ARCHITECTURE.md component structure
@@ -588,6 +653,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 7. Ensure dark/undead theme consistency
 
 **Key Patterns:**
+
 - Reuse modal, HUD, and menu components
 - Follow pixel-art style guidelines
 - Use event-driven interactions
@@ -598,6 +664,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 ### For Farm Agent (farm-module-dev)
 
 **Primary Documents:**
+
 1. DOMAIN-FARM.md - **PRIMARY AUTHORITY** for farm mechanics
 2. LAYOUT-FARM.md - Farm visual layout and UI design
 3. TESTING.md - Testing standards
@@ -606,6 +673,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 6. GLOSSARY.md - Terminology
 
 **Responsibilities:**
+
 - Implement all farm-related features
 - Zombie lifecycle (planting, growth, harvesting)
 - Decay and maintenance systems
@@ -614,6 +682,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 - Integration hooks for other modules
 
 **Workflow:**
+
 1. **ALWAYS** consult DOMAIN-FARM.md as authoritative source
 2. Receive test specifications from Test Agent
 3. Implement features following TDD (tests first)
@@ -622,6 +691,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 6. Provide clean hooks for Combat and UI modules
 
 **Critical Rules:**
+
 - Never implement features outside the farm domain (no combat logic)
 - All mechanics must match DOMAIN-FARM.md exactly
 - Use XState for complex lifecycle state machines
@@ -633,6 +703,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 ### For Combat Agent (combat-mechanics-specialist)
 
 **Primary Documents:**
+
 1. DOMAIN-COMBAT.md - **PRIMARY AUTHORITY** for combat mechanics
 2. LAYOUT-COMBAT.md - Combat battlefield and UI design
 3. TESTING.md - Testing standards
@@ -641,6 +712,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 6. GLOSSARY.md - Terminology
 
 **Responsibilities:**
+
 - Implement all combat-related features
 - Battle state machine and flow
 - Damage calculations and formulas
@@ -650,6 +722,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 - Integration with Farm module (zombie stats, permadeath)
 
 **Workflow:**
+
 1. **ALWAYS** consult DOMAIN-COMBAT.md as authoritative source
 2. Receive test specifications from Test Agent
 3. Implement features following TDD (tests first)
@@ -658,6 +731,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 6. Coordinate with Farm Agent for zombie data contracts
 
 **Critical Rules:**
+
 - Never implement features outside the combat domain (no farming logic)
 - All mechanics must match DOMAIN-COMBAT.md exactly
 - Use Phaser for 2D battle rendering
@@ -665,6 +739,7 @@ This document serves as the central reference guide for all Claude AI subagents 
 - Never write tests (Test Agent does that)
 
 **Damage Formula Example:**
+
 ```typescript
 // From DOMAIN-COMBAT.md
 const baseDamage = attackerAttack - defenderDefense;
@@ -677,22 +752,26 @@ const finalDamage = Math.max(1, baseDamage); // Minimum 1 damage
 ### For General-Purpose Agent (Explore)
 
 **Primary Documents:**
+
 1. CLAUDE.md - This file for orientation
 2. All META/ documents as needed
 3. Zombie-Farm-PRD.md for context
 
 **Responsibilities:**
+
 - Codebase exploration and analysis
 - Finding files and patterns
 - Answering questions about code
 - Research and investigation
 
 **Thoroughness Levels:**
+
 - **Quick:** Basic searches, specific file patterns
 - **Medium:** Moderate exploration, multiple locations
 - **Very thorough:** Comprehensive analysis, all naming conventions
 
 **Workflow:**
+
 1. Start with CLAUDE.md to understand project
 2. Use Glob for file pattern searches
 3. Use Grep for code keyword searches
@@ -769,11 +848,13 @@ const finalDamage = Math.max(1, baseDamage); // Minimum 1 damage
 ### Authority Levels
 
 **Level 1 - Product Authority:**
+
 - Zombie-Farm-PRD.md
   - Defines WHAT the game is and should do
   - Final word on game design intent
 
 **Level 2 - Domain Authority:**
+
 - DOMAIN-FARM.md (for farm mechanics)
 - DOMAIN-COMBAT.md (for combat mechanics)
   - Define HOW features work (rules, formulas, behaviors)
@@ -781,6 +862,7 @@ const finalDamage = Math.max(1, baseDamage); // Minimum 1 damage
   - Authority for their specific domains
 
 **Level 3 - Technical Authority:**
+
 - ARCHITECTURE.md (how system is structured)
 - TESTING.md (how we test)
 - WORKFLOW.md (how we work)
@@ -788,6 +870,7 @@ const finalDamage = Math.max(1, baseDamage); // Minimum 1 damage
   - Support implementation of domain rules
 
 **Level 4 - Reference:**
+
 - GLOSSARY.md (definitions)
 - UIUX.md (design patterns)
 - Sunflowerland-ref/ (examples)
@@ -796,6 +879,7 @@ const finalDamage = Math.max(1, baseDamage); // Minimum 1 damage
 ### Conflict Resolution
 
 If documents conflict:
+
 1. **PRD > DOMAIN docs** - Game design intent wins
 2. **DOMAIN > CODE** - Specs win over implementation
 3. **Update docs** - If implementation reveals better approach, update docs first
@@ -804,6 +888,7 @@ If documents conflict:
 ### Document Updates
 
 **When to Update:**
+
 - DOMAIN docs: When mechanics change or new features added
 - ARCHITECTURE.md: When structure or patterns change
 - TESTING.md: When testing approach changes
@@ -812,6 +897,7 @@ If documents conflict:
 - PRD: Rarely (usually only for major design pivots)
 
 **Who Updates:**
+
 - Solo Developer makes final edits
 - Agents can propose updates
 - Keep docs in sync with code
@@ -855,6 +941,13 @@ If documents conflict:
 
 ## Version History
 
+- **v1.2** (2025-11-14) - Utility Libraries Addition
+  - Added Utility Libraries section with all 4 utility modules
+  - Added reference to PHASE-8-UTILITY-LIBRARIES.md test specifications
+  - Updated utility module locations (math, format, validation, collections)
+  - 209 new utility tests added to project (1,255 total tests)
+  - All utilities available for use across all agents
+
 - **v1.1** (2025-11-12) - Layout Documents Addition
   - Added Layout Documents section (LAYOUT-CORE, LAYOUT-FARM, LAYOUT-COMBAT)
   - Updated agent-specific guides to reference layout documents
@@ -871,6 +964,7 @@ If documents conflict:
 ## Notes for Solo Developer
 
 This document is designed to:
+
 - Onboard new AI agents quickly
 - Reduce redundant explanations
 - Ensure consistent understanding across agents
@@ -878,6 +972,7 @@ This document is designed to:
 - Support efficient TDD workflow
 
 Keep this updated as:
+
 - New documents are added
 - Document purposes change
 - Agent roles evolve
