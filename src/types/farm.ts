@@ -84,9 +84,9 @@ export interface Plot {
  * Plot State
  */
 export enum PlotState {
-  EMPTY = 'empty',                  // No seed planted
-  PLANTED = 'planted',              // Seed planted, growing
-  READY = 'ready',                  // Zombie ready to harvest
+  EMPTY = 'empty', // No seed planted
+  PLANTED = 'planted', // Seed planted, growing
+  READY = 'ready', // Zombie ready to harvest
 }
 
 // ============================================================================
@@ -158,21 +158,21 @@ export interface Zombie {
  */
 export enum ZombieType {
   // Basic Tier
-  SHAMBLER = 'shambler',            // Slow, tanky, basic zombie
-  RUNNER = 'runner',                // Fast, fragile, high DPS
+  SHAMBLER = 'shambler', // Slow, tanky, basic zombie
+  RUNNER = 'runner', // Fast, fragile, high DPS
 
   // Advanced Tier
-  BRUTE = 'brute',                  // Very tanky, AoE damage, structure breaker
-  SPITTER = 'spitter',              // Ranged, toxic damage
-  GHOUL = 'ghoul',                  // Balanced melee, life steal
+  BRUTE = 'brute', // Very tanky, AoE damage, structure breaker
+  SPITTER = 'spitter', // Ranged, toxic damage
+  GHOUL = 'ghoul', // Balanced melee, life steal
 
   // Elite Tier
-  ABOMINATION = 'abomination',      // Massive HP, slow, huge damage
-  LICH = 'lich',                    // Ranged caster, dark magic, support
-  BONE_KNIGHT = 'boneKnight',       // Armored, high defense, tactical
+  ABOMINATION = 'abomination', // Massive HP, slow, huge damage
+  LICH = 'lich', // Ranged caster, dark magic, support
+  BONE_KNIGHT = 'boneKnight', // Armored, high defense, tactical
 
   // Special
-  PRIEST_ZOMBIE = 'priestZombie',   // Holy-undead hybrid, heals undead
+  PRIEST_ZOMBIE = 'priestZombie', // Holy-undead hybrid, heals undead
   EXPLOSIVE_ZOMBIE = 'explosiveZombie', // Explodes on death
   NECROMANCER_ZOMBIE = 'necromancerZombie', // Can resurrect fallen allies
 }
@@ -183,10 +183,10 @@ export enum ZombieType {
  * Determines base stat multipliers and appearance.
  */
 export enum ZombieQuality {
-  BRONZE = 'bronze',                // 1.0x stats
-  SILVER = 'silver',                // 1.25x stats
-  GOLD = 'gold',                    // 1.5x stats
-  DIAMOND = 'diamond',              // 2.0x stats
+  BRONZE = 'bronze', // 1.0x stats
+  SILVER = 'silver', // 1.25x stats
+  GOLD = 'gold', // 1.5x stats
+  DIAMOND = 'diamond', // 2.0x stats
 }
 
 /**
@@ -242,13 +242,13 @@ export interface ZombieEquipment {
  * Current behavior state for zombies roaming the farm.
  */
 export enum ZombieAIState {
-  IDLE = 'idle',                    // Standing still
-  WANDERING = 'wandering',          // Random movement
-  FOLLOWING = 'following',          // Following player command
-  GUARDING = 'guarding',            // Staying at assigned location
-  GATHERING = 'gathering',          // Gathering resource
-  TRAINING = 'training',            // Using training dummy
-  RESTING = 'resting',              // In shelter/structure
+  IDLE = 'idle', // Standing still
+  WANDERING = 'wandering', // Random movement
+  FOLLOWING = 'following', // Following player command
+  GUARDING = 'guarding', // Staying at assigned location
+  GATHERING = 'gathering', // Gathering resource
+  TRAINING = 'training', // Using training dummy
+  RESTING = 'resting', // In shelter/structure
 }
 
 // ============================================================================
@@ -291,23 +291,23 @@ export interface Building {
  */
 export enum BuildingType {
   // Core Buildings
-  COMMAND_CENTER = 'commandCenter',     // Main building, unlocks research
-  CRYPT = 'crypt',                      // Stores inactive zombies
+  COMMAND_CENTER = 'commandCenter', // Main building, unlocks research
+  CRYPT = 'crypt', // Stores inactive zombies
 
   // Production Buildings
-  ZOMBIE_PLOT = 'zombiePlot',           // Plot for growing zombies
-  BLOOD_WELL = 'bloodWell',             // Produces Blood Water
+  ZOMBIE_PLOT = 'zombiePlot', // Plot for growing zombies
+  BLOOD_WELL = 'bloodWell', // Produces Blood Water
   CORPSE_COMPOSTER = 'corpseComposter', // Converts waste to Corpse Dust
-  BONE_MILL = 'boneMill',               // Processes bones to Bone Meal
+  BONE_MILL = 'boneMill', // Processes bones to Bone Meal
 
   // Capacity Buildings
-  MAUSOLEUM = 'mausoleum',              // Increases zombie capacity
-  CRYPT_EXPANSION = 'cryptExpansion',   // Increases storage capacity
+  MAUSOLEUM = 'mausoleum', // Increases zombie capacity
+  CRYPT_EXPANSION = 'cryptExpansion', // Increases storage capacity
 
   // Training & Support
-  TRAINING_DUMMY = 'trainingDummy',     // Zombies train here for XP
+  TRAINING_DUMMY = 'trainingDummy', // Zombies train here for XP
   STITCHING_STATION = 'stitchingStation', // Heals injured zombies
-  GUARD_TOWER = 'guardTower',           // Defense against raids
+  GUARD_TOWER = 'guardTower', // Defense against raids
 
   // Decorations (boost happiness)
   BONFIRE = 'bonfire',
@@ -324,10 +324,10 @@ export enum BuildingType {
  * Building State
  */
 export enum BuildingState {
-  BUILDING = 'building',            // Under construction
-  ACTIVE = 'active',                // Operational
-  DAMAGED = 'damaged',              // Damaged, needs repair
-  DISABLED = 'disabled',            // Temporarily disabled
+  BUILDING = 'building', // Under construction
+  ACTIVE = 'active', // Operational
+  DAMAGED = 'damaged', // Damaged, needs repair
+  DISABLED = 'disabled', // Temporarily disabled
 }
 
 // ============================================================================
@@ -388,10 +388,10 @@ export interface DecayConfig {
  * Factors that affect zombie happiness.
  */
 export interface HappinessFactor {
-  readonly fed: number;                 // +10 if fed today
-  readonly pet: number;                 // +5 if pet today
-  readonly environment: number;         // +/- based on farm cleanliness
-  readonly social: number;              // +5 if other zombies nearby
-  readonly entertainment: number;       // +5 if decorations nearby
-  readonly injured: number;             // -10 if below 50% HP
+  readonly fed: number; // +10 if fed today
+  readonly pet: number; // +5 if pet today
+  readonly environment: number; // +/- based on farm cleanliness
+  readonly social: number; // +5 if other zombies nearby
+  readonly entertainment: number; // +5 if decorations nearby
+  readonly injured: number; // -10 if below 50% HP
 }

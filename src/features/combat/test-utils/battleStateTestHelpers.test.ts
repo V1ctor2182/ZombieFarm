@@ -106,9 +106,7 @@ describe('battleStateTestHelpers', () => {
 
       expect(battle.phase).toBe(BattlePhase.RETREAT);
       expect(battle.isRetreating).toBe(true);
-      expect(battle.retreatCountdown).toBe(
-        gameConfig.COMBAT.RETREAT_COUNTDOWN_SECONDS
-      );
+      expect(battle.retreatCountdown).toBe(gameConfig.COMBAT.RETREAT_COUNTDOWN_SECONDS);
     });
   });
 
@@ -154,10 +152,7 @@ describe('battleStateTestHelpers', () => {
 
     it('does not exceed total waves', () => {
       const battle = createMultiWaveBattle(3);
-      const finalWave = setBattleDuration(
-        { ...battle, currentWave: 3 },
-        100
-      );
+      const finalWave = setBattleDuration({ ...battle, currentWave: 3 }, 100);
       const updated = triggerWaveCompletion(finalWave);
 
       expect(updated.currentWave).toBe(3); // Stays at final wave
@@ -274,9 +269,7 @@ describe('battleStateTestHelpers', () => {
       const battle = createDefeatBattle();
       const result = generateDefeatResult(battle);
 
-      expect(
-        result.rewards.currencies.darkCoins ?? 0
-      ).toBeLessThanOrEqual(0);
+      expect(result.rewards.currencies.darkCoins ?? 0).toBeLessThanOrEqual(0);
     });
   });
 

@@ -298,8 +298,12 @@ export const gameMachine = setup({
         // Update battle stats
         const stats = {
           ...context.player.stats,
-          battlesWon: result.victory ? context.player.stats.battlesWon + 1 : context.player.stats.battlesWon,
-          battlesLost: !result.victory ? context.player.stats.battlesLost + 1 : context.player.stats.battlesLost,
+          battlesWon: result.victory
+            ? context.player.stats.battlesWon + 1
+            : context.player.stats.battlesWon,
+          battlesLost: !result.victory
+            ? context.player.stats.battlesLost + 1
+            : context.player.stats.battlesLost,
           zombiesLost: context.player.stats.zombiesLost + result.casualties.length,
         };
 

@@ -354,10 +354,7 @@ describe('playerFactory', () => {
     });
 
     it('creates player with completed quests', () => {
-      const player = createPlayerWithQuests(
-        ['quest_3'],
-        ['tutorial', 'first_battle']
-      );
+      const player = createPlayerWithQuests(['quest_3'], ['tutorial', 'first_battle']);
 
       expect(player.quests.active).toContain('quest_3');
       expect(player.quests.completed).toContain('tutorial');

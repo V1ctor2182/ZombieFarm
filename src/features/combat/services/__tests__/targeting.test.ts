@@ -28,10 +28,7 @@ import { ZombieType } from '../../../../types/farm';
 /**
  * Create a mock zombie combat unit for testing
  */
-function createMockZombie(
-  id: string,
-  overrides: Partial<CombatUnit> = {}
-): CombatUnit {
+function createMockZombie(id: string, overrides: Partial<CombatUnit> = {}): CombatUnit {
   return {
     id,
     type: overrides.type ?? ZombieType.SHAMBLER,
@@ -59,10 +56,7 @@ function createMockZombie(
 /**
  * Create a mock enemy for testing
  */
-function createMockEnemy(
-  id: string,
-  overrides: Partial<Enemy> = {}
-): Enemy {
+function createMockEnemy(id: string, overrides: Partial<Enemy> = {}): Enemy {
   return {
     id,
     type: overrides.type ?? EnemyType.PEASANT,
@@ -238,9 +232,9 @@ describe('findTargetsInRange', () => {
     const targets = findTargetsInRange(unit, enemies, obstacles);
 
     expect(targets).toHaveLength(2);
-    expect(targets.map(t => t.id)).toContain('e1');
-    expect(targets.map(t => t.id)).toContain('e2');
-    expect(targets.map(t => t.id)).not.toContain('e3');
+    expect(targets.map((t) => t.id)).toContain('e1');
+    expect(targets.map((t) => t.id)).toContain('e2');
+    expect(targets.map((t) => t.id)).not.toContain('e3');
   });
 
   it('excludes dead enemies', () => {
@@ -265,9 +259,7 @@ describe('findTargetsInRange', () => {
       position: { x: 0, y: 0 },
       stats: { ...createMockZombie('z1').stats, range: 2 },
     });
-    const enemies = [
-      createMockEnemy('e1', { position: { x: 10, y: 10 } }),
-    ];
+    const enemies = [createMockEnemy('e1', { position: { x: 10, y: 10 } })];
     const obstacles: Obstacle[] = [];
 
     const targets = findTargetsInRange(unit, enemies, obstacles);
@@ -280,12 +272,8 @@ describe('findTargetsInRange', () => {
       position: { x: 0, y: 0 },
       stats: { ...createMockZombie('z1').stats, range: 10 },
     });
-    const enemies = [
-      createMockEnemy('e1', { position: { x: 5, y: 0 } }),
-    ];
-    const obstacles: Obstacle[] = [
-      createMockObstacle('wall1', { x: 2, y: 0 }, true),
-    ];
+    const enemies = [createMockEnemy('e1', { position: { x: 5, y: 0 } })];
+    const obstacles: Obstacle[] = [createMockObstacle('wall1', { x: 2, y: 0 }, true)];
 
     const targets = findTargetsInRange(unit, enemies, obstacles);
 
@@ -311,9 +299,7 @@ describe('hasLineOfSight', () => {
   it('returns false when obstacle blocks direct line', () => {
     const from = { x: 0, y: 0 };
     const to = { x: 5, y: 0 };
-    const obstacles: Obstacle[] = [
-      createMockObstacle('wall1', { x: 2, y: 0 }, true),
-    ];
+    const obstacles: Obstacle[] = [createMockObstacle('wall1', { x: 2, y: 0 }, true)];
 
     const result = hasLineOfSight(from, to, obstacles);
 
@@ -634,12 +620,7 @@ describe('shouldRetarget', () => {
     const allTargets = [currentTarget, higherPriorityTarget];
 
     // For WEAKEST priority, should retarget to weaker enemy
-    const result = shouldRetarget(
-      unit,
-      currentTarget,
-      allTargets,
-      TargetPriority.WEAKEST
-    );
+    const result = shouldRetarget(unit, currentTarget, allTargets, TargetPriority.WEAKEST);
 
     expect(result).toBe(true);
   });
@@ -658,12 +639,7 @@ describe('shouldRetarget', () => {
       createMockEnemy('e2', { position: { x: 10, y: 0 } }), // 10 units away
     ];
 
-    const result = shouldRetarget(
-      unit,
-      currentTarget,
-      allTargets,
-      TargetPriority.CLOSEST
-    );
+    const result = shouldRetarget(unit, currentTarget, allTargets, TargetPriority.CLOSEST);
 
     expect(result).toBe(false); // e1 is still closest, and e2 is not 3+ tiles closer
   });
@@ -687,10 +663,10 @@ describe('getTargetsInRadius', () => {
     const inRadius = getTargetsInRadius(center, radius, targets);
 
     expect(inRadius).toHaveLength(3);
-    expect(inRadius.map(t => t.id)).toContain('e1');
-    expect(inRadius.map(t => t.id)).toContain('e2');
-    expect(inRadius.map(t => t.id)).toContain('e4');
-    expect(inRadius.map(t => t.id)).not.toContain('e3');
+    expect(inRadius.map((t) => t.id)).toContain('e1');
+    expect(inRadius.map((t) => t.id)).toContain('e2');
+    expect(inRadius.map((t) => t.id)).toContain('e4');
+    expect(inRadius.map((t) => t.id)).not.toContain('e3');
   });
 
   it('excludes dead targets', () => {
@@ -710,9 +686,7 @@ describe('getTargetsInRadius', () => {
   it('returns empty array if no targets in radius', () => {
     const center = { x: 0, y: 0 };
     const radius = 2;
-    const targets = [
-      createMockEnemy('e1', { position: { x: 10, y: 10 } }),
-    ];
+    const targets = [createMockEnemy('e1', { position: { x: 10, y: 10 } })];
 
     const inRadius = getTargetsInRadius(center, radius, targets);
 

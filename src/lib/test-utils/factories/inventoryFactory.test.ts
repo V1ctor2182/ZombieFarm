@@ -86,7 +86,7 @@ describe('inventoryFactory', () => {
 
     it('has multiple seed types', () => {
       const inv = createRichInventory();
-      expect(Object.keys(inv.seeds!).length).toBeGreaterThan(2);
+      expect(Object.keys(inv.seeds).length).toBeGreaterThan(2);
     });
   });
 
@@ -98,7 +98,7 @@ describe('inventoryFactory', () => {
 
     it('has 3 shambler seeds', () => {
       const inv = createStarterInventory();
-      expect(inv.seeds![SeedType.SHAMBLER_SEED]).toBe(3);
+      expect(inv.seeds[SeedType.SHAMBLER_SEED]).toBe(3);
     });
   });
 
@@ -108,8 +108,8 @@ describe('inventoryFactory', () => {
         [SeedType.SHAMBLER_SEED]: 10,
         [SeedType.BRUTE_SEED]: 5,
       });
-      expect(inv.seeds![SeedType.SHAMBLER_SEED]).toBe(10);
-      expect(inv.seeds![SeedType.BRUTE_SEED]).toBe(5);
+      expect(inv.seeds[SeedType.SHAMBLER_SEED]).toBe(10);
+      expect(inv.seeds[SeedType.BRUTE_SEED]).toBe(5);
     });
   });
 });

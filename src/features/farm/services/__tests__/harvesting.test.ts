@@ -341,9 +341,7 @@ describe('harvesting service', () => {
       const zombie = createTestZombie();
 
       // Run multiple times with 50% chance
-      const results = Array.from({ length: 20 }, () =>
-        applyMutations(zombie, 0.5)
-      );
+      const results = Array.from({ length: 20 }, () => applyMutations(zombie, 0.5));
 
       // Some should have mutations, some shouldn't
       const withMutations = results.filter((z) => z.mutations.length > 0);
@@ -398,10 +396,7 @@ describe('harvesting service', () => {
       const abominationByproducts = generateByproducts(ZombieType.ABOMINATION);
 
       // Elite zombies should drop more or better resources
-      const shamblerTotal = Object.values(shamblerByproducts).reduce(
-        (sum, val) => sum + val,
-        0
-      );
+      const shamblerTotal = Object.values(shamblerByproducts).reduce((sum, val) => sum + val, 0);
       const abominationTotal = Object.values(abominationByproducts).reduce(
         (sum, val) => sum + val,
         0
@@ -469,12 +464,7 @@ describe('harvesting service', () => {
       const farmState = createTestFarmState({ plots: [] });
       const inventory = createTestInventory();
 
-      const result = harvestZombie(
-        farmState,
-        inventory,
-        'nonexistent-plot',
-        ZombieQuality.BRONZE
-      );
+      const result = harvestZombie(farmState, inventory, 'nonexistent-plot', ZombieQuality.BRONZE);
 
       expect(result.success).toBe(false);
       expect(result.error).toContain('not found');
@@ -638,9 +628,7 @@ describe('harvesting service', () => {
       );
 
       // At least some should have mutations (diamond has higher chance)
-      const withMutations = results.filter(
-        (r) => r.success && r.data.zombie.mutations.length > 0
-      );
+      const withMutations = results.filter((r) => r.success && r.data.zombie.mutations.length > 0);
 
       // Just verify the system works, exact probabilities handled by config
       expect(withMutations.length).toBeGreaterThanOrEqual(0);

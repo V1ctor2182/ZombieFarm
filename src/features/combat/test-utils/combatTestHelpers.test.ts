@@ -331,9 +331,7 @@ describe('combatTestHelpers', () => {
 
       const updated = simulateBattleTick(battle, 1.0);
 
-      expect(updated.retreatCountdown).toBeLessThan(
-        battle.retreatCountdown
-      );
+      expect(updated.retreatCountdown).toBeLessThan(battle.retreatCountdown);
     });
 
     it('completes retreat and ends battle', () => {
@@ -425,9 +423,7 @@ describe('combatTestHelpers', () => {
 
       const updated = killUnit(battle, zombieId);
 
-      const otherZombies = updated.playerSquad.filter(
-        (z) => z.id !== zombieId
-      );
+      const otherZombies = updated.playerSquad.filter((z) => z.id !== zombieId);
       expect(otherZombies.every((z) => !z.isDead)).toBe(true);
     });
   });

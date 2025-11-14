@@ -9,12 +9,7 @@
 
 import type { Zombie } from '../../../types/farm';
 import type { Location, LocationEnemy } from '../../../types/world';
-import type {
-  CombatState,
-  CombatUnit,
-  Enemy,
-  Obstacle,
-} from '../../../types/combat';
+import type { CombatState, CombatUnit, Enemy, Obstacle } from '../../../types/combat';
 import { BattlePhase, UnitAIState, EnemyType } from '../../../types/combat';
 import type { BattleId, LocationId, Position } from '../../../types/global';
 import { gameConfig } from '../../../lib/config/zombieFarmConfig';
@@ -64,10 +59,7 @@ export interface PositionedUnit<T> extends Omit<T, 'position'> {
  * @param maxSquadSize - Maximum allowed squad size
  * @returns Validation result with errors and warnings
  */
-export function validateSquad(
-  zombies: Zombie[],
-  maxSquadSize: number
-): SquadValidationResult {
+export function validateSquad(zombies: Zombie[], maxSquadSize: number): SquadValidationResult {
   const errors: string[] = [];
   const warnings: string[] = [];
 
@@ -110,10 +102,7 @@ export function validateSquad(
  * @param waveNumber - Which wave to generate (1-based)
  * @returns Array of enemy units for this wave
  */
-export function generateEnemyWave(
-  location: Location,
-  waveNumber: number
-): Enemy[] {
+export function generateEnemyWave(location: Location, waveNumber: number): Enemy[] {
   // Filter enemies for this specific wave
   const waveEnemies = location.enemies.filter((e) => e.wave === waveNumber);
 
@@ -150,9 +139,7 @@ function createEnemy(spec: LocationEnemy, index: number): Enemy {
   };
 
   const enemy: Enemy = {
-    id: `enemy-${spec.type}-${Date.now()}-${index}-${Math.random()
-      .toString(36)
-      .substr(2, 5)}`,
+    id: `enemy-${spec.type}-${Date.now()}-${index}-${Math.random().toString(36).substr(2, 5)}`,
     type: spec.type,
     name: getEnemyName(spec.type, spec.isBoss),
     position: { x: 0, y: 0 }, // Will be assigned later
@@ -281,9 +268,7 @@ export function initializeBattle(
 
   // Initialize battle state
   const battleState: CombatState = {
-    battleId: `battle-${Date.now()}-${Math.random()
-      .toString(36)
-      .substr(2, 9)}` as BattleId,
+    battleId: `battle-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
     locationId: location.id,
     phase: BattlePhase.PREPARATION,
     playerSquad: positionedZombies,
@@ -347,25 +332,19 @@ export function checkBattleRequirements(
 
   // Check cooldown
   if (location.nextRaidAvailable !== null && location.nextRaidAvailable > Date.now()) {
-    const hoursRemaining = Math.ceil(
-      (location.nextRaidAvailable - Date.now()) / (1000 * 60 * 60)
-    );
+    const hoursRemaining = Math.ceil((location.nextRaidAvailable - Date.now()) / (1000 * 60 * 60));
     errors.push(`Location is on cooldown (${hoursRemaining}h remaining)`);
   }
 
   // Warn about difficulty
   if (location.difficulty >= 7 || avgLevel < location.recommendedLevel - 2) {
-    warnings.push(
-      `High difficulty location (${location.difficulty}/10) or squad under-leveled`
-    );
+    warnings.push(`High difficulty location (${location.difficulty}/10) or squad under-leveled`);
   }
 
   // Warn about low HP zombies
   const lowHpZombies = squad.filter((z) => z.stats.hp < z.stats.maxHp * 0.3);
   if (lowHpZombies.length > 0) {
-    warnings.push(
-      `${lowHpZombies.length} zombie(s) have low HP (below 30%)`
-    );
+    warnings.push(`${lowHpZombies.length} zombie(s) have low HP (below 30%)`);
   }
 
   // Warn if squad level is significantly below recommended

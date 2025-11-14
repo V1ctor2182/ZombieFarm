@@ -55,16 +55,10 @@ describe('damageCalculatorTestHelpers', () => {
         },
       });
 
-      const result = calculateExpectedDamage(
-        attacker,
-        defender,
-        DamageType.PHYSICAL
-      );
+      const result = calculateExpectedDamage(attacker, defender, DamageType.PHYSICAL);
 
       expect(result.baseDamage).toBe(50);
-      expect(result.finalDamage).toBeGreaterThanOrEqual(
-        gameConfig.COMBAT.MINIMUM_DAMAGE
-      );
+      expect(result.finalDamage).toBeGreaterThanOrEqual(gameConfig.COMBAT.MINIMUM_DAMAGE);
       expect(result.damageType).toBe(DamageType.PHYSICAL);
     });
 
@@ -95,11 +89,7 @@ describe('damageCalculatorTestHelpers', () => {
         },
       });
 
-      const result = calculateExpectedDamage(
-        attacker,
-        defender,
-        DamageType.PHYSICAL
-      );
+      const result = calculateExpectedDamage(attacker, defender, DamageType.PHYSICAL);
 
       expect(result.finalDamage).toBe(1);
     });
@@ -131,17 +121,10 @@ describe('damageCalculatorTestHelpers', () => {
         },
       });
 
-      const normal = calculateExpectedDamage(
-        attacker,
-        defender,
-        DamageType.PHYSICAL
-      );
-      const critical = calculateExpectedDamage(
-        attacker,
-        defender,
-        DamageType.PHYSICAL,
-        { isCritical: true }
-      );
+      const normal = calculateExpectedDamage(attacker, defender, DamageType.PHYSICAL);
+      const critical = calculateExpectedDamage(attacker, defender, DamageType.PHYSICAL, {
+        isCritical: true,
+      });
 
       expect(critical.isCritical).toBe(true);
       expect(critical.finalDamage).toBeGreaterThan(normal.finalDamage);
@@ -175,12 +158,9 @@ describe('damageCalculatorTestHelpers', () => {
         },
       });
 
-      const result = calculateExpectedDamage(
-        attacker,
-        defender,
-        DamageType.PHYSICAL,
-        { ignoreArmor: true }
-      );
+      const result = calculateExpectedDamage(attacker, defender, DamageType.PHYSICAL, {
+        ignoreArmor: true,
+      });
 
       expect(result.modifiers.armorReduction).toBe(0);
     });
@@ -262,23 +242,19 @@ describe('damageCalculatorTestHelpers', () => {
     });
 
     it('applies defender overrides', () => {
-      const scenario = createDamageScenario(
-        DamageType.PHYSICAL,
-        undefined,
-        {
-          name: 'Custom Defender',
-          stats: {
-            hp: 200,
-            maxHp: 200,
-            attack: 10,
-            defense: 40,
-            speed: 1.0,
-            range: 1,
-            attackCooldown: 1.5,
-            resistances: {},
-          },
-        }
-      );
+      const scenario = createDamageScenario(DamageType.PHYSICAL, undefined, {
+        name: 'Custom Defender',
+        stats: {
+          hp: 200,
+          maxHp: 200,
+          attack: 10,
+          defense: 40,
+          speed: 1.0,
+          range: 1,
+          attackCooldown: 1.5,
+          resistances: {},
+        },
+      });
 
       expect(scenario.defender.name).toBe('Custom Defender');
       expect(scenario.defender.stats.defense).toBe(40);
@@ -360,9 +336,7 @@ describe('damageCalculatorTestHelpers', () => {
     it('deals increased damage to undead', () => {
       const scenario = createHolyDamageScenario();
 
-      expect(scenario.expectedDamage.modifiers.typeMultiplier).toBeGreaterThan(
-        1.0
-      );
+      expect(scenario.expectedDamage.modifiers.typeMultiplier).toBeGreaterThan(1.0);
     });
   });
 
@@ -415,17 +389,13 @@ describe('damageCalculatorTestHelpers', () => {
     it('creates zero damage scenario', () => {
       const scenario = createZeroDamageScenario();
 
-      expect(scenario.attacker.stats.attack).toBeLessThan(
-        scenario.defender.stats.defense
-      );
+      expect(scenario.attacker.stats.attack).toBeLessThan(scenario.defender.stats.defense);
     });
 
     it('enforces minimum damage', () => {
       const scenario = createZeroDamageScenario();
 
-      expect(scenario.expectedDamage.finalDamage).toBe(
-        gameConfig.COMBAT.MINIMUM_DAMAGE
-      );
+      expect(scenario.expectedDamage.finalDamage).toBe(gameConfig.COMBAT.MINIMUM_DAMAGE);
     });
   });
 
@@ -433,17 +403,13 @@ describe('damageCalculatorTestHelpers', () => {
     it('creates overkill scenario', () => {
       const scenario = createOverkillScenario();
 
-      expect(scenario.attacker.stats.attack).toBeGreaterThan(
-        scenario.defender.stats.hp * 10
-      );
+      expect(scenario.attacker.stats.attack).toBeGreaterThan(scenario.defender.stats.hp * 10);
     });
 
     it('calculates massive damage', () => {
       const scenario = createOverkillScenario();
 
-      expect(scenario.expectedDamage.finalDamage).toBeGreaterThan(
-        scenario.defender.stats.hp
-      );
+      expect(scenario.expectedDamage.finalDamage).toBeGreaterThan(scenario.defender.stats.hp);
     });
   });
 
@@ -481,11 +447,7 @@ describe('damageCalculatorTestHelpers', () => {
     it('validates damage within range', () => {
       const scenario = createPhysicalDamageScenario();
 
-      const isValid = validateDamageCalculation(
-        scenario.expectedDamage,
-        1,
-        1000
-      );
+      const isValid = validateDamageCalculation(scenario.expectedDamage, 1, 1000);
 
       expect(isValid).toBe(true);
     });
@@ -493,11 +455,7 @@ describe('damageCalculatorTestHelpers', () => {
     it('rejects damage above max', () => {
       const scenario = createOverkillScenario();
 
-      const isValid = validateDamageCalculation(
-        scenario.expectedDamage,
-        1,
-        10
-      );
+      const isValid = validateDamageCalculation(scenario.expectedDamage, 1, 10);
 
       expect(isValid).toBe(false);
     });

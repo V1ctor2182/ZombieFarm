@@ -168,10 +168,7 @@ export class EventBus {
    * @param eventType - Event type
    * @param handler - Handler to remove
    */
-  off<T extends GameEvent = GameEvent>(
-    eventType: T['type'] | '*',
-    handler: EventHandler<T>
-  ): void {
+  off<T extends GameEvent = GameEvent>(eventType: T['type'] | '*', handler: EventHandler<T>): void {
     if (eventType === '*') {
       this.wildcardSubscriptions = this.wildcardSubscriptions.filter(
         (sub) => sub.handler !== handler

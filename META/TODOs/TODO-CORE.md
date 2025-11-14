@@ -983,7 +983,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
   - 51 tests written (47 passing, 4 integration issues)
   - Save/load, versioning, migration, auto-save functional
   - Minor integration issues noted but not blocking
-- **940+ total tests passing across project** (as of 2025-11-13)
+- **1000+ total tests passing across project** (as of 2025-11-13)
   - CORE: 125 tests (31 state machine + 43 event system + 51 save system)
   - TEST: 428 tests (factories, fixtures, matchers)
   - FARM: 145 tests (54 planting + 38 growth + 53 harvesting) ✅

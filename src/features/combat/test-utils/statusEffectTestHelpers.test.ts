@@ -55,9 +55,7 @@ describe('statusEffectTestHelpers', () => {
 
       expect(effect.effect).toBe('poisoned');
       expect(effect.unitId).toBe('unit-1');
-      expect(effect.duration).toBe(
-        gameConfig.COMBAT.STATUS_EFFECTS.poisoned.duration
-      );
+      expect(effect.duration).toBe(gameConfig.COMBAT.STATUS_EFFECTS.poisoned.duration);
       expect(effect.strength).toBeGreaterThan(0);
     });
 
@@ -96,11 +94,7 @@ describe('statusEffectTestHelpers', () => {
     });
 
     it('creates scenario with multiple targets', () => {
-      const scenario = createStatusEffectScenario('burning', [
-        'unit-1',
-        'unit-2',
-        'unit-3',
-      ]);
+      const scenario = createStatusEffectScenario('burning', ['unit-1', 'unit-2', 'unit-3']);
 
       expect(scenario.targets).toHaveLength(3);
       expect(scenario.activeEffects).toHaveLength(3);
@@ -184,9 +178,7 @@ describe('statusEffectTestHelpers', () => {
 
     it('targets a zombie', () => {
       const scenario = createPoisonScenario();
-      const zombie = scenario.battle.playerSquad.find(
-        (z) => z.id === scenario.poisonedUnitId
-      );
+      const zombie = scenario.battle.playerSquad.find((z) => z.id === scenario.poisonedUnitId);
 
       expect(zombie).toBeDefined();
     });
@@ -216,9 +208,7 @@ describe('statusEffectTestHelpers', () => {
 
     it('targets an enemy', () => {
       const scenario = createStunScenario();
-      const enemy = scenario.battle.enemies.find(
-        (e) => e.id === scenario.stunnedUnitId
-      );
+      const enemy = scenario.battle.enemies.find((e) => e.id === scenario.stunnedUnitId);
 
       expect(enemy).toBeDefined();
     });
@@ -242,16 +232,12 @@ describe('statusEffectTestHelpers', () => {
     it('calculates reduced attack', () => {
       const scenario = createWeakenedScenario();
 
-      expect(scenario.reducedAttack).toBeLessThan(
-        scenario.originalAttack
-      );
+      expect(scenario.reducedAttack).toBeLessThan(scenario.originalAttack);
       // Floor rounding means it might be slightly less than exact 0.7
       expect(scenario.reducedAttack).toBeGreaterThanOrEqual(
         Math.floor(scenario.originalAttack * 0.7)
       );
-      expect(scenario.reducedAttack).toBeLessThanOrEqual(
-        scenario.originalAttack * 0.7
-      );
+      expect(scenario.reducedAttack).toBeLessThanOrEqual(scenario.originalAttack * 0.7);
     });
   });
 
@@ -266,10 +252,7 @@ describe('statusEffectTestHelpers', () => {
       const scenario = createSlowedScenario();
 
       expect(scenario.reducedSpeed).toBeLessThan(scenario.originalSpeed);
-      expect(scenario.reducedSpeed).toBeCloseTo(
-        scenario.originalSpeed * 0.5,
-        1
-      );
+      expect(scenario.reducedSpeed).toBeCloseTo(scenario.originalSpeed * 0.5, 1);
     });
   });
 
@@ -283,12 +266,8 @@ describe('statusEffectTestHelpers', () => {
     it('calculates buffed stats', () => {
       const scenario = createBuffScenario();
 
-      expect(scenario.buffedStats.attack).toBeGreaterThan(
-        scenario.originalStats.attack
-      );
-      expect(scenario.buffedStats.defense).toBeGreaterThan(
-        scenario.originalStats.defense
-      );
+      expect(scenario.buffedStats.attack).toBeGreaterThan(scenario.originalStats.attack);
+      expect(scenario.buffedStats.defense).toBeGreaterThan(scenario.originalStats.defense);
     });
   });
 
@@ -312,9 +291,7 @@ describe('statusEffectTestHelpers', () => {
     it('effects are same type', () => {
       const scenario = createStackingScenario('poisoned', 3);
 
-      expect(scenario.effects.every((e) => e.effect === 'poisoned')).toBe(
-        true
-      );
+      expect(scenario.effects.every((e) => e.effect === 'poisoned')).toBe(true);
     });
   });
 
@@ -377,10 +354,7 @@ describe('statusEffectTestHelpers', () => {
   describe('getUnitEffects', () => {
     it('returns effects for specific unit', () => {
       const scenario = createStackingScenario('poisoned', 2);
-      const unitEffects = getUnitEffects(
-        scenario.battle,
-        scenario.targetUnitId
-      );
+      const unitEffects = getUnitEffects(scenario.battle, scenario.targetUnitId);
 
       expect(unitEffects).toHaveLength(2);
     });
@@ -396,22 +370,14 @@ describe('statusEffectTestHelpers', () => {
   describe('countEffectStacks', () => {
     it('counts stacks of specific effect', () => {
       const scenario = createStackingScenario('poisoned', 3);
-      const count = countEffectStacks(
-        scenario.battle,
-        scenario.targetUnitId,
-        'poisoned'
-      );
+      const count = countEffectStacks(scenario.battle, scenario.targetUnitId, 'poisoned');
 
       expect(count).toBe(3);
     });
 
     it('returns 0 for non-applied effect', () => {
       const scenario = createPoisonScenario();
-      const count = countEffectStacks(
-        scenario.battle,
-        scenario.poisonedUnitId,
-        'burning'
-      );
+      const count = countEffectStacks(scenario.battle, scenario.poisonedUnitId, 'burning');
 
       expect(count).toBe(0);
     });

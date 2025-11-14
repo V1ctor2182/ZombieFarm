@@ -7,21 +7,9 @@
  * All values derived from DOMAIN-FARM.md and DOMAIN-COMBAT.md specifications.
  */
 
-import {
-  ZombieType,
-  ZombieQuality,
-  BuildingType,
-} from '../../types/farm';
-import {
-  Resource,
-  Currency,
-  SeedType,
-  ResourceNodeType,
-} from '../../types/resources';
-import {
-  DamageType,
-  StatusEffect,
-} from '../../types/combat';
+import { ZombieType, ZombieQuality, BuildingType } from '../../types/farm';
+import { Resource, Currency, SeedType, ResourceNodeType } from '../../types/resources';
+import { DamageType, StatusEffect } from '../../types/combat';
 
 // ============================================================================
 // GAME CONSTANTS
@@ -513,7 +501,7 @@ export const gameConfig = {
     fertilizerSpeedBoost: 0.3, // 30% faster growth with fertilizer
     fertilizerQualityBoost: 0.15, // +15% chance for higher quality
     qualityChances: {
-      [ZombieQuality.BRONZE]: 0.60, // 60% bronze
+      [ZombieQuality.BRONZE]: 0.6, // 60% bronze
       [ZombieQuality.SILVER]: 0.25, // 25% silver
       [ZombieQuality.GOLD]: 0.12, // 12% gold
       [ZombieQuality.DIAMOND]: 0.03, // 3% diamond

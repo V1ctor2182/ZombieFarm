@@ -108,8 +108,12 @@ describe('mockRandom', () => {
     });
 
     it('should throw error if sequence contains invalid values', () => {
-      expect(() => mockRandomSequence([0.5, -0.1])).toThrow('All sequence values must be >= 0 and < 1');
-      expect(() => mockRandomSequence([0.5, 1.0])).toThrow('All sequence values must be >= 0 and < 1');
+      expect(() => mockRandomSequence([0.5, -0.1])).toThrow(
+        'All sequence values must be >= 0 and < 1'
+      );
+      expect(() => mockRandomSequence([0.5, 1.0])).toThrow(
+        'All sequence values must be >= 0 and < 1'
+      );
     });
 
     it('should allow changing the sequence', () => {

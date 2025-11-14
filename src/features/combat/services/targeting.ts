@@ -74,15 +74,9 @@ export function getTargetsInRadius(
  * @param obstacles - Obstacles that may block LOS
  * @returns True if line of sight is clear
  */
-export function hasLineOfSight(
-  from: Position,
-  to: Position,
-  obstacles: Obstacle[]
-): boolean {
+export function hasLineOfSight(from: Position, to: Position, obstacles: Obstacle[]): boolean {
   // Filter to only LOS-blocking obstacles
-  const blockingObstacles = obstacles.filter(
-    (obs) => obs.blocksLineOfSight && !obs.isDead
-  );
+  const blockingObstacles = obstacles.filter((obs) => obs.blocksLineOfSight && !obs.isDead);
 
   if (blockingObstacles.length === 0) {
     return true;
@@ -106,11 +100,7 @@ export function hasLineOfSight(
  * @param obstaclePos - Obstacle position
  * @returns True if obstacle is on the line
  */
-function isObstacleOnLine(
-  from: Position,
-  to: Position,
-  obstaclePos: Position
-): boolean {
+function isObstacleOnLine(from: Position, to: Position, obstaclePos: Position): boolean {
   // Calculate line equation coefficients
   const dx = to.x - from.x;
   const dy = to.y - from.y;
@@ -136,8 +126,7 @@ function isObstacleOnLine(
   // General case: point-to-line distance
   const lineLength = Math.sqrt(dx * dx + dy * dy);
   const distanceToLine =
-    Math.abs(dy * obstaclePos.x - dx * obstaclePos.y + to.x * from.y - to.y * from.x) /
-    lineLength;
+    Math.abs(dy * obstaclePos.x - dx * obstaclePos.y + to.x * from.y - to.y * from.x) / lineLength;
 
   // Check if obstacle is close to line (within 0.5 tiles)
   if (distanceToLine > 0.5) {
@@ -145,8 +134,7 @@ function isObstacleOnLine(
   }
 
   // Check if obstacle is between from and to (not behind)
-  const dotProduct =
-    (obstaclePos.x - from.x) * dx + (obstaclePos.y - from.y) * dy;
+  const dotProduct = (obstaclePos.x - from.x) * dx + (obstaclePos.y - from.y) * dy;
   const lineSquared = dx * dx + dy * dy;
 
   if (dotProduct < 0 || dotProduct > lineSquared) {

@@ -45,13 +45,15 @@ describe('testScenarios', () => {
     });
 
     it('has some Dark Coins', () => {
-      expect(FIRST_BATTLE_PREP_SCENARIO.inventory.currencies[Currency.DARK_COINS]).toBeGreaterThan(0);
+      expect(FIRST_BATTLE_PREP_SCENARIO.inventory.currencies[Currency.DARK_COINS]).toBeGreaterThan(
+        0
+      );
     });
   });
 
   describe('GROWING_FARM_SCENARIO', () => {
     it('has multiple zombie types unlocked', () => {
-      expect(Object.keys(GROWING_FARM_SCENARIO.inventory.seeds!).length).toBeGreaterThan(1);
+      expect(Object.keys(GROWING_FARM_SCENARIO.inventory.seeds).length).toBeGreaterThan(1);
     });
 
     it('has won battles', () => {

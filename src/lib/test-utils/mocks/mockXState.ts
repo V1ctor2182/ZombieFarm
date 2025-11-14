@@ -21,7 +21,13 @@
  * ```
  */
 
-import { type Actor, type AnyStateMachine, createActor, type EventObject, type Snapshot } from 'xstate';
+import {
+  type Actor,
+  type AnyStateMachine,
+  createActor,
+  type EventObject,
+  type Snapshot,
+} from 'xstate';
 
 /**
  * Default timeout for waiting operations (ms)
@@ -49,7 +55,7 @@ const DEFAULT_TIMEOUT = 5000;
 export async function waitForState(
   actor: Actor<AnyStateMachine>,
   stateName: string,
-  timeout: number = DEFAULT_TIMEOUT,
+  timeout: number = DEFAULT_TIMEOUT
 ): Promise<void> {
   return new Promise((resolve, reject) => {
     // Check if already in target state
@@ -119,7 +125,7 @@ export async function sendEventAndWait(
   actor: Actor<AnyStateMachine>,
   event: EventObject,
   expectedState: string,
-  timeout: number = DEFAULT_TIMEOUT,
+  timeout: number = DEFAULT_TIMEOUT
 ): Promise<void> {
   actor.send(event);
   await waitForState(actor, expectedState, timeout);
@@ -140,7 +146,7 @@ export async function sendEventAndWait(
  * ```
  */
 export function getMachineSnapshot<TMachine extends AnyStateMachine>(
-  actor: Actor<TMachine>,
+  actor: Actor<TMachine>
 ): Snapshot<unknown> {
   return actor.getSnapshot();
 }
@@ -170,7 +176,9 @@ export function getMachineSnapshot<TMachine extends AnyStateMachine>(
  * actor.start();
  * ```
  */
-export function createTestActor<TMachine extends AnyStateMachine>(machine: TMachine): Actor<TMachine> {
+export function createTestActor<TMachine extends AnyStateMachine>(
+  machine: TMachine
+): Actor<TMachine> {
   return createActor(machine);
 }
 
@@ -257,7 +265,7 @@ export function isInState(snapshot: Snapshot<unknown>, stateName: string): boole
  */
 export async function waitForSnapshot(
   actor: Actor<AnyStateMachine>,
-  timeout: number = DEFAULT_TIMEOUT,
+  timeout: number = DEFAULT_TIMEOUT
 ): Promise<Snapshot<unknown>> {
   return new Promise((resolve, reject) => {
     const timeoutId = setTimeout(() => {

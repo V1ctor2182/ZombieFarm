@@ -54,17 +54,10 @@ function toHaveResource(
  * expect(plot).toBeInState(PlotState.GROWING);
  * expect(zombie).toBeInState(ZombieAIState.ATTACKING);
  */
-function toBeInState(
-  received: any,
-  expectedState: string
-): jest.CustomMatcherResult {
+function toBeInState(received: any, expectedState: string): jest.CustomMatcherResult {
   // Check various state properties
   const actualState =
-    received.state ||
-    received.aiState ||
-    received.phase ||
-    received.mode ||
-    'unknown';
+    received.state || received.aiState || received.phase || received.mode || 'unknown';
 
   const pass = actualState === expectedState;
 
@@ -90,8 +83,7 @@ function toHaveZombie(
   received: GameState | { activeZombies: string[] },
   zombieIdOrProperties: string | Partial<Zombie>
 ): jest.CustomMatcherResult {
-  const zombieIds =
-    'farm' in received ? received.farm.activeZombies : received.activeZombies;
+  const zombieIds = 'farm' in received ? received.farm.activeZombies : received.activeZombies;
 
   if (typeof zombieIdOrProperties === 'string') {
     const pass = zombieIds.includes(zombieIdOrProperties);

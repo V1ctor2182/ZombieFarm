@@ -714,7 +714,7 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
 - Core Phase 5 (Save System) COMPLETE ✅
   - 51 tests (47 passing, 4 integration issues)
   - Save/load system operational
-- **940+ total tests passing across project**
+- **1000+ total tests passing across project**
   - CORE: 125 tests (state machine + event system + save system)
   - TEST: 428 tests (factories, fixtures, matchers)
   - FARM: 145 tests (54 planting + 38 growth + 53 harvesting) ✅

@@ -12,5 +12,11 @@ export type {
   EventBusStats,
 } from './eventBus';
 
-export { EventLogger, eventLogger, enableEventLogging, disableEventLogging, printEventStats } from './eventLogger';
+export {
+  EventLogger,
+  eventLogger,
+  enableEventLogging,
+  disableEventLogging,
+  printEventStats,
+} from './eventLogger';
 export type { EventLoggerConfig, EventTiming } from './eventLogger';

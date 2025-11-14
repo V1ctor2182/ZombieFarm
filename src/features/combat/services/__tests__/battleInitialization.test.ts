@@ -79,11 +79,7 @@ describe('validateSquad', () => {
     });
 
     it('accepts squad at exact maximum size', () => {
-      const zombies: Zombie[] = [
-        createMockZombie(),
-        createMockZombie(),
-        createMockZombie(),
-      ];
+      const zombies: Zombie[] = [createMockZombie(), createMockZombie(), createMockZombie()];
       const maxSquadSize = 3;
 
       const result = validateSquad(zombies, maxSquadSize);
@@ -131,9 +127,7 @@ describe('validateSquad', () => {
     });
 
     it('rejects zombies with negative HP', () => {
-      const zombies: Zombie[] = [
-        createMockZombie({ stats: { hp: -10, maxHp: 100 } }),
-      ];
+      const zombies: Zombie[] = [createMockZombie({ stats: { hp: -10, maxHp: 100 } })];
       const maxSquadSize = 5;
 
       const result = validateSquad(zombies, maxSquadSize);
@@ -206,8 +200,8 @@ describe('generateEnemyWave', () => {
       const enemies = generateEnemyWave(location, waveNumber);
 
       expect(enemies).toHaveLength(5);
-      const peasants = enemies.filter(e => e.type === EnemyType.PEASANT);
-      const militia = enemies.filter(e => e.type === EnemyType.MILITIA);
+      const peasants = enemies.filter((e) => e.type === EnemyType.PEASANT);
+      const militia = enemies.filter((e) => e.type === EnemyType.MILITIA);
       expect(peasants).toHaveLength(3);
       expect(militia).toHaveLength(2);
     });
@@ -225,7 +219,7 @@ describe('generateEnemyWave', () => {
       const enemies = generateEnemyWave(location, waveNumber);
 
       expect(enemies).toHaveLength(3);
-      expect(enemies.every(e => e.type === EnemyType.PEASANT)).toBe(true);
+      expect(enemies.every((e) => e.type === EnemyType.PEASANT)).toBe(true);
     });
 
     it('generates second wave enemies correctly', () => {
@@ -241,14 +235,12 @@ describe('generateEnemyWave', () => {
       const enemies = generateEnemyWave(location, waveNumber);
 
       expect(enemies).toHaveLength(2);
-      expect(enemies.every(e => e.type === EnemyType.KNIGHT)).toBe(true);
+      expect(enemies.every((e) => e.type === EnemyType.KNIGHT)).toBe(true);
     });
 
     it('returns empty array for non-existent wave', () => {
       const location = createMockLocation({
-        enemies: [
-          { type: EnemyType.PEASANT, count: 3, wave: 1 },
-        ],
+        enemies: [{ type: EnemyType.PEASANT, count: 3, wave: 1 }],
         waves: 1,
       });
       const waveNumber = 2;
@@ -260,15 +252,13 @@ describe('generateEnemyWave', () => {
 
     it('assigns unique IDs to each enemy', () => {
       const location = createMockLocation({
-        enemies: [
-          { type: EnemyType.PEASANT, count: 5, wave: 1 },
-        ],
+        enemies: [{ type: EnemyType.PEASANT, count: 5, wave: 1 }],
         waves: 1,
       });
 
       const enemies = generateEnemyWave(location, 1);
 
-      const ids = enemies.map(e => e.id);
+      const ids = enemies.map((e) => e.id);
       const uniqueIds = new Set(ids);
       expect(uniqueIds.size).toBe(5);
     });
@@ -277,9 +267,7 @@ describe('generateEnemyWave', () => {
   describe('enemy stats and configuration', () => {
     it('applies base stats from enemy config', () => {
       const location = createMockLocation({
-        enemies: [
-          { type: EnemyType.KNIGHT, count: 1, wave: 1 },
-        ],
+        enemies: [{ type: EnemyType.KNIGHT, count: 1, wave: 1 }],
       });
 
       const enemies = generateEnemyWave(location, 1);
@@ -291,9 +279,7 @@ describe('generateEnemyWave', () => {
 
     it('applies level modifier to enemy stats', () => {
       const location = createMockLocation({
-        enemies: [
-          { type: EnemyType.PEASANT, count: 1, wave: 1, levelModifier: 2.0 },
-        ],
+        enemies: [{ type: EnemyType.PEASANT, count: 1, wave: 1, levelModifier: 2.0 }],
       });
 
       const enemies = generateEnemyWave(location, 1);
@@ -310,9 +296,7 @@ describe('generateEnemyWave', () => {
 
     it('marks boss enemies correctly', () => {
       const location = createMockLocation({
-        enemies: [
-          { type: EnemyType.PALADIN, count: 1, wave: 1, isBoss: true },
-        ],
+        enemies: [{ type: EnemyType.PALADIN, count: 1, wave: 1, isBoss: true }],
       });
 
       const enemies = generateEnemyWave(location, 1);
@@ -323,9 +307,7 @@ describe('generateEnemyWave', () => {
 
     it('assigns abilities based on enemy type', () => {
       const location = createMockLocation({
-        enemies: [
-          { type: EnemyType.MAGE, count: 1, wave: 1 },
-        ],
+        enemies: [{ type: EnemyType.MAGE, count: 1, wave: 1 }],
       });
 
       const enemies = generateEnemyWave(location, 1);
@@ -342,11 +324,7 @@ describe('generateEnemyWave', () => {
 describe('assignPositions', () => {
   describe('zombie positioning', () => {
     it('positions zombies in line formation', () => {
-      const zombies: Zombie[] = [
-        createMockZombie(),
-        createMockZombie(),
-        createMockZombie(),
-      ];
+      const zombies: Zombie[] = [createMockZombie(), createMockZombie(), createMockZombie()];
       const formation: FormationType = 'line';
       const side: 'left' | 'right' = 'left';
 
@@ -354,9 +332,9 @@ describe('assignPositions', () => {
 
       expect(positioned).toHaveLength(3);
       // Zombies should be on left side (x < 500)
-      expect(positioned.every(z => z.position.x < 500)).toBe(true);
+      expect(positioned.every((z) => z.position.x < 500)).toBe(true);
       // Zombies should have different y positions (vertical spread)
-      const yPositions = positioned.map(z => z.position.y);
+      const yPositions = positioned.map((z) => z.position.y);
       const uniqueY = new Set(yPositions);
       expect(uniqueY.size).toBe(3);
     });
@@ -375,7 +353,7 @@ describe('assignPositions', () => {
 
       expect(positioned).toHaveLength(4);
       // Staggered means different x positions within side
-      const xPositions = positioned.map(z => z.position.x);
+      const xPositions = positioned.map((z) => z.position.x);
       const uniqueX = new Set(xPositions);
       expect(uniqueX.size).toBeGreaterThan(1);
     });
@@ -395,7 +373,7 @@ describe('assignPositions', () => {
       // First zombie (tank) should be furthest forward
       const firstZombie = positioned[0];
       const others = positioned.slice(1);
-      expect(others.every(z => z.position.x < firstZombie.position.x)).toBe(true);
+      expect(others.every((z) => z.position.x < firstZombie.position.x)).toBe(true);
     });
 
     it('respects deployment order', () => {
@@ -418,9 +396,7 @@ describe('assignPositions', () => {
   describe('enemy positioning', () => {
     it('positions enemies on right side', () => {
       const location = createMockLocation({
-        enemies: [
-          { type: EnemyType.PEASANT, count: 3, wave: 1 },
-        ],
+        enemies: [{ type: EnemyType.PEASANT, count: 3, wave: 1 }],
       });
       const enemies = generateEnemyWave(location, 1);
       const formation: FormationType = 'line';
@@ -429,20 +405,18 @@ describe('assignPositions', () => {
       const positioned = assignPositions(enemies as any[], formation, side);
 
       // Enemies should be on right side (x > 500)
-      expect(positioned.every(e => e.position.x > 500)).toBe(true);
+      expect(positioned.every((e) => e.position.x > 500)).toBe(true);
     });
 
     it('spreads enemies vertically', () => {
       const location = createMockLocation({
-        enemies: [
-          { type: EnemyType.PEASANT, count: 5, wave: 1 },
-        ],
+        enemies: [{ type: EnemyType.PEASANT, count: 5, wave: 1 }],
       });
       const enemies = generateEnemyWave(location, 1);
 
       const positioned = assignPositions(enemies as any[], 'line', 'right');
 
-      const yPositions = positioned.map(e => e.position.y);
+      const yPositions = positioned.map((e) => e.position.y);
       const uniqueY = new Set(yPositions);
       expect(uniqueY.size).toBeGreaterThanOrEqual(3);
     });
@@ -465,7 +439,7 @@ describe('assignPositions', () => {
 
       expect(positioned).toHaveLength(10);
       // All should have valid positions
-      expect(positioned.every(z => z.position.x >= 0 && z.position.y >= 0)).toBe(true);
+      expect(positioned.every((z) => z.position.x >= 0 && z.position.y >= 0)).toBe(true);
     });
 
     it('keeps units within battlefield bounds', () => {
@@ -474,7 +448,7 @@ describe('assignPositions', () => {
       const positioned = assignPositions(zombies, 'line', 'left');
 
       // Assuming battlefield height is 1080
-      expect(positioned.every(z => z.position.y >= 0 && z.position.y <= 1080)).toBe(true);
+      expect(positioned.every((z) => z.position.y >= 0 && z.position.y <= 1080)).toBe(true);
     });
   });
 });
@@ -485,14 +459,9 @@ describe('assignPositions', () => {
 
 describe('initializeBattle', () => {
   it('creates complete battle state', () => {
-    const squad: Zombie[] = [
-      createMockZombie(),
-      createMockZombie(),
-    ];
+    const squad: Zombie[] = [createMockZombie(), createMockZombie()];
     const location = createMockLocation({
-      enemies: [
-        { type: EnemyType.PEASANT, count: 3, wave: 1 },
-      ],
+      enemies: [{ type: EnemyType.PEASANT, count: 3, wave: 1 }],
     });
 
     const battleState = initializeBattle(squad, location);
@@ -546,9 +515,7 @@ describe('initializeBattle', () => {
   });
 
   it('converts zombies to combat units', () => {
-    const squad = [
-      createMockZombie({ name: 'TestZombie', stats: { hp: 50, maxHp: 100 } }),
-    ];
+    const squad = [createMockZombie({ name: 'TestZombie', stats: { hp: 50, maxHp: 100 } })];
     const location = createMockLocation();
 
     const battleState = initializeBattle(squad, location);
@@ -648,7 +615,7 @@ describe('checkBattleRequirements', () => {
       const result = checkBattleRequirements(squad, location, 5);
 
       expect(result.canStart).toBe(true);
-      expect(result.warnings.some(w => w.includes('difficulty'))).toBe(true);
+      expect(result.warnings.some((w) => w.includes('difficulty'))).toBe(true);
     });
 
     it('fails if location is on cooldown', () => {
@@ -659,7 +626,7 @@ describe('checkBattleRequirements', () => {
       const result = checkBattleRequirements(squad, location, 5);
 
       expect(result.canStart).toBe(false);
-      expect(result.errors.some(e => e.includes('cooldown'))).toBe(true);
+      expect(result.errors.some((e) => e.includes('cooldown'))).toBe(true);
     });
   });
 
@@ -678,37 +645,29 @@ describe('checkBattleRequirements', () => {
     });
 
     it('warns if zombies have low HP', () => {
-      const squad = [
-        createMockZombie({ stats: { hp: 10, maxHp: 100 } }),
-      ];
+      const squad = [createMockZombie({ stats: { hp: 10, maxHp: 100 } })];
       const location = createMockLocation();
 
       const result = checkBattleRequirements(squad, location, 5);
 
       expect(result.canStart).toBe(true);
-      expect(result.warnings.some(w => w.includes('low HP'))).toBe(true);
+      expect(result.warnings.some((w) => w.includes('low HP'))).toBe(true);
     });
   });
 
   describe('level recommendations', () => {
     it('warns if squad average level is below recommended', () => {
-      const squad = [
-        createMockZombie({ level: 1 }),
-        createMockZombie({ level: 2 }),
-      ];
+      const squad = [createMockZombie({ level: 1 }), createMockZombie({ level: 2 })];
       const location = createMockLocation({ recommendedLevel: 10 });
 
       const result = checkBattleRequirements(squad, location, 5);
 
       expect(result.canStart).toBe(true);
-      expect(result.warnings.some(w => w.includes('level'))).toBe(true);
+      expect(result.warnings.some((w) => w.includes('level'))).toBe(true);
     });
 
     it('does not warn if squad level is sufficient', () => {
-      const squad = [
-        createMockZombie({ level: 10 }),
-        createMockZombie({ level: 12 }),
-      ];
+      const squad = [createMockZombie({ level: 10 }), createMockZombie({ level: 12 })];
       const location = createMockLocation({ recommendedLevel: 10 });
 
       const result = checkBattleRequirements(squad, location, 5);

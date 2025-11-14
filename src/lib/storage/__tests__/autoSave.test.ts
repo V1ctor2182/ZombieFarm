@@ -23,10 +23,7 @@ import {
 } from '../autoSave';
 import { saveGame } from '../saveLoad';
 import { createTestGameState } from '../../test-utils/factories/gameStateFactory';
-import {
-  mockLocalStorage,
-  restoreLocalStorage,
-} from '../../test-utils/mocks/mockLocalStorage';
+import { mockLocalStorage, restoreLocalStorage } from '../../test-utils/mocks/mockLocalStorage';
 
 // Mock saveGame to track calls
 jest.mock('../saveLoad', () => ({
@@ -236,7 +233,10 @@ describe('autoSave', () => {
       // Arrange
       const getState = () => createTestGameState();
       setupAutoSave(getState, { enabled: true });
-      (saveGame as jest.Mock).mockReturnValueOnce({ success: false, error: new Error('Save failed') });
+      (saveGame as jest.Mock).mockReturnValueOnce({
+        success: false,
+        error: new Error('Save failed'),
+      });
 
       // Act & Assert
       expect(() => triggerAutoSave()).not.toThrow();

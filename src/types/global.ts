@@ -73,9 +73,9 @@ export enum Season {
  */
 export enum Weather {
   CLEAR = 'clear',
-  BLOOD_RAIN = 'bloodRain',    // Accelerates growth, refills Blood Wells
-  FOG = 'fog',                  // Cosmetic, slight raid chance reduction
-  BRIGHT_SUN = 'brightSun',     // Slows undead growth, reduces happiness
+  BLOOD_RAIN = 'bloodRain', // Accelerates growth, refills Blood Wells
+  FOG = 'fog', // Cosmetic, slight raid chance reduction
+  BRIGHT_SUN = 'brightSun', // Slows undead growth, reduces happiness
 }
 
 /**

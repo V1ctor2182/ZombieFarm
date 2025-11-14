@@ -552,9 +552,7 @@ describe('growth service', () => {
       );
 
       // With fertilizer, should have more high-quality zombies
-      const silverOrBetter = qualities.filter(
-        (q) => q !== ZombieQuality.BRONZE
-      ).length;
+      const silverOrBetter = qualities.filter((q) => q !== ZombieQuality.BRONZE).length;
       expect(silverOrBetter).toBeGreaterThan(0);
     });
 

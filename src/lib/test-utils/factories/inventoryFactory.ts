@@ -32,7 +32,9 @@ export function createTestInventory(overrides?: Partial<Inventory>): Inventory {
     currencies: overrides?.currencies
       ? { ...defaultInventory.currencies, ...overrides.currencies }
       : defaultInventory.currencies,
-    seeds: overrides?.seeds ? { ...defaultInventory.seeds, ...overrides.seeds } : defaultInventory.seeds,
+    seeds: overrides?.seeds
+      ? { ...defaultInventory.seeds, ...overrides.seeds }
+      : defaultInventory.seeds,
   };
 }
 

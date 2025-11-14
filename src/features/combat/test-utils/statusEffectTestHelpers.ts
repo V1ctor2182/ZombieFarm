@@ -95,9 +95,7 @@ export function createStatusEffectScenario(
 } {
   const battle = createMockBattle();
 
-  const activeEffects = targetIds.map((unitId) =>
-    createActiveStatusEffect(effect, unitId)
-  );
+  const activeEffects = targetIds.map((unitId) => createActiveStatusEffect(effect, unitId));
 
   const updatedBattle: CombatState = {
     ...battle,
@@ -488,7 +486,5 @@ export function countEffectStacks(
   unitId: string,
   effect: StatusEffect
 ): number {
-  return battle.activeEffects.filter(
-    (e) => e.unitId === unitId && e.effect === effect
-  ).length;
+  return battle.activeEffects.filter((e) => e.unitId === unitId && e.effect === effect).length;
 }

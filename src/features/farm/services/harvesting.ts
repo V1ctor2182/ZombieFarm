@@ -28,9 +28,7 @@ import { gameConfig } from '../../../lib/config/zombieFarmConfig';
 /**
  * Result type for service operations
  */
-export type Result<T, E = string> =
-  | { success: true; data: T }
-  | { success: false; error: E };
+export type Result<T, E = string> = { success: true; data: T } | { success: false; error: E };
 
 /**
  * Map SeedType to ZombieType
@@ -111,10 +109,7 @@ export function validateHarvest(plot: Plot): Result<void> {
  * @param quality - Quality tier
  * @returns Zombie stats
  */
-export function generateZombieStats(
-  zombieType: ZombieType,
-  quality: ZombieQuality
-): ZombieStats {
+export function generateZombieStats(zombieType: ZombieType, quality: ZombieQuality): ZombieStats {
   // Get base stats from config
   const zombieConfig = gameConfig.ZOMBIES[zombieType];
   if (!zombieConfig) {
@@ -226,8 +221,7 @@ export function applyMutations(zombie: Zombie, mutationChance: number): Zombie {
   const mutations: string[] = [];
 
   for (let i = 0; i < numMutations; i++) {
-    const mutation =
-      MUTATION_TYPES[Math.floor(Math.random() * MUTATION_TYPES.length)];
+    const mutation = MUTATION_TYPES[Math.floor(Math.random() * MUTATION_TYPES.length)];
     if (!mutations.includes(mutation)) {
       mutations.push(mutation);
     }
@@ -245,8 +239,8 @@ export function applyMutations(zombie: Zombie, mutationChance: number): Zombie {
 function getMutationChance(quality: ZombieQuality): number {
   const chances = {
     bronze: 0.05, // 5%
-    silver: 0.10, // 10%
-    gold: 0.20, // 20%
+    silver: 0.1, // 10%
+    gold: 0.2, // 20%
     diamond: 0.35, // 35%
   };
   return chances[quality] || 0;
@@ -267,9 +261,7 @@ function getMutationChance(quality: ZombieQuality): number {
  * @param zombieType - Type of zombie harvested
  * @returns Resource byproducts
  */
-export function generateByproducts(
-  zombieType: ZombieType
-): Record<Resource, number> {
+export function generateByproducts(zombieType: ZombieType): Record<Resource, number> {
   // Base byproducts for all zombies
   const byproducts: Partial<Record<Resource, number>> = {
     rottedWood: Math.floor(Math.random() * 3) + 1, // 1-3 wood
@@ -401,17 +393,14 @@ export function harvestZombie(
   const mutatedZombie = applyMutations(zombie, mutationChance);
 
   // Determine if zombie goes to active roster or Crypt
-  const hasCapacity =
-    farmState.activeZombies.length < farmState.activeZombieCapacity;
+  const hasCapacity = farmState.activeZombies.length < farmState.activeZombieCapacity;
 
   const updatedFarmState: FarmState = {
     ...farmState,
     activeZombies: hasCapacity
       ? [...farmState.activeZombies, mutatedZombie]
       : farmState.activeZombies,
-    cryptZombies: hasCapacity
-      ? farmState.cryptZombies
-      : [...farmState.cryptZombies, mutatedZombie],
+    cryptZombies: hasCapacity ? farmState.cryptZombies : [...farmState.cryptZombies, mutatedZombie],
     plots: farmState.plots.map((p) =>
       p.id === plotId
         ? {

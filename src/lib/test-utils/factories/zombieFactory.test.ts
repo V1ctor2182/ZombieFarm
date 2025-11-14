@@ -153,9 +153,7 @@ describe('zombieFactory', () => {
       const zombie = createTestZombieWithQuality(ZombieType.SHAMBLER, ZombieQuality.SILVER);
 
       expect(zombie.quality).toBe(ZombieQuality.SILVER);
-      const expectedHp = Math.floor(
-        gameConfig.ZOMBIES[ZombieType.SHAMBLER].baseStats.maxHp * 1.25
-      );
+      const expectedHp = Math.floor(gameConfig.ZOMBIES[ZombieType.SHAMBLER].baseStats.maxHp * 1.25);
       expect(zombie.stats.maxHp).toBe(expectedHp);
     });
 
@@ -163,9 +161,7 @@ describe('zombieFactory', () => {
       const zombie = createTestZombieWithQuality(ZombieType.SHAMBLER, ZombieQuality.GOLD);
 
       expect(zombie.quality).toBe(ZombieQuality.GOLD);
-      const expectedHp = Math.floor(
-        gameConfig.ZOMBIES[ZombieType.SHAMBLER].baseStats.maxHp * 1.5
-      );
+      const expectedHp = Math.floor(gameConfig.ZOMBIES[ZombieType.SHAMBLER].baseStats.maxHp * 1.5);
       expect(zombie.stats.maxHp).toBe(expectedHp);
     });
 
@@ -173,9 +169,7 @@ describe('zombieFactory', () => {
       const zombie = createTestZombieWithQuality(ZombieType.SHAMBLER, ZombieQuality.DIAMOND);
 
       expect(zombie.quality).toBe(ZombieQuality.DIAMOND);
-      const expectedHp = Math.floor(
-        gameConfig.ZOMBIES[ZombieType.SHAMBLER].baseStats.maxHp * 2.0
-      );
+      const expectedHp = Math.floor(gameConfig.ZOMBIES[ZombieType.SHAMBLER].baseStats.maxHp * 2.0);
       expect(zombie.stats.maxHp).toBe(expectedHp);
     });
   });

@@ -7,11 +7,7 @@
  * Per DOMAIN-COMBAT.md combat flow specifications.
  */
 
-import {
-  findTargetsInRange,
-  selectTarget,
-  shouldRetarget,
-} from '../services/targeting';
+import { findTargetsInRange, selectTarget, shouldRetarget } from '../services/targeting';
 import type { CombatUnit, Enemy, Obstacle } from '../../../types/combat';
 import {
   TargetPriority,
@@ -285,11 +281,7 @@ describe('Targeting Integration', () => {
         stats: { ...brute.stats, range: 10 },
       };
 
-      const target = selectTarget(
-        modifiedBrute,
-        enemies,
-        TargetPriority.CLOSEST
-      );
+      const target = selectTarget(modifiedBrute, enemies, TargetPriority.CLOSEST);
 
       expect(target?.id).toBe('e1'); // Soldier is closest
     });
@@ -302,11 +294,7 @@ describe('Targeting Integration', () => {
         stats: { ...spitter.stats, range: 15 },
       };
 
-      const target = selectTarget(
-        modifiedSpitter,
-        enemies,
-        TargetPriority.LOWEST_ARMOR
-      );
+      const target = selectTarget(modifiedSpitter, enemies, TargetPriority.LOWEST_ARMOR);
 
       expect(target?.id).toBe('e2'); // Archer has lowest defense (5)
     });
@@ -319,11 +307,7 @@ describe('Targeting Integration', () => {
         stats: { ...runner.stats, range: 15 },
       };
 
-      const target = selectTarget(
-        modifiedRunner,
-        enemies,
-        TargetPriority.SUPPORT
-      );
+      const target = selectTarget(modifiedRunner, enemies, TargetPriority.SUPPORT);
 
       expect(target?.id).toBe('e3'); // Priest is support unit
     });
@@ -401,12 +385,7 @@ describe('Targeting Integration', () => {
 
       const allEnemies = [...enemies, weakEnemy];
 
-      const shouldChange = shouldRetarget(
-        runner,
-        enemies[0],
-        allEnemies,
-        TargetPriority.WEAKEST
-      );
+      const shouldChange = shouldRetarget(runner, enemies[0], allEnemies, TargetPriority.WEAKEST);
 
       expect(shouldChange).toBe(true); // Should switch to weak enemy
     });
@@ -440,9 +419,7 @@ describe('Targeting Integration', () => {
         stats: { ...z.stats, range: 10 },
       }));
 
-      const targets = advancedZombies.map((z) =>
-        selectTarget(z, enemies, TargetPriority.CLOSEST)
-      );
+      const targets = advancedZombies.map((z) => selectTarget(z, enemies, TargetPriority.CLOSEST));
 
       // All should target soldier (closest)
       expect(targets.every((t) => t?.id === 'e1')).toBe(true);
@@ -456,21 +433,9 @@ describe('Targeting Integration', () => {
         stats: { ...z.stats, range: 15 },
       }));
 
-      const closestTarget = selectTarget(
-        advancedZombies[0],
-        enemies,
-        TargetPriority.CLOSEST
-      );
-      const weakestTarget = selectTarget(
-        advancedZombies[1],
-        enemies,
-        TargetPriority.WEAKEST
-      );
-      const supportTarget = selectTarget(
-        advancedZombies[2],
-        enemies,
-        TargetPriority.SUPPORT
-      );
+      const closestTarget = selectTarget(advancedZombies[0], enemies, TargetPriority.CLOSEST);
+      const weakestTarget = selectTarget(advancedZombies[1], enemies, TargetPriority.WEAKEST);
+      const supportTarget = selectTarget(advancedZombies[2], enemies, TargetPriority.SUPPORT);
 
       expect(closestTarget?.id).toBe('e1'); // Soldier
       expect(weakestTarget?.id).toBe('e2'); // Archer (60 HP)
@@ -521,12 +486,7 @@ describe('Targeting Integration', () => {
 
       const singleEnemy = [enemies[0]];
 
-      const shouldChange = shouldRetarget(
-        brute,
-        enemies[0],
-        singleEnemy,
-        TargetPriority.CLOSEST
-      );
+      const shouldChange = shouldRetarget(brute, enemies[0], singleEnemy, TargetPriority.CLOSEST);
 
       expect(shouldChange).toBe(false); // Only one target, can't switch
     });

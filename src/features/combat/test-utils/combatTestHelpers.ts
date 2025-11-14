@@ -42,9 +42,7 @@ export function createMockPosition(overrides?: Partial<Position>): Position {
 /**
  * Creates a mock combat unit (zombie in battle)
  */
-export function createMockCombatUnit(
-  overrides?: Partial<CombatUnit>
-): CombatUnit {
+export function createMockCombatUnit(overrides?: Partial<CombatUnit>): CombatUnit {
   return {
     id: `zombie-${Math.random().toString(36).substr(2, 9)}`,
     type: 'shambler',
@@ -110,7 +108,7 @@ export function createMockEnemy(overrides?: Partial<Enemy>): Enemy {
  */
 export function createMockZombie(overrides?: Partial<Zombie>): Zombie {
   return {
-    id: `zombie-${Math.random().toString(36).substr(2, 9)}` as ZombieId,
+    id: `zombie-${Math.random().toString(36).substr(2, 9)}`,
     name: 'Test Zombie',
     type: 'shambler' as any,
     quality: 'common' as any,
@@ -141,7 +139,7 @@ export function createMockZombie(overrides?: Partial<Zombie>): Zombie {
  */
 export function createMockLocation(overrides?: Partial<Location>): Location {
   return {
-    id: `location-${Math.random().toString(36).substr(2, 9)}` as LocationId,
+    id: `location-${Math.random().toString(36).substr(2, 9)}`,
     name: 'Test Village',
     description: 'A small test village',
     type: LocationType.VILLAGE,
@@ -179,9 +177,7 @@ export function createMockLocation(overrides?: Partial<Location>): Location {
 /**
  * Creates a mock squad of zombies
  */
-export function createMockSquad(
-  zombies?: Partial<CombatUnit>[]
-): ReadonlyArray<CombatUnit> {
+export function createMockSquad(zombies?: Partial<CombatUnit>[]): ReadonlyArray<CombatUnit> {
   if (!zombies || zombies.length === 0) {
     // Default squad: 1 Brute, 2 Shamblers
     return [
@@ -222,9 +218,7 @@ export function createMockSquad(
 /**
  * Creates a mock enemy wave
  */
-export function createMockEnemyWave(
-  enemies?: Partial<Enemy>[]
-): ReadonlyArray<Enemy> {
+export function createMockEnemyWave(enemies?: Partial<Enemy>[]): ReadonlyArray<Enemy> {
   if (!enemies || enemies.length === 0) {
     // Default wave: 2 Peasants, 1 Archer
     return [
@@ -272,14 +266,12 @@ export function createMockEnemyWave(
 /**
  * Creates a complete mock battle state
  */
-export function createMockBattle(
-  overrides?: Partial<CombatState>
-): CombatState {
+export function createMockBattle(overrides?: Partial<CombatState>): CombatState {
   const defaultSquad = createMockSquad();
   const defaultEnemies = createMockEnemyWave();
 
   return {
-    battleId: `battle-${Math.random().toString(36).substr(2, 9)}` as BattleId,
+    battleId: `battle-${Math.random().toString(36).substr(2, 9)}`,
     locationId: 'test-location' as LocationId,
     phase: BattlePhase.ACTIVE,
     playerSquad: defaultSquad,
@@ -308,10 +300,7 @@ export function createMockBattle(
  * will be more complex. This helper focuses on time progression and
  * basic state updates.
  */
-export function simulateBattleTick(
-  battle: CombatState,
-  deltaTime: number
-): CombatState {
+export function simulateBattleTick(battle: CombatState, deltaTime: number): CombatState {
   // Update battle duration
   const newDuration = battle.battleDuration + deltaTime;
 
@@ -371,10 +360,7 @@ export function simulateBattleTicks(
 /**
  * Kills a unit in battle (sets HP to 0, isDead to true)
  */
-export function killUnit(
-  battle: CombatState,
-  unitId: string
-): CombatState {
+export function killUnit(battle: CombatState, unitId: string): CombatState {
   const updatedSquad = battle.playerSquad.map((unit) =>
     unit.id === unitId
       ? {
@@ -407,11 +393,7 @@ export function killUnit(
 /**
  * Damages a unit in battle
  */
-export function damageUnit(
-  battle: CombatState,
-  unitId: string,
-  damage: number
-): CombatState {
+export function damageUnit(battle: CombatState, unitId: string, damage: number): CombatState {
   const updatedSquad = battle.playerSquad.map((unit) => {
     if (unit.id === unitId) {
       const newHp = Math.max(0, unit.stats.hp - damage);
@@ -448,11 +430,7 @@ export function damageUnit(
 /**
  * Heals a unit in battle
  */
-export function healUnit(
-  battle: CombatState,
-  unitId: string,
-  healAmount: number
-): CombatState {
+export function healUnit(battle: CombatState, unitId: string, healAmount: number): CombatState {
   const updatedSquad = battle.playerSquad.map((unit) => {
     if (unit.id === unitId) {
       const newHp = Math.min(unit.stats.maxHp, unit.stats.hp + healAmount);
@@ -496,10 +474,7 @@ export function initiateRetreat(battle: CombatState): CombatState {
 /**
  * Finds a unit by ID in battle
  */
-export function findUnit(
-  battle: CombatState,
-  unitId: string
-): CombatUnit | Enemy | null {
+export function findUnit(battle: CombatState, unitId: string): CombatUnit | Enemy | null {
   const zombie = battle.playerSquad.find((z) => z.id === unitId);
   if (zombie) return zombie;
 
@@ -534,10 +509,7 @@ export function calculateDistance(pos1: Position, pos2: Position): number {
 /**
  * Checks if a unit is in range of another
  */
-export function isInRange(
-  attacker: CombatUnit | Enemy,
-  target: CombatUnit | Enemy
-): boolean {
+export function isInRange(attacker: CombatUnit | Enemy, target: CombatUnit | Enemy): boolean {
   const distance = calculateDistance(attacker.position, target.position);
   return distance <= attacker.stats.range;
 }

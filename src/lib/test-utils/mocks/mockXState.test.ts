@@ -166,7 +166,7 @@ describe('mockXState', () => {
     it('should throw when actor is not in expected state', () => {
       // Act & Assert
       expect(() => expectState(actor, 'running')).toThrow(
-        "Expected state 'running', but current state is 'idle'",
+        "Expected state 'running', but current state is 'idle'"
       );
     });
 
@@ -211,7 +211,7 @@ describe('mockXState', () => {
     it('should reject if timeout exceeded', async () => {
       // Act & Assert
       await expect(waitForState(actor, 'nonExistentState', 100)).rejects.toThrow(
-        "Timeout waiting for state 'nonExistentState' after 100ms",
+        "Timeout waiting for state 'nonExistentState' after 100ms"
       );
     });
 
@@ -261,7 +261,7 @@ describe('mockXState', () => {
     it('should reject if target state not reached', async () => {
       // Act & Assert
       await expect(sendEventAndWait(actor, { type: 'START' }, 'paused', 100)).rejects.toThrow(
-        "Timeout waiting for state 'paused'",
+        "Timeout waiting for state 'paused'"
       );
     });
   });
@@ -422,7 +422,9 @@ describe('mockXState', () => {
 
     it('should reject on timeout', async () => {
       // Act & Assert (no events sent, so should timeout)
-      await expect(waitForSnapshot(actor, 100)).rejects.toThrow('Timeout waiting for snapshot after 100ms');
+      await expect(waitForSnapshot(actor, 100)).rejects.toThrow(
+        'Timeout waiting for snapshot after 100ms'
+      );
     });
   });
 

@@ -55,10 +55,7 @@ let enabled = false;
  * @param getState - Function that returns current game state
  * @param config - Auto-save configuration
  */
-export function setupAutoSave(
-  getState: () => GameState,
-  config: AutoSaveConfig
-): void {
+export function setupAutoSave(getState: () => GameState, config: AutoSaveConfig): void {
   // Stop existing auto-save if running
   stopAutoSave();
 
@@ -179,12 +176,13 @@ function performSave(): void {
   } catch (error) {
     // Handle unexpected errors
     console.error('Auto-save error:', error);
-    const saveError = error instanceof SaveLoadError
-      ? error
-      : new SaveLoadError(
-          error instanceof Error ? error.message : 'Unknown error',
-          'SERIALIZATION_ERROR' as any
-        );
+    const saveError =
+      error instanceof SaveLoadError
+        ? error
+        : new SaveLoadError(
+            error instanceof Error ? error.message : 'Unknown error',
+            'SERIALIZATION_ERROR' as any
+          );
     currentConfig.onError(saveError);
   }
 }

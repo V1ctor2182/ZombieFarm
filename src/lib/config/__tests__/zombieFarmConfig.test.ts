@@ -264,7 +264,9 @@ describe('Game Configuration', () => {
       expect(gameConfig.COMBAT.DAMAGE_MULTIPLIERS[DamageType.PHYSICAL].vsArmor).toBeLessThan(1.0);
 
       // Toxic bypasses some armor
-      expect(gameConfig.COMBAT.DAMAGE_MULTIPLIERS[DamageType.TOXIC].armorPenetration).toBeGreaterThan(0);
+      expect(
+        gameConfig.COMBAT.DAMAGE_MULTIPLIERS[DamageType.TOXIC].armorPenetration
+      ).toBeGreaterThan(0);
     });
 
     it('should define status effect durations', () => {
@@ -379,9 +381,9 @@ describe('Game Configuration', () => {
 
   describe('Configuration Consistency', () => {
     it('should have all zombie types reference valid resources in costs', () => {
-      Object.values(gameConfig.ZOMBIES).forEach(zombie => {
+      Object.values(gameConfig.ZOMBIES).forEach((zombie) => {
         if (zombie.feedCost.resources) {
-          Object.keys(zombie.feedCost.resources).forEach(resourceKey => {
+          Object.keys(zombie.feedCost.resources).forEach((resourceKey) => {
             expect(Object.values(Resource)).toContain(resourceKey);
           });
         }
@@ -389,9 +391,9 @@ describe('Game Configuration', () => {
     });
 
     it('should have all buildings reference valid resources in costs', () => {
-      Object.values(gameConfig.BUILDINGS).forEach(building => {
+      Object.values(gameConfig.BUILDINGS).forEach((building) => {
         if (building.cost.resources) {
-          Object.keys(building.cost.resources).forEach(resourceKey => {
+          Object.keys(building.cost.resources).forEach((resourceKey) => {
             expect(Object.values(Resource)).toContain(resourceKey);
           });
         }
@@ -399,7 +401,7 @@ describe('Game Configuration', () => {
     });
 
     it('should have no negative values in stats', () => {
-      Object.values(gameConfig.ZOMBIES).forEach(zombie => {
+      Object.values(gameConfig.ZOMBIES).forEach((zombie) => {
         expect(zombie.baseStats.maxHp).toBeGreaterThan(0);
         expect(zombie.baseStats.attack).toBeGreaterThan(0);
         expect(zombie.baseStats.defense).toBeGreaterThanOrEqual(0);
@@ -410,7 +412,7 @@ describe('Game Configuration', () => {
     });
 
     it('should have growth times be reasonable (not instant, not too long)', () => {
-      Object.values(gameConfig.ZOMBIES).forEach(zombie => {
+      Object.values(gameConfig.ZOMBIES).forEach((zombie) => {
         expect(zombie.growthTimeMinutes).toBeGreaterThan(0);
         expect(zombie.growthTimeMinutes).toBeLessThan(24 * 60); // Less than 24 hours
       });

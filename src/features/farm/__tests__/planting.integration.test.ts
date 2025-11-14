@@ -187,7 +187,7 @@ describe('planting integration', () => {
 
       const result = handlePlantSeedEvent(gameState, event);
 
-      const plot = result.updatedState?.farm.plots.find(p => p.id === 'plot-1');
+      const plot = result.updatedState?.farm.plots.find((p) => p.id === 'plot-1');
       expect(plot?.state).toBe('planted');
       expect(plot?.plantedSeed).toBe('shamblerSeed');
       expect(plot?.plantedAt).toBe(timestamp);
@@ -421,8 +421,8 @@ describe('planting integration', () => {
       const result2 = handlePlantSeedEvent(result1.updatedState!, event2);
       expect(result2.success).toBe(true);
 
-      const plot1 = result2.updatedState?.farm.plots.find(p => p.id === 'plot-1');
-      const plot2 = result2.updatedState?.farm.plots.find(p => p.id === 'plot-2');
+      const plot1 = result2.updatedState?.farm.plots.find((p) => p.id === 'plot-1');
+      const plot2 = result2.updatedState?.farm.plots.find((p) => p.id === 'plot-2');
 
       expect(plot1?.plantedSeed).toBe('shamblerSeed');
       expect(plot2?.plantedSeed).toBe('runnerSeed');

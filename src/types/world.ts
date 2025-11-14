@@ -102,33 +102,33 @@ export interface Location {
  */
 export enum LocationType {
   // Human Settlements
-  VILLAGE = 'village',              // Small settlement, easy
-  TOWN = 'town',                    // Medium settlement, moderate
-  CITY = 'city',                    // Large settlement, hard
-  CAPITAL = 'capital',              // Capital city, very hard
+  VILLAGE = 'village', // Small settlement, easy
+  TOWN = 'town', // Medium settlement, moderate
+  CITY = 'city', // Large settlement, hard
+  CAPITAL = 'capital', // Capital city, very hard
 
   // Military
-  OUTPOST = 'outpost',              // Military outpost
-  CAMP = 'camp',                    // Military camp
-  FORTRESS = 'fortress',            // Military fortress
-  CASTLE = 'castle',                // Castle, heavily defended
+  OUTPOST = 'outpost', // Military outpost
+  CAMP = 'camp', // Military camp
+  FORTRESS = 'fortress', // Military fortress
+  CASTLE = 'castle', // Castle, heavily defended
 
   // Religious
-  CHAPEL = 'chapel',                // Small chapel
-  CHURCH = 'church',                // Church
-  CATHEDRAL = 'cathedral',          // Cathedral, holy enemies
+  CHAPEL = 'chapel', // Small chapel
+  CHURCH = 'church', // Church
+  CATHEDRAL = 'cathedral', // Cathedral, holy enemies
 
   // Economic
-  FARM = 'farm',                    // Human farm
-  MINE = 'mine',                    // Mine, resources
-  LUMBER_MILL = 'lumberMill',       // Lumber mill, wood resources
-  MARKET = 'market',                // Market, loot
+  FARM = 'farm', // Human farm
+  MINE = 'mine', // Mine, resources
+  LUMBER_MILL = 'lumberMill', // Lumber mill, wood resources
+  MARKET = 'market', // Market, loot
 
   // Special
-  RUINS = 'ruins',                  // Ancient ruins
-  CRYPT = 'crypt',                  // Other necromancer's crypt
-  LABORATORY = 'laboratory',        // Alchemist/scientist lab
-  BOSS = 'boss',                    // Unique boss encounter
+  RUINS = 'ruins', // Ancient ruins
+  CRYPT = 'crypt', // Other necromancer's crypt
+  LABORATORY = 'laboratory', // Alchemist/scientist lab
+  BOSS = 'boss', // Unique boss encounter
 }
 
 /**
@@ -219,13 +219,13 @@ export interface Region {
  * Region Biome
  */
 export enum RegionBiome {
-  GRASSLAND = 'grassland',          // Starting area
-  FOREST = 'forest',                // Dense forest
-  SWAMP = 'swamp',                  // Dark swamp
-  MOUNTAINS = 'mountains',          // Mountain range
-  DESERT = 'desert',                // Desert wasteland
-  TUNDRA = 'tundra',                // Frozen tundra
-  CORRUPTION = 'corruption',        // Corrupted/cursed land
+  GRASSLAND = 'grassland', // Starting area
+  FOREST = 'forest', // Dense forest
+  SWAMP = 'swamp', // Dark swamp
+  MOUNTAINS = 'mountains', // Mountain range
+  DESERT = 'desert', // Desert wasteland
+  TUNDRA = 'tundra', // Frozen tundra
+  CORRUPTION = 'corruption', // Corrupted/cursed land
 }
 
 /**
@@ -265,9 +265,9 @@ export interface WorldMapNode {
  * Node Visual State
  */
 export enum NodeVisualState {
-  LOCKED = 'locked',                // Not yet unlocked
-  UNLOCKED = 'unlocked',            // Unlocked, not conquered
-  CONQUERED = 'conquered',          // Conquered
-  AVAILABLE = 'available',          // Can be raided now
-  COOLDOWN = 'cooldown',            // On cooldown
+  LOCKED = 'locked', // Not yet unlocked
+  UNLOCKED = 'unlocked', // Unlocked, not conquered
+  CONQUERED = 'conquered', // Conquered
+  AVAILABLE = 'available', // Can be raided now
+  COOLDOWN = 'cooldown', // On cooldown
 }

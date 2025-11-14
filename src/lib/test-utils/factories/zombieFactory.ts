@@ -79,9 +79,7 @@ export function createTestZombie(overrides?: Partial<Zombie>): Zombie {
   return {
     ...defaultZombie,
     ...overrides,
-    stats: overrides?.stats
-      ? { ...defaultZombie.stats, ...overrides.stats }
-      : defaultZombie.stats,
+    stats: overrides?.stats ? { ...defaultZombie.stats, ...overrides.stats } : defaultZombie.stats,
     position: overrides?.position
       ? { ...defaultZombie.position, ...overrides.position }
       : defaultZombie.position,
@@ -96,10 +94,7 @@ export function createTestZombie(overrides?: Partial<Zombie>): Zombie {
  *
  * Per DOMAIN-FARM.md: Quality affects stat multipliers
  */
-export function createTestZombieWithQuality(
-  type: ZombieType,
-  quality: ZombieQuality
-): Zombie {
+export function createTestZombieWithQuality(type: ZombieType, quality: ZombieQuality): Zombie {
   return createTestZombie({
     type,
     quality,

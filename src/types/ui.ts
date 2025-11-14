@@ -97,10 +97,10 @@ export enum ModalType {
  * Modal Size
  */
 export enum ModalSize {
-  SMALL = 'small',                  // 400px
-  MEDIUM = 'medium',                // 600px
-  LARGE = 'large',                  // 800px
-  FULL = 'full',                    // Full screen
+  SMALL = 'small', // 400px
+  MEDIUM = 'medium', // 600px
+  LARGE = 'large', // 800px
+  FULL = 'full', // Full screen
 }
 
 // ============================================================================
@@ -145,12 +145,12 @@ export interface Notification {
  * Notification Type
  */
 export enum NotificationType {
-  INFO = 'info',                    // Blue, informational
-  SUCCESS = 'success',              // Green, success message
-  WARNING = 'warning',              // Yellow, warning
-  ERROR = 'error',                  // Red, error
-  ACHIEVEMENT = 'achievement',      // Special styling for achievements
-  LEVEL_UP = 'levelUp',             // Special styling for level ups
+  INFO = 'info', // Blue, informational
+  SUCCESS = 'success', // Green, success message
+  WARNING = 'warning', // Yellow, warning
+  ERROR = 'error', // Red, error
+  ACHIEVEMENT = 'achievement', // Special styling for achievements
+  LEVEL_UP = 'levelUp', // Special styling for level ups
 }
 
 /**

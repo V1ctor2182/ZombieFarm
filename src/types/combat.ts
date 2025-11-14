@@ -62,11 +62,11 @@ export interface CombatState {
  * Battle Phase
  */
 export enum BattlePhase {
-  PREPARATION = 'preparation',      // Squad selection, pre-battle
-  ACTIVE = 'active',                // Battle in progress
-  VICTORY = 'victory',              // Player won
-  DEFEAT = 'defeat',                // Player lost
-  RETREAT = 'retreat',              // Retreating
+  PREPARATION = 'preparation', // Squad selection, pre-battle
+  ACTIVE = 'active', // Battle in progress
+  VICTORY = 'victory', // Player won
+  DEFEAT = 'defeat', // Player lost
+  RETREAT = 'retreat', // Retreating
 }
 
 // ============================================================================
@@ -145,13 +145,13 @@ export interface CombatStats {
  * Unit AI State
  */
 export enum UnitAIState {
-  IDLE = 'idle',                    // No action
-  ADVANCING = 'advancing',          // Moving forward
-  ENGAGING = 'engaging',            // In combat with target
-  RETREATING = 'retreating',        // Moving backward
-  FLEEING = 'fleeing',              // Running away (fear)
-  STUNNED = 'stunned',              // Cannot act
-  DEAD = 'dead',                    // Defeated
+  IDLE = 'idle', // No action
+  ADVANCING = 'advancing', // Moving forward
+  ENGAGING = 'engaging', // In combat with target
+  RETREATING = 'retreating', // Moving backward
+  FLEEING = 'fleeing', // Running away (fear)
+  STUNNED = 'stunned', // Cannot act
+  DEAD = 'dead', // Defeated
 }
 
 // ============================================================================
@@ -206,27 +206,27 @@ export interface Enemy {
  */
 export enum EnemyType {
   // Common
-  PEASANT = 'peasant',              // Weak, low armor, basic attack
-  MILITIA = 'militia',              // Basic soldier, sword/shield
+  PEASANT = 'peasant', // Weak, low armor, basic attack
+  MILITIA = 'militia', // Basic soldier, sword/shield
 
   // Ranged
-  ARCHER = 'archer',                // Ranged physical damage
-  CROSSBOWMAN = 'crossbowman',      // Slower, higher damage ranged
+  ARCHER = 'archer', // Ranged physical damage
+  CROSSBOWMAN = 'crossbowman', // Slower, higher damage ranged
 
   // Melee
-  SOLDIER = 'soldier',              // Standard melee fighter
-  KNIGHT = 'knight',                // Heavy armor, high defense
-  BRUTE = 'brute',                  // High HP, slow, heavy damage
+  SOLDIER = 'soldier', // Standard melee fighter
+  KNIGHT = 'knight', // Heavy armor, high defense
+  BRUTE = 'brute', // High HP, slow, heavy damage
 
   // Magic
-  MAGE = 'mage',                    // Fire/ice magic, AoE
-  PRIEST = 'priest',                // Holy damage, healing
-  NECROMANCER = 'necromancer',      // Dark magic, summons
+  MAGE = 'mage', // Fire/ice magic, AoE
+  PRIEST = 'priest', // Holy damage, healing
+  NECROMANCER = 'necromancer', // Dark magic, summons
 
   // Elite
-  PALADIN = 'paladin',              // Holy warrior, very dangerous to undead
-  GENERAL = 'general',              // Buffs allies, tactical
-  BOSS = 'boss',                    // Unique boss unit
+  PALADIN = 'paladin', // Holy warrior, very dangerous to undead
+  GENERAL = 'general', // Buffs allies, tactical
+  BOSS = 'boss', // Unique boss unit
 }
 
 /**
@@ -255,12 +255,12 @@ export interface EnemyAIProfile {
  * Target Priority
  */
 export enum TargetPriority {
-  CLOSEST = 'closest',              // Attack nearest unit
-  WEAKEST = 'weakest',              // Attack lowest HP
+  CLOSEST = 'closest', // Attack nearest unit
+  WEAKEST = 'weakest', // Attack lowest HP
   HIGHEST_THREAT = 'highestThreat', // Attack highest attack
-  LOWEST_ARMOR = 'lowestArmor',     // Attack least defended
-  SUPPORT = 'support',              // Attack support units (healers, buffers)
-  RANGED = 'ranged',                // Attack ranged units
+  LOWEST_ARMOR = 'lowestArmor', // Attack least defended
+  SUPPORT = 'support', // Attack support units (healers, buffers)
+  RANGED = 'ranged', // Attack ranged units
 }
 
 /**
@@ -375,12 +375,12 @@ export interface Obstacle {
  * Obstacle Type
  */
 export enum ObstacleType {
-  GATE = 'gate',                    // Must be destroyed to pass
-  WALL = 'wall',                    // Blocks movement
-  TOWER = 'tower',                  // Houses ranged enemies
-  SPIKE_PIT = 'spikePit',           // Trap
-  FIRE_TRAP = 'fireTrap',           // Trap
-  BARRICADE = 'barricade',          // Destructible obstacle
+  GATE = 'gate', // Must be destroyed to pass
+  WALL = 'wall', // Blocks movement
+  TOWER = 'tower', // Houses ranged enemies
+  SPIKE_PIT = 'spikePit', // Trap
+  FIRE_TRAP = 'fireTrap', // Trap
+  BARRICADE = 'barricade', // Destructible obstacle
 }
 
 /**
@@ -410,26 +410,26 @@ export interface TrapData {
  * Different damage types with unique interactions.
  */
 export enum DamageType {
-  PHYSICAL = 'physical',            // Standard, reduced by armor
-  TOXIC = 'toxic',                  // Bypasses armor, applies poison
-  FIRE = 'fire',                    // AoE, applies burning
-  DARK = 'dark',                    // Ignores armor, causes fear
-  EXPLOSIVE = 'explosive',          // AoE, damages all
-  HOLY = 'holy',                    // 2x damage to undead, stun/weaken
+  PHYSICAL = 'physical', // Standard, reduced by armor
+  TOXIC = 'toxic', // Bypasses armor, applies poison
+  FIRE = 'fire', // AoE, applies burning
+  DARK = 'dark', // Ignores armor, causes fear
+  EXPLOSIVE = 'explosive', // AoE, damages all
+  HOLY = 'holy', // 2x damage to undead, stun/weaken
 }
 
 /**
  * Status Effect
  */
 export enum StatusEffect {
-  POISONED = 'poisoned',            // Continuous damage over time
-  BURNING = 'burning',              // DoT, can spread
-  STUNNED = 'stunned',              // Cannot move or attack
-  FEAR = 'fear',                    // Flee from combat
-  BLEEDING = 'bleeding',            // Minor DoT
-  WEAKENED = 'weakened',            // Reduced attack
-  SLOWED = 'slowed',                // Reduced speed
-  BUFFED = 'buffed',                // Increased stats
+  POISONED = 'poisoned', // Continuous damage over time
+  BURNING = 'burning', // DoT, can spread
+  STUNNED = 'stunned', // Cannot move or attack
+  FEAR = 'fear', // Flee from combat
+  BLEEDING = 'bleeding', // Minor DoT
+  WEAKENED = 'weakened', // Reduced attack
+  SLOWED = 'slowed', // Reduced speed
+  BUFFED = 'buffed', // Increased stats
 }
 
 /**

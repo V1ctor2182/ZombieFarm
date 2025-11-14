@@ -125,9 +125,7 @@ describe('GameProvider', () => {
           <div>
             <div data-testid="state">{state.value}</div>
             <button
-              onClick={() =>
-                dispatch({ type: 'game.started', payload: { timestamp: Date.now() } })
-              }
+              onClick={() => dispatch({ type: 'game.started', payload: { timestamp: Date.now() } })}
             >
               Start Game
             </button>
@@ -192,7 +190,9 @@ describe('GameProvider', () => {
     it('should return dispatch function', () => {
       const TestComponent = () => {
         const dispatch = useGameDispatch();
-        return <div data-testid="has-dispatch">{typeof dispatch === 'function' ? 'yes' : 'no'}</div>;
+        return (
+          <div data-testid="has-dispatch">{typeof dispatch === 'function' ? 'yes' : 'no'}</div>
+        );
       };
 
       render(
@@ -385,12 +385,20 @@ describe('GameProvider', () => {
             <div data-testid="state">{state.value}</div>
             <div data-testid="xp">{state.context.player.xp}</div>
             {state.matches('loading') && (
-              <button onClick={() => dispatch({ type: 'game.started', payload: { timestamp: Date.now() } })}>
+              <button
+                onClick={() =>
+                  dispatch({ type: 'game.started', payload: { timestamp: Date.now() } })
+                }
+              >
                 Start
               </button>
             )}
             {state.matches('tutorial') && (
-              <button onClick={() => dispatch({ type: 'tutorial.completed', payload: { timestamp: Date.now() } })}>
+              <button
+                onClick={() =>
+                  dispatch({ type: 'tutorial.completed', payload: { timestamp: Date.now() } })
+                }
+              >
                 Complete Tutorial
               </button>
             )}

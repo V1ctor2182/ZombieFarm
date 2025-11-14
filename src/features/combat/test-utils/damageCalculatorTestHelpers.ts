@@ -47,7 +47,7 @@ export function calculateExpectedDamage(
   const typeConfig = gameConfig.COMBAT.DAMAGE_MULTIPLIERS[damageType];
 
   // Calculate base damage
-  let baseDamage = attacker.stats.attack;
+  const baseDamage = attacker.stats.attack;
 
   // Apply armor reduction unless ignored
   let armorReduction = 0;
@@ -169,9 +169,7 @@ export function createDamageScenario(
 /**
  * Creates a physical damage scenario (standard attack)
  */
-export function createPhysicalDamageScenario(): ReturnType<
-  typeof createDamageScenario
-> {
+export function createPhysicalDamageScenario(): ReturnType<typeof createDamageScenario> {
   return createDamageScenario(
     DamageType.PHYSICAL,
     {
@@ -204,9 +202,7 @@ export function createPhysicalDamageScenario(): ReturnType<
 /**
  * Creates a toxic damage scenario (armor-bypassing)
  */
-export function createToxicDamageScenario(): ReturnType<
-  typeof createDamageScenario
-> {
+export function createToxicDamageScenario(): ReturnType<typeof createDamageScenario> {
   return createDamageScenario(
     DamageType.TOXIC,
     {
@@ -239,9 +235,7 @@ export function createToxicDamageScenario(): ReturnType<
 /**
  * Creates a fire damage scenario (AoE burning)
  */
-export function createFireDamageScenario(): ReturnType<
-  typeof createDamageScenario
-> {
+export function createFireDamageScenario(): ReturnType<typeof createDamageScenario> {
   return createDamageScenario(
     DamageType.FIRE,
     {
@@ -274,9 +268,7 @@ export function createFireDamageScenario(): ReturnType<
 /**
  * Creates a dark damage scenario (ignores armor)
  */
-export function createDarkDamageScenario(): ReturnType<
-  typeof createDamageScenario
-> {
+export function createDarkDamageScenario(): ReturnType<typeof createDamageScenario> {
   return createDamageScenario(
     DamageType.DARK,
     {
@@ -309,9 +301,7 @@ export function createDarkDamageScenario(): ReturnType<
 /**
  * Creates a holy damage scenario (2x vs undead)
  */
-export function createHolyDamageScenario(): ReturnType<
-  typeof createDamageScenario
-> {
+export function createHolyDamageScenario(): ReturnType<typeof createDamageScenario> {
   // Holy is used by enemies against zombies
   const attacker = createMockEnemy({
     type: 'priest' as any,
@@ -340,11 +330,7 @@ export function createHolyDamageScenario(): ReturnType<
     },
   });
 
-  const expectedDamage = calculateExpectedDamage(
-    attacker,
-    defender,
-    DamageType.HOLY
-  );
+  const expectedDamage = calculateExpectedDamage(attacker, defender, DamageType.HOLY);
 
   return {
     attacker: attacker as any,
@@ -357,9 +343,7 @@ export function createHolyDamageScenario(): ReturnType<
 /**
  * Creates an explosive damage scenario (AoE)
  */
-export function createExplosiveDamageScenario(): ReturnType<
-  typeof createDamageScenario
-> {
+export function createExplosiveDamageScenario(): ReturnType<typeof createDamageScenario> {
   return createDamageScenario(
     DamageType.EXPLOSIVE,
     {
@@ -428,18 +412,11 @@ export function createCriticalHitScenario(): {
     },
   });
 
-  const normalDamage = calculateExpectedDamage(
-    attacker,
-    defender,
-    DamageType.PHYSICAL
-  );
+  const normalDamage = calculateExpectedDamage(attacker, defender, DamageType.PHYSICAL);
 
-  const criticalDamage = calculateExpectedDamage(
-    attacker,
-    defender,
-    DamageType.PHYSICAL,
-    { isCritical: true }
-  );
+  const criticalDamage = calculateExpectedDamage(attacker, defender, DamageType.PHYSICAL, {
+    isCritical: true,
+  });
 
   return {
     attacker,
@@ -456,9 +433,7 @@ export function createCriticalHitScenario(): {
 /**
  * Creates zero damage scenario (high defense)
  */
-export function createZeroDamageScenario(): ReturnType<
-  typeof createDamageScenario
-> {
+export function createZeroDamageScenario(): ReturnType<typeof createDamageScenario> {
   return createDamageScenario(
     DamageType.PHYSICAL,
     {
@@ -491,9 +466,7 @@ export function createZeroDamageScenario(): ReturnType<
 /**
  * Creates overkill damage scenario (damage >> HP)
  */
-export function createOverkillScenario(): ReturnType<
-  typeof createDamageScenario
-> {
+export function createOverkillScenario(): ReturnType<typeof createDamageScenario> {
   return createDamageScenario(
     DamageType.PHYSICAL,
     {

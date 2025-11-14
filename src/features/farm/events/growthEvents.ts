@@ -166,8 +166,8 @@ export function handleGrowthUpdateEvent(
 
   // Track plots that were NOT complete before update
   const previouslyIncomplete = farm.plots
-    .filter(plot => plot.growthTimeRemaining !== null && plot.growthTimeRemaining > 0)
-    .map(plot => plot.id);
+    .filter((plot) => plot.growthTimeRemaining !== null && plot.growthTimeRemaining > 0)
+    .map((plot) => plot.id);
 
   // Update growth timers
   const updateResult = updateGrowth(farm, event.deltaTime);
@@ -183,11 +183,8 @@ export function handleGrowthUpdateEvent(
 
   // Identify plots that just completed (were incomplete, now complete)
   const completedPlots = updatedFarm.plots
-    .filter(plot =>
-      previouslyIncomplete.includes(plot.id) &&
-      plot.growthTimeRemaining === 0
-    )
-    .map(plot => plot.id);
+    .filter((plot) => previouslyIncomplete.includes(plot.id) && plot.growthTimeRemaining === 0)
+    .map((plot) => plot.id);
 
   // Update game state immutably
   const updatedState: GameState = {
@@ -244,8 +241,8 @@ export function handleOfflineGrowthEvent(
 
   // Track plots that were NOT complete before offline period
   const previouslyIncomplete = farm.plots
-    .filter(plot => plot.growthTimeRemaining !== null && plot.growthTimeRemaining > 0)
-    .map(plot => plot.id);
+    .filter((plot) => plot.growthTimeRemaining !== null && plot.growthTimeRemaining > 0)
+    .map((plot) => plot.id);
 
   // Calculate offline growth
   const offlineResult = calculateOfflineGrowth(farm, event.offlineTime);
@@ -261,11 +258,8 @@ export function handleOfflineGrowthEvent(
 
   // Identify plots that completed during offline period
   const completedPlots = updatedFarm.plots
-    .filter(plot =>
-      previouslyIncomplete.includes(plot.id) &&
-      plot.growthTimeRemaining === 0
-    )
-    .map(plot => plot.id);
+    .filter((plot) => previouslyIncomplete.includes(plot.id) && plot.growthTimeRemaining === 0)
+    .map((plot) => plot.id);
 
   // Update game state immutably
   const updatedState: GameState = {
@@ -314,7 +308,7 @@ export function handleGrowthCompleteEvent(
   }
 
   // Find the plot
-  const plot = gameState.farm.plots.find(p => p.id === event.plotId);
+  const plot = gameState.farm.plots.find((p) => p.id === event.plotId);
 
   if (!plot) {
     return {

@@ -46,9 +46,7 @@ const createTestPlot = (overrides: Partial<Plot> = {}): Plot => ({
   ...overrides,
 });
 
-const createTestInventory = (
-  seedOverrides: Partial<Record<string, number>> = {}
-): Inventory => ({
+const createTestInventory = (seedOverrides: Partial<Record<string, number>> = {}): Inventory => ({
   resources: {
     [Resource.ROTTEN_WOOD]: 100,
     [Resource.BONES]: 50,
@@ -267,7 +265,13 @@ describe('planting service', () => {
     });
 
     it('should successfully plant seed in empty plot', () => {
-      const result = plantSeed(farmState, inventory, 'plot-1', 'shamblerSeed' as SeedType, timestamp);
+      const result = plantSeed(
+        farmState,
+        inventory,
+        'plot-1',
+        'shamblerSeed' as SeedType,
+        timestamp
+      );
 
       expect(result.success).toBe(true);
       expect(result.error).toBeUndefined();
@@ -277,22 +281,40 @@ describe('planting service', () => {
     });
 
     it('should update plot state to PLANTED', () => {
-      const result = plantSeed(farmState, inventory, 'plot-1', 'shamblerSeed' as SeedType, timestamp);
+      const result = plantSeed(
+        farmState,
+        inventory,
+        'plot-1',
+        'shamblerSeed' as SeedType,
+        timestamp
+      );
 
-      const plot = result.farmState?.plots.find(p => p.id === 'plot-1');
+      const plot = result.farmState?.plots.find((p) => p.id === 'plot-1');
       expect(plot?.state).toBe(PlotState.PLANTED);
       expect(plot?.plantedSeed).toBe('shamblerSeed');
       expect(plot?.plantedAt).toBe(timestamp);
     });
 
     it('should decrement seed count in inventory', () => {
-      const result = plantSeed(farmState, inventory, 'plot-1', 'shamblerSeed' as SeedType, timestamp);
+      const result = plantSeed(
+        farmState,
+        inventory,
+        'plot-1',
+        'shamblerSeed' as SeedType,
+        timestamp
+      );
 
       expect(result.inventory?.seeds.shamblerSeed).toBe(9); // Was 10, now 9
     });
 
     it('should initialize growth timer', () => {
-      const result = plantSeed(farmState, inventory, 'plot-1', 'shamblerSeed' as SeedType, timestamp);
+      const result = plantSeed(
+        farmState,
+        inventory,
+        'plot-1',
+        'shamblerSeed' as SeedType,
+        timestamp
+      );
 
       expect(result.growthTimer?.plotId).toBe('plot-1');
       expect(result.growthTimer?.seedType).toBe('shamblerSeed');
@@ -300,7 +322,13 @@ describe('planting service', () => {
     });
 
     it('should fail when plot does not exist', () => {
-      const result = plantSeed(farmState, inventory, 'invalid-plot', 'shamblerSeed' as SeedType, timestamp);
+      const result = plantSeed(
+        farmState,
+        inventory,
+        'invalid-plot',
+        'shamblerSeed' as SeedType,
+        timestamp
+      );
 
       expect(result.success).toBe(false);
       expect(result.error).toBe('Plot not found');
@@ -312,7 +340,13 @@ describe('planting service', () => {
         plots: [createTestPlot({ state: PlotState.PLANTED })],
       });
 
-      const result = plantSeed(occupiedFarm, inventory, 'plot-1', 'shamblerSeed' as SeedType, timestamp);
+      const result = plantSeed(
+        occupiedFarm,
+        inventory,
+        'plot-1',
+        'shamblerSeed' as SeedType,
+        timestamp
+      );
 
       expect(result.success).toBe(false);
       expect(result.error).toBe('Plot is not empty');
@@ -321,14 +355,26 @@ describe('planting service', () => {
     it('should fail when seed is not available', () => {
       const noSeedsInventory = createTestInventory({ shamblerSeed: 0 });
 
-      const result = plantSeed(farmState, noSeedsInventory, 'plot-1', 'shamblerSeed' as SeedType, timestamp);
+      const result = plantSeed(
+        farmState,
+        noSeedsInventory,
+        'plot-1',
+        'shamblerSeed' as SeedType,
+        timestamp
+      );
 
       expect(result.success).toBe(false);
       expect(result.error).toBe('Seed not available');
     });
 
     it('should fail when seed type is invalid', () => {
-      const result = plantSeed(farmState, inventory, 'plot-1', 'invalidSeed' as SeedType, timestamp);
+      const result = plantSeed(
+        farmState,
+        inventory,
+        'plot-1',
+        'invalidSeed' as SeedType,
+        timestamp
+      );
 
       expect(result.success).toBe(false);
       expect(result.error).toBe('Invalid seed type');
@@ -339,7 +385,13 @@ describe('planting service', () => {
         plots: [createTestPlot({ isWatered: true })],
       });
 
-      const result = plantSeed(wateredFarm, inventory, 'plot-1', 'shamblerSeed' as SeedType, timestamp);
+      const result = plantSeed(
+        wateredFarm,
+        inventory,
+        'plot-1',
+        'shamblerSeed' as SeedType,
+        timestamp
+      );
 
       const baseTime = 5 * 60 * 1000;
       const expectedTime = baseTime / 1.5; // 50% faster
@@ -352,7 +404,13 @@ describe('planting service', () => {
         plots: [createTestPlot({ isFertilized: true })],
       });
 
-      const result = plantSeed(fertilizedFarm, inventory, 'plot-1', 'shamblerSeed' as SeedType, timestamp);
+      const result = plantSeed(
+        fertilizedFarm,
+        inventory,
+        'plot-1',
+        'shamblerSeed' as SeedType,
+        timestamp
+      );
 
       const baseTime = 5 * 60 * 1000;
       const expectedTime = baseTime / 1.3; // 30% faster
@@ -369,14 +427,26 @@ describe('planting service', () => {
         ],
       });
 
-      const result = plantSeed(multiPlotFarm, inventory, 'plot-1', 'shamblerSeed' as SeedType, timestamp);
+      const result = plantSeed(
+        multiPlotFarm,
+        inventory,
+        'plot-1',
+        'shamblerSeed' as SeedType,
+        timestamp
+      );
 
       expect(result.farmState?.plots).toHaveLength(3);
-      expect(result.farmState?.plots.find(p => p.id === 'plot-2')?.state).toBe(PlotState.PLANTED);
+      expect(result.farmState?.plots.find((p) => p.id === 'plot-2')?.state).toBe(PlotState.PLANTED);
     });
 
     it('should preserve other seeds in inventory', () => {
-      const result = plantSeed(farmState, inventory, 'plot-1', 'shamblerSeed' as SeedType, timestamp);
+      const result = plantSeed(
+        farmState,
+        inventory,
+        'plot-1',
+        'shamblerSeed' as SeedType,
+        timestamp
+      );
 
       expect(result.inventory?.seeds.runnerSeed).toBe(5); // Unchanged
       expect(result.inventory?.seeds.bruteSeed).toBe(3); // Unchanged
@@ -384,26 +454,29 @@ describe('planting service', () => {
 
     it('should handle planting multiple seeds in different plots', () => {
       const multiPlotFarm = createTestFarmState({
-        plots: [
-          createTestPlot({ id: 'plot-1' }),
-          createTestPlot({ id: 'plot-2' }),
-        ],
+        plots: [createTestPlot({ id: 'plot-1' }), createTestPlot({ id: 'plot-2' })],
       });
 
-      const result1 = plantSeed(multiPlotFarm, inventory, 'plot-1', 'shamblerSeed' as SeedType, timestamp);
+      const result1 = plantSeed(
+        multiPlotFarm,
+        inventory,
+        'plot-1',
+        'shamblerSeed' as SeedType,
+        timestamp
+      );
       expect(result1.success).toBe(true);
 
       const result2 = plantSeed(
-        result1.farmState!,
-        result1.inventory!,
+        result1.farmState,
+        result1.inventory,
         'plot-2',
         'runnerSeed' as SeedType,
         timestamp
       );
       expect(result2.success).toBe(true);
 
-      const plot1 = result2.farmState?.plots.find(p => p.id === 'plot-1');
-      const plot2 = result2.farmState?.plots.find(p => p.id === 'plot-2');
+      const plot1 = result2.farmState?.plots.find((p) => p.id === 'plot-1');
+      const plot2 = result2.farmState?.plots.find((p) => p.id === 'plot-2');
 
       expect(plot1?.plantedSeed).toBe('shamblerSeed');
       expect(plot2?.plantedSeed).toBe('runnerSeed');
@@ -428,21 +501,39 @@ describe('planting service', () => {
     it('should handle edge case of last seed', () => {
       const lastSeedInventory = createTestInventory({ shamblerSeed: 1 });
 
-      const result = plantSeed(farmState, lastSeedInventory, 'plot-1', 'shamblerSeed' as SeedType, timestamp);
+      const result = plantSeed(
+        farmState,
+        lastSeedInventory,
+        'plot-1',
+        'shamblerSeed' as SeedType,
+        timestamp
+      );
 
       expect(result.success).toBe(true);
       expect(result.inventory?.seeds.shamblerSeed).toBe(0);
     });
 
     it('should fail gracefully with null farm state', () => {
-      const result = plantSeed(null as unknown as FarmState, inventory, 'plot-1', 'shamblerSeed' as SeedType, timestamp);
+      const result = plantSeed(
+        null as unknown as FarmState,
+        inventory,
+        'plot-1',
+        'shamblerSeed' as SeedType,
+        timestamp
+      );
 
       expect(result.success).toBe(false);
       expect(result.error).toBeDefined();
     });
 
     it('should fail gracefully with null inventory', () => {
-      const result = plantSeed(farmState, null as unknown as Inventory, 'plot-1', 'shamblerSeed' as SeedType, timestamp);
+      const result = plantSeed(
+        farmState,
+        null as unknown as Inventory,
+        'plot-1',
+        'shamblerSeed' as SeedType,
+        timestamp
+      );
 
       expect(result.success).toBe(false);
       expect(result.error).toBeDefined();

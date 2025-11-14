@@ -10,10 +10,7 @@
  */
 
 import { describe, it, expect } from '@jest/globals';
-import {
-  handleHarvestEvent,
-  handleBatchHarvestEvent,
-} from '../events/harvestingEvents';
+import { handleHarvestEvent, handleBatchHarvestEvent } from '../events/harvestingEvents';
 import type { GameState } from '../../../types/global';
 import type { Plot } from '../../../types/farm';
 import { PlotState, ZombieType, ZombieQuality } from '../../../types/farm';

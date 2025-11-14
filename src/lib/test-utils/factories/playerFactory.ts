@@ -42,9 +42,7 @@ export function createTestPlayer(overrides?: Partial<Player>): Player {
   return {
     ...defaultPlayer,
     ...overrides,
-    stats: overrides?.stats
-      ? { ...defaultPlayer.stats, ...overrides.stats }
-      : defaultPlayer.stats,
+    stats: overrides?.stats ? { ...defaultPlayer.stats, ...overrides.stats } : defaultPlayer.stats,
     quests: overrides?.quests
       ? {
           active: overrides.quests.active ?? defaultPlayer.quests.active,
@@ -109,12 +107,7 @@ export function createMidLevelPlayer(): Player {
       'bone_knight_seed',
       'necromancer_level_7',
     ],
-    achievements: [
-      'first_harvest',
-      'first_victory',
-      'harvest_100',
-      'win_10_battles',
-    ],
+    achievements: ['first_harvest', 'first_victory', 'harvest_100', 'win_10_battles'],
   });
 }
 

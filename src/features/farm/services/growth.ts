@@ -16,9 +16,7 @@ import { gameConfig } from '../../../lib/config/zombieFarmConfig';
 /**
  * Result type for service operations
  */
-export type Result<T, E = string> =
-  | { success: true; data: T }
-  | { success: false; error: E };
+export type Result<T, E = string> = { success: true; data: T } | { success: false; error: E };
 
 // ============================================================================
 // GROWTH UPDATE
@@ -34,10 +32,7 @@ export type Result<T, E = string> =
  * @param deltaTime - Time elapsed in milliseconds
  * @returns Updated farm state or error
  */
-export function updateGrowth(
-  farmState: FarmState,
-  deltaTime: number
-): Result<FarmState> {
+export function updateGrowth(farmState: FarmState, deltaTime: number): Result<FarmState> {
   // Validate delta time
   if (deltaTime < 0) {
     return {
@@ -172,10 +167,7 @@ export interface QualityConditions {
  * @param conditions - Growth conditions (fertilized, watered, etc.)
  * @returns Quality tier for the zombie
  */
-export function determineQuality(
-  seedType: SeedType,
-  conditions: QualityConditions
-): ZombieQuality {
+export function determineQuality(seedType: SeedType, conditions: QualityConditions): ZombieQuality {
   // Get base quality chances from config
   const baseChances = gameConfig.ZOMBIE_GROWTH.qualityChances;
 

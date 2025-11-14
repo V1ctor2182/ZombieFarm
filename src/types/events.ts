@@ -39,7 +39,10 @@ export type FarmEvent =
   | { type: 'zombie.pet'; payload: { zombieId: ZombieId; timestamp: number } }
   | { type: 'zombie.toCrypt'; payload: { zombieId: ZombieId; timestamp: number } }
   | { type: 'zombie.fromCrypt'; payload: { zombieId: ZombieId; timestamp: number } }
-  | { type: 'zombie.command'; payload: { zombieId: ZombieId; command: string; targetPosition?: Position } }
+  | {
+      type: 'zombie.command';
+      payload: { zombieId: ZombieId; command: string; targetPosition?: Position };
+    }
   | { type: 'zombie.died'; payload: { zombieId: ZombieId; reason: string; timestamp: number } }
 
   // Zombie Progression
@@ -49,28 +52,55 @@ export type FarmEvent =
   | { type: 'zombie.unequipped'; payload: { zombieId: ZombieId; slot: string } }
 
   // Building & Construction
-  | { type: 'building.placed'; payload: { buildingId: BuildingId; type: string; position: Position; timestamp: number } }
+  | {
+      type: 'building.placed';
+      payload: { buildingId: BuildingId; type: string; position: Position; timestamp: number };
+    }
   | { type: 'building.constructed'; payload: { buildingId: BuildingId; timestamp: number } }
-  | { type: 'building.upgraded'; payload: { buildingId: BuildingId; newLevel: number; timestamp: number } }
+  | {
+      type: 'building.upgraded';
+      payload: { buildingId: BuildingId; newLevel: number; timestamp: number };
+    }
   | { type: 'building.demolished'; payload: { buildingId: BuildingId; timestamp: number } }
 
   // Resource Management
-  | { type: 'resource.gathered'; payload: { resource: Resource; amount: number; nodeId?: string; timestamp: number } }
-  | { type: 'resource.spent'; payload: { resource: Resource; amount: number; reason: string; timestamp: number } }
-  | { type: 'resource.node.harvested'; payload: { nodeId: string; resource: Resource; amount: number; timestamp: number } }
+  | {
+      type: 'resource.gathered';
+      payload: { resource: Resource; amount: number; nodeId?: string; timestamp: number };
+    }
+  | {
+      type: 'resource.spent';
+      payload: { resource: Resource; amount: number; reason: string; timestamp: number };
+    }
+  | {
+      type: 'resource.node.harvested';
+      payload: { nodeId: string; resource: Resource; amount: number; timestamp: number };
+    }
   | { type: 'resource.node.depleted'; payload: { nodeId: string; timestamp: number } }
 
   // Farm Expansion
-  | { type: 'farm.expanded'; payload: { newLevel: number; newSize: { width: number; height: number }; timestamp: number } }
+  | {
+      type: 'farm.expanded';
+      payload: { newLevel: number; newSize: { width: number; height: number }; timestamp: number };
+    }
 
   // Time & Weather
   | { type: 'time.dayChanged'; payload: { newDay: number; timestamp: number } }
-  | { type: 'time.hourChanged'; payload: { newHour: number; isDaytime: boolean; timestamp: number } }
-  | { type: 'weather.changed'; payload: { newWeather: string; duration: number; timestamp: number } }
+  | {
+      type: 'time.hourChanged';
+      payload: { newHour: number; isDaytime: boolean; timestamp: number };
+    }
+  | {
+      type: 'weather.changed';
+      payload: { newWeather: string; duration: number; timestamp: number };
+    }
 
   // Decay & Maintenance
   | { type: 'decay.applied'; payload: { zombieId: ZombieId; amount: number; timestamp: number } }
-  | { type: 'happiness.changed'; payload: { zombieId: ZombieId; oldValue: number; newValue: number; reason: string } };
+  | {
+      type: 'happiness.changed';
+      payload: { zombieId: ZombieId; oldValue: number; newValue: number; reason: string };
+    };
 
 // ============================================================================
 // COMBAT EVENTS
@@ -83,35 +113,88 @@ export type FarmEvent =
  */
 export type CombatEvent =
   // Battle Lifecycle
-  | { type: 'battle.initiated'; payload: { battleId: BattleId; locationId: LocationId; timestamp: number } }
-  | { type: 'battle.squadSelected'; payload: { battleId: BattleId; zombieIds: ReadonlyArray<ZombieId> } }
+  | {
+      type: 'battle.initiated';
+      payload: { battleId: BattleId; locationId: LocationId; timestamp: number };
+    }
+  | {
+      type: 'battle.squadSelected';
+      payload: { battleId: BattleId; zombieIds: ReadonlyArray<ZombieId> };
+    }
   | { type: 'battle.started'; payload: { battleId: BattleId; timestamp: number } }
-  | { type: 'battle.ended'; payload: { battleId: BattleId; result: BattleResult; timestamp: number } }
-  | { type: 'battle.retreated'; payload: { battleId: BattleId; survivors: ReadonlyArray<ZombieId>; timestamp: number } }
+  | {
+      type: 'battle.ended';
+      payload: { battleId: BattleId; result: BattleResult; timestamp: number };
+    }
+  | {
+      type: 'battle.retreated';
+      payload: { battleId: BattleId; survivors: ReadonlyArray<ZombieId>; timestamp: number };
+    }
 
   // Combat Actions
-  | { type: 'unit.spawned'; payload: { battleId: BattleId; unitId: string; unitType: string; position: Position } }
-  | { type: 'unit.moved'; payload: { battleId: BattleId; unitId: string; from: Position; to: Position } }
-  | { type: 'unit.attacked'; payload: { battleId: BattleId; attackerId: string; targetId: string; damage: number; damageType: string } }
-  | { type: 'unit.damaged'; payload: { battleId: BattleId; unitId: string; damage: number; newHp: number } }
-  | { type: 'unit.healed'; payload: { battleId: BattleId; unitId: string; amount: number; newHp: number } }
+  | {
+      type: 'unit.spawned';
+      payload: { battleId: BattleId; unitId: string; unitType: string; position: Position };
+    }
+  | {
+      type: 'unit.moved';
+      payload: { battleId: BattleId; unitId: string; from: Position; to: Position };
+    }
+  | {
+      type: 'unit.attacked';
+      payload: {
+        battleId: BattleId;
+        attackerId: string;
+        targetId: string;
+        damage: number;
+        damageType: string;
+      };
+    }
+  | {
+      type: 'unit.damaged';
+      payload: { battleId: BattleId; unitId: string; damage: number; newHp: number };
+    }
+  | {
+      type: 'unit.healed';
+      payload: { battleId: BattleId; unitId: string; amount: number; newHp: number };
+    }
   | { type: 'unit.died'; payload: { battleId: BattleId; unitId: string; killerId?: string } }
 
   // Status Effects
-  | { type: 'status.applied'; payload: { battleId: BattleId; unitId: string; effect: string; duration: number } }
+  | {
+      type: 'status.applied';
+      payload: { battleId: BattleId; unitId: string; effect: string; duration: number };
+    }
   | { type: 'status.removed'; payload: { battleId: BattleId; unitId: string; effect: string } }
 
   // Abilities
-  | { type: 'ability.used'; payload: { battleId: BattleId; unitId: string; abilityId: string; targetIds: ReadonlyArray<string> } }
+  | {
+      type: 'ability.used';
+      payload: {
+        battleId: BattleId;
+        unitId: string;
+        abilityId: string;
+        targetIds: ReadonlyArray<string>;
+      };
+    }
 
   // Wave Management
-  | { type: 'wave.spawned'; payload: { battleId: BattleId; waveNumber: number; enemyIds: ReadonlyArray<string> } }
+  | {
+      type: 'wave.spawned';
+      payload: { battleId: BattleId; waveNumber: number; enemyIds: ReadonlyArray<string> };
+    }
   | { type: 'wave.completed'; payload: { battleId: BattleId; waveNumber: number } }
 
   // Obstacles
-  | { type: 'obstacle.damaged'; payload: { battleId: BattleId; obstacleId: string; damage: number; newHp: number } }
+  | {
+      type: 'obstacle.damaged';
+      payload: { battleId: BattleId; obstacleId: string; damage: number; newHp: number };
+    }
   | { type: 'obstacle.destroyed'; payload: { battleId: BattleId; obstacleId: string } }
-  | { type: 'trap.triggered'; payload: { battleId: BattleId; trapId: string; victimId: string; damage: number } };
+  | {
+      type: 'trap.triggered';
+      payload: { battleId: BattleId; trapId: string; victimId: string; damage: number };
+    };
 
 // ============================================================================
 // WORLD EVENTS
@@ -125,7 +208,10 @@ export type CombatEvent =
 export type WorldEvent =
   | { type: 'location.unlocked'; payload: { locationId: LocationId; timestamp: number } }
   | { type: 'location.conquered'; payload: { locationId: LocationId; timestamp: number } }
-  | { type: 'location.raided'; payload: { locationId: LocationId; success: boolean; timestamp: number } }
+  | {
+      type: 'location.raided';
+      payload: { locationId: LocationId; success: boolean; timestamp: number };
+    }
   | { type: 'world.regionUnlocked'; payload: { regionId: string; timestamp: number } };
 
 // ============================================================================
@@ -160,7 +246,10 @@ export type SystemEvent =
   | { type: 'tech.researched'; payload: { techId: string; timestamp: number } }
 
   // Offline Progress
-  | { type: 'offline.calculated'; payload: { timeAway: number; eventsProcessed: number; timestamp: number } }
+  | {
+      type: 'offline.calculated';
+      payload: { timeAway: number; eventsProcessed: number; timestamp: number };
+    }
 
   // Errors
   | { type: 'error.occurred'; payload: { errorType: string; message: string; timestamp: number } };
@@ -180,7 +269,10 @@ export type UIEvent =
   | { type: 'modal.closed'; payload: { modalType: string } }
 
   // Notifications
-  | { type: 'notification.shown'; payload: { notificationType: string; message: string; duration?: number } }
+  | {
+      type: 'notification.shown';
+      payload: { notificationType: string; message: string; duration?: number };
+    }
   | { type: 'notification.dismissed'; payload: { notificationId: string } }
 
   // Panel Management

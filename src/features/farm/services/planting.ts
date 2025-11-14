@@ -300,7 +300,7 @@ export function plantSeed(
   }
 
   // Find the plot
-  const plot = farmState.plots.find(p => p.id === plotId);
+  const plot = farmState.plots.find((p) => p.id === plotId);
 
   if (!plot) {
     return {
@@ -352,7 +352,7 @@ export function plantSeed(
   const growthTimer = startGrowthTimer(plotId, seedType, bonus, timestamp);
 
   // Update plot state immutably
-  const updatedPlots = farmState.plots.map(p => {
+  const updatedPlots = farmState.plots.map((p) => {
     if (p.id === plotId) {
       return {
         ...p,

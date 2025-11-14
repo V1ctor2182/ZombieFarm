@@ -13,9 +13,7 @@ import { determineQuality } from '../services/growth';
 /**
  * Result type for event handlers
  */
-export type Result<T, E = string> =
-  | { success: true; data: T }
-  | { success: false; error: E };
+export type Result<T, E = string> = { success: true; data: T } | { success: false; error: E };
 
 // ============================================================================
 // HARVEST EVENT
@@ -45,10 +43,7 @@ export interface HarvestEvent {
  * @param event - Harvest event
  * @returns Updated game state or error
  */
-export function handleHarvestEvent(
-  gameState: GameState,
-  event: HarvestEvent
-): Result<GameState> {
+export function handleHarvestEvent(gameState: GameState, event: HarvestEvent): Result<GameState> {
   // Validate event structure
   if (!event.plotId || !event.quality) {
     return {

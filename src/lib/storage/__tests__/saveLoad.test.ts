@@ -93,12 +93,14 @@ describe('saveLoad', () => {
       // Arrange
       const gameState = createTestGameState({
         farm: {
-          plots: Array(20).fill(null).map((_, i) => ({
-            id: `plot-${i}`,
-            position: { x: i % 5, y: Math.floor(i / 5) },
-            state: 'empty' as const,
-            crop: null,
-          })),
+          plots: Array(20)
+            .fill(null)
+            .map((_, i) => ({
+              id: `plot-${i}`,
+              position: { x: i % 5, y: Math.floor(i / 5) },
+              state: 'empty' as const,
+              crop: null,
+            })),
           zombies: [],
           buildings: [],
           capacity: { maxZombies: 10, maxPlots: 20 },
@@ -252,7 +254,7 @@ describe('saveLoad', () => {
       // Assert
       expect(result.valid).toBe(false);
       expect(result.errors.length).toBeGreaterThan(0);
-      expect(result.errors.some(e => e.includes('Player'))).toBe(true);
+      expect(result.errors.some((e) => e.includes('Player'))).toBe(true);
     });
 
     it('should reject data with invalid types', () => {
@@ -265,7 +267,7 @@ describe('saveLoad', () => {
 
       // Assert
       expect(result.valid).toBe(false);
-      expect(result.errors.some(e => e.includes('level'))).toBe(true);
+      expect(result.errors.some((e) => e.includes('level'))).toBe(true);
     });
 
     it('should validate nested structures', () => {
@@ -278,7 +280,7 @@ describe('saveLoad', () => {
 
       // Assert
       expect(result.valid).toBe(false);
-      expect(result.errors.some(e => e.includes('plots'))).toBe(true);
+      expect(result.errors.some((e) => e.includes('plots'))).toBe(true);
     });
 
     it('should accept data with optional fields missing', () => {
@@ -453,10 +455,7 @@ describe('saveLoad', () => {
   describe('SaveLoadError', () => {
     it('should create error with correct properties', () => {
       // Act
-      const error = new SaveLoadError(
-        'Test error message',
-        SaveLoadErrorCode.INVALID_JSON
-      );
+      const error = new SaveLoadError('Test error message', SaveLoadErrorCode.INVALID_JSON);
 
       // Assert
       expect(error.message).toBe('Test error message');
@@ -478,11 +477,13 @@ describe('saveLoad', () => {
       // Arrange
       const largeState = createTestGameState({
         farm: {
-          zombies: Array(1000).fill(null).map((_, i) => ({
-            id: `zombie-${i}`,
-            type: 'shambler',
-            stats: { hp: 100, attack: 10, defense: 5 },
-          })),
+          zombies: Array(1000)
+            .fill(null)
+            .map((_, i) => ({
+              id: `zombie-${i}`,
+              type: 'shambler',
+              stats: { hp: 100, attack: 10, defense: 5 },
+            })),
         } as any,
       });
 

@@ -682,14 +682,30 @@ describe('mockTimers', () => {
       teardownFakeTimers();
 
       // Test each function throws with correct message
-      expect(() => advanceTime(1000)).toThrow('Fake timers not enabled. Call setupFakeTimers() first.');
-      expect(() => advanceToNextTimer()).toThrow('Fake timers not enabled. Call setupFakeTimers() first.');
-      expect(() => runAllTimers()).toThrow('Fake timers not enabled. Call setupFakeTimers() first.');
-      expect(() => runOnlyPendingTimers()).toThrow('Fake timers not enabled. Call setupFakeTimers() first.');
-      expect(() => getTimerCount()).toThrow('Fake timers not enabled. Call setupFakeTimers() first.');
-      expect(() => getCurrentTime()).toThrow('Fake timers not enabled. Call setupFakeTimers() first.');
-      expect(() => setCurrentTime(0)).toThrow('Fake timers not enabled. Call setupFakeTimers() first.');
-      expect(() => clearAllTimers()).toThrow('Fake timers not enabled. Call setupFakeTimers() first.');
+      expect(() => advanceTime(1000)).toThrow(
+        'Fake timers not enabled. Call setupFakeTimers() first.'
+      );
+      expect(() => advanceToNextTimer()).toThrow(
+        'Fake timers not enabled. Call setupFakeTimers() first.'
+      );
+      expect(() => runAllTimers()).toThrow(
+        'Fake timers not enabled. Call setupFakeTimers() first.'
+      );
+      expect(() => runOnlyPendingTimers()).toThrow(
+        'Fake timers not enabled. Call setupFakeTimers() first.'
+      );
+      expect(() => getTimerCount()).toThrow(
+        'Fake timers not enabled. Call setupFakeTimers() first.'
+      );
+      expect(() => getCurrentTime()).toThrow(
+        'Fake timers not enabled. Call setupFakeTimers() first.'
+      );
+      expect(() => setCurrentTime(0)).toThrow(
+        'Fake timers not enabled. Call setupFakeTimers() first.'
+      );
+      expect(() => clearAllTimers()).toThrow(
+        'Fake timers not enabled. Call setupFakeTimers() first.'
+      );
     });
   });
 });

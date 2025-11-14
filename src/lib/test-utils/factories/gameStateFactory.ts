@@ -152,25 +152,17 @@ export function createTestGameState(overrides?: Partial<GameState>): GameState {
     player: overrides?.player
       ? { ...defaultState.player, ...overrides.player }
       : defaultState.player,
-    time: overrides?.time
-      ? { ...defaultState.time, ...overrides.time }
-      : defaultState.time,
-    farm: overrides?.farm
-      ? { ...defaultState.farm, ...overrides.farm }
-      : defaultState.farm,
+    time: overrides?.time ? { ...defaultState.time, ...overrides.time } : defaultState.time,
+    farm: overrides?.farm ? { ...defaultState.farm, ...overrides.farm } : defaultState.farm,
     combat: overrides?.combat
       ? { ...defaultState.combat, ...overrides.combat }
       : defaultState.combat,
-    world: overrides?.world
-      ? { ...defaultState.world, ...overrides.world }
-      : defaultState.world,
+    world: overrides?.world ? { ...defaultState.world, ...overrides.world } : defaultState.world,
     ui: overrides?.ui ? { ...defaultState.ui, ...overrides.ui } : defaultState.ui,
     inventory: overrides?.inventory
       ? { ...defaultState.inventory, ...overrides.inventory }
       : defaultState.inventory,
-    save: overrides?.save
-      ? { ...defaultState.save, ...overrides.save }
-      : defaultState.save,
+    save: overrides?.save ? { ...defaultState.save, ...overrides.save } : defaultState.save,
   };
 }
 

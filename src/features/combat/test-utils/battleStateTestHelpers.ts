@@ -25,9 +25,7 @@ import { gameConfig } from '../../../lib/config/zombieFarmConfig';
 /**
  * Creates a test battle state with specific configuration
  */
-export function createTestBattleState(
-  overrides?: Partial<CombatState>
-): CombatState {
+export function createTestBattleState(overrides?: Partial<CombatState>): CombatState {
   return createMockBattle(overrides);
 }
 
@@ -113,10 +111,7 @@ export function createRetreatBattle(): CombatState {
 /**
  * Advances battle time by specified seconds
  */
-export function advanceBattleTime(
-  battle: CombatState,
-  seconds: number
-): CombatState {
+export function advanceBattleTime(battle: CombatState, seconds: number): CombatState {
   return {
     ...battle,
     battleDuration: battle.battleDuration + seconds,
@@ -126,10 +121,7 @@ export function advanceBattleTime(
 /**
  * Sets battle to a specific duration
  */
-export function setBattleDuration(
-  battle: CombatState,
-  duration: number
-): CombatState {
+export function setBattleDuration(battle: CombatState, duration: number): CombatState {
   return {
     ...battle,
     battleDuration: duration,
@@ -198,13 +190,11 @@ export function generateBattleResult(
   const { darkCoinsReward = 100, xpPerZombie = 50 } = options || {};
 
   const { zombies: survivors } = getAliveUnits(battle);
-  const casualties = battle.playerSquad
-    .filter((z) => z.isDead)
-    .map((z) => z.id as ZombieId);
+  const casualties = battle.playerSquad.filter((z) => z.isDead).map((z) => z.id);
 
   const xpGained: Record<ZombieId, number> = {};
   survivors.forEach((zombie) => {
-    xpGained[zombie.id as ZombieId] = xpPerZombie;
+    xpGained[zombie.id] = xpPerZombie;
   });
 
   const stats: BattleStats = {
@@ -218,7 +208,7 @@ export function generateBattleResult(
 
   return {
     victory: battle.phase === BattlePhase.VICTORY,
-    survivors: survivors.map((z) => z.id as ZombieId),
+    survivors: survivors.map((z) => z.id),
     casualties,
     xpGained,
     rewards: {
@@ -255,18 +245,16 @@ export function generateFlawlessVictory(battle: CombatState): BattleResult {
  */
 export function generateDefeatResult(battle: CombatState): BattleResult {
   const survivors = battle.playerSquad.filter((z) => !z.isDead);
-  const casualties = battle.playerSquad
-    .filter((z) => z.isDead)
-    .map((z) => z.id as ZombieId);
+  const casualties = battle.playerSquad.filter((z) => z.isDead).map((z) => z.id);
 
   const xpGained: Record<ZombieId, number> = {};
   survivors.forEach((zombie) => {
-    xpGained[zombie.id as ZombieId] = 10; // Minimal XP for surviving defeat
+    xpGained[zombie.id] = 10; // Minimal XP for surviving defeat
   });
 
   return {
     victory: false,
-    survivors: survivors.map((z) => z.id as ZombieId),
+    survivors: survivors.map((z) => z.id),
     casualties,
     xpGained,
     rewards: {
@@ -293,10 +281,7 @@ export function generateDefeatResult(battle: CombatState): BattleResult {
  * Checks if battle is over
  */
 export function isBattleOver(battle: CombatState): boolean {
-  return (
-    battle.phase === BattlePhase.VICTORY ||
-    battle.phase === BattlePhase.DEFEAT
-  );
+  return battle.phase === BattlePhase.VICTORY || battle.phase === BattlePhase.DEFEAT;
 }
 
 /**
@@ -309,9 +294,7 @@ export function isBattleActive(battle: CombatState): boolean {
 /**
  * Gets battle winner
  */
-export function getBattleWinner(
-  battle: CombatState
-): 'player' | 'enemy' | 'none' {
+export function getBattleWinner(battle: CombatState): 'player' | 'enemy' | 'none' {
   if (battle.phase === BattlePhase.VICTORY) return 'player';
   if (battle.phase === BattlePhase.DEFEAT) return 'enemy';
   return 'none';

@@ -13,26 +13,26 @@
  */
 export enum Resource {
   // Primary Farm Resources
-  ROTTEN_WOOD = 'rottedWood',       // Basic building material from dead trees
-  BONES = 'bones',                   // Building material from graves/skeletons
-  BLOOD_WATER = 'bloodWater',        // For watering zombie crops, speeds growth
-  CORPSE_DUST = 'corpseDust',        // Fertilizer from Corpse Composter
-  SOUL_FRAGMENTS = 'soulFragments',  // From defeated enemies, magical uses
+  ROTTEN_WOOD = 'rottedWood', // Basic building material from dead trees
+  BONES = 'bones', // Building material from graves/skeletons
+  BLOOD_WATER = 'bloodWater', // For watering zombie crops, speeds growth
+  CORPSE_DUST = 'corpseDust', // Fertilizer from Corpse Composter
+  SOUL_FRAGMENTS = 'soulFragments', // From defeated enemies, magical uses
 
   // Secondary Resources
-  IRON_SCRAPS = 'ironScraps',        // Metal from ruins or defeated soldiers
-  CLOTH = 'cloth',                   // From looting or defeating enemies
-  BRAINS = 'brains',                 // Premium zombie food, major happiness boost
-  ROTTEN_MEAT = 'rottenMeat',        // Standard zombie food
-  HOLY_WATER = 'holyWater',          // From cathedrals, used in dark rituals
-  COAL = 'coal',                     // Fuel for certain structures
-  TAR = 'tar',                       // From swamp expansions
-  GRAVE_DIRT = 'graveDirt',          // Special soil for premium zombie growth
+  IRON_SCRAPS = 'ironScraps', // Metal from ruins or defeated soldiers
+  CLOTH = 'cloth', // From looting or defeating enemies
+  BRAINS = 'brains', // Premium zombie food, major happiness boost
+  ROTTEN_MEAT = 'rottenMeat', // Standard zombie food
+  HOLY_WATER = 'holyWater', // From cathedrals, used in dark rituals
+  COAL = 'coal', // Fuel for certain structures
+  TAR = 'tar', // From swamp expansions
+  GRAVE_DIRT = 'graveDirt', // Special soil for premium zombie growth
 
   // Crafted Materials
-  BONE_MEAL = 'boneMeal',            // Processed bones, fertilizer
-  EMBALMING_FLUID = 'embalmingFluid',// Reduces decay rate
-  DARK_ESSENCE = 'darkEssence',      // Crafted magical material
+  BONE_MEAL = 'boneMeal', // Processed bones, fertilizer
+  EMBALMING_FLUID = 'embalmingFluid', // Reduces decay rate
+  DARK_ESSENCE = 'darkEssence', // Crafted magical material
 }
 
 /**
@@ -41,8 +41,8 @@ export enum Resource {
  * Special resources used as currency.
  */
 export enum Currency {
-  DARK_COINS = 'darkCoins',          // Primary currency from raids
-  SOUL_ESSENCE = 'soulEssence',      // Premium currency from major battles
+  DARK_COINS = 'darkCoins', // Primary currency from raids
+  SOUL_ESSENCE = 'soulEssence', // Premium currency from major battles
 }
 
 /**
@@ -66,7 +66,7 @@ export enum SeedType {
   BONE_KNIGHT_SEED = 'boneKnightSeed',
 
   // Special/Rare
-  PRIEST_ZOMBIE_SEED = 'priestZombieSeed',  // From Cathedral
+  PRIEST_ZOMBIE_SEED = 'priestZombieSeed', // From Cathedral
   EXPLOSIVE_ZOMBIE_SEED = 'explosiveZombieSeed',
   NECROMANCER_ZOMBIE_SEED = 'necromancerZombieSeed',
 }
@@ -187,21 +187,21 @@ export interface ResourceNode {
  * Resource Node Type
  */
 export enum ResourceNodeType {
-  DEAD_TREE = 'deadTree',           // Yields Rotten Wood
-  GRAVE_MOUND = 'graveMound',       // Yields Bones, Grave Dirt
-  BLOOD_WELL = 'bloodWell',         // Yields Blood Water (refills over time)
-  RUIN = 'ruin',                    // Yields Iron Scraps, Cloth
-  BONE_PILE = 'bonePile',           // Yields Bones
-  SWAMP_TAR = 'swampTar',           // Yields Tar (from swamp expansion)
+  DEAD_TREE = 'deadTree', // Yields Rotten Wood
+  GRAVE_MOUND = 'graveMound', // Yields Bones, Grave Dirt
+  BLOOD_WELL = 'bloodWell', // Yields Blood Water (refills over time)
+  RUIN = 'ruin', // Yields Iron Scraps, Cloth
+  BONE_PILE = 'bonePile', // Yields Bones
+  SWAMP_TAR = 'swampTar', // Yields Tar (from swamp expansion)
 }
 
 /**
  * Resource Node State
  */
 export enum ResourceNodeState {
-  READY = 'ready',                  // Can be harvested
-  DEPLETED = 'depleted',            // Harvested, on cooldown
-  PERMANENT = 'permanent',          // Permanent structure (e.g., built well)
+  READY = 'ready', // Can be harvested
+  DEPLETED = 'depleted', // Harvested, on cooldown
+  PERMANENT = 'permanent', // Permanent structure (e.g., built well)
 }
 
 /**

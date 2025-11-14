@@ -12,17 +12,8 @@
  */
 
 import { describe, it, expect, beforeEach, afterEach, jest } from '@jest/globals';
-import {
-  saveGame,
-  loadGame,
-  clearSaveData,
-  hasSaveData,
-} from '../../../lib/storage/saveLoad';
-import {
-  setupAutoSave,
-  stopAutoSave,
-  triggerAutoSave,
-} from '../../../lib/storage/autoSave';
+import { saveGame, loadGame, clearSaveData, hasSaveData } from '../../../lib/storage/saveLoad';
+import { setupAutoSave, stopAutoSave, triggerAutoSave } from '../../../lib/storage/autoSave';
 import { createTestGameState } from '../../../lib/test-utils/factories/gameStateFactory';
 import { createTestZombie } from '../../../lib/test-utils/factories/zombieFactory';
 import {
@@ -308,9 +299,9 @@ describe('Persistence Integration', () => {
   describe('Performance and Edge Cases', () => {
     it('should handle large save files efficiently', () => {
       // Arrange - create large state
-      const largeZombieArray = Array(500).fill(null).map((_, i) =>
-        createTestZombie({ id: `zombie-${i}` })
-      );
+      const largeZombieArray = Array(500)
+        .fill(null)
+        .map((_, i) => createTestZombie({ id: `zombie-${i}` }));
       const state = createTestGameState({
         farm: { zombies: largeZombieArray } as any,
       });
