@@ -12,7 +12,6 @@
  */
 
 import type { Zombie, ZombieQuality, FarmState, ZombieStats } from '../../../types/farm';
-import type { TimeState } from '../../../types/global';
 import { gameConfig } from '../../../lib/config/zombieFarmConfig';
 
 /**
@@ -134,7 +133,7 @@ export function getEffectiveDecayRate(zombie: Zombie, isSheltered: boolean = fal
  * @param currentGameDay - Current game day
  * @returns True if zombie can decay
  */
-export function canDecay(zombie: Zombie, isInCrypt: boolean, currentGameDay: number): boolean {
+export function canDecay(zombie: Zombie, isInCrypt: boolean, _currentGameDay: number): boolean {
   // Crypt zombies never decay
   if (isInCrypt) {
     return false;

@@ -2,7 +2,7 @@
 title: 'Combat Module TODO'
 module: Combat (DOMAIN-COMBAT)
 priority: High
-last updated: 2025-11-12
+last updated: 2025-11-14
 ---
 
 # Combat Module Implementation TODO
@@ -161,15 +161,42 @@ This document tracks all tasks for implementing the Combat module following DOMA
 - AI-powered squad suggestions (balanced, defensive, aggressive, fast strategies)
 - Full integration with battleInitialization system
 
-### 2.5 Enemy Composition - TEST & IMPLEMENTATION
+### 2.5 Enemy Composition - TEST & IMPLEMENTATION ✅ COMPLETE (2025-11-14)
 
-- [ ] Test: Each location has defined enemy units
-- [ ] Test: Enemy stats loaded correctly
-- [ ] Test: Fortifications (walls, towers, traps) load
-- [ ] Test: Enemy waves spawn correctly
-- [ ] Implement enemy composition database
-- [ ] Create fortification types
-- [ ] Implement wave spawning system
+- [x] Test: Each location has defined enemy units
+- [x] Test: Enemy stats loaded correctly
+- [x] Test: Fortifications (walls, towers, traps) load
+- [x] Test: Enemy waves spawn correctly
+- [x] Implement enemy composition database
+- [x] Create fortification types
+- [x] Implement wave spawning system
+
+**Test Results:**
+- 117 new tests passing (37 enemy composition + 38 fortifications + 42 wave spawning)
+- Total combat tests: 450 passing
+- Full coverage of enemy composition, fortifications, and wave spawning
+
+**Deliverables:**
+- enemyComposition.ts service (604 lines)
+  - Base stats database for all 13 enemy types
+  - Difficulty scaling system (15% per difficulty level)
+  - Enemy unit generation with AI profiles
+  - Ability assignment (mage, priest, paladin, necromancer, general, boss)
+  - Composition validation
+- fortifications.ts service (236 lines)
+  - 6 fortification types (gate, wall, tower, barricade, spike pit, fire trap)
+  - Placement validation and spacing
+  - Line of sight and movement blocking
+  - Trap triggering mechanics
+  - Fortification destruction
+- waveSpawning.ts service (233 lines)
+  - Wave definition creation from locations
+  - Spawn position calculation with zones (frontline, midline, backline)
+  - Wave completion detection
+  - Sequential wave progression
+  - Boss wave identification
+- idGenerator.ts utility (22 lines)
+  - Unique ID generation for enemies and fortifications
 
 ---
 
@@ -801,8 +828,8 @@ This document tracks all tasks for implementing the Combat module following DOMA
 
 ## Current Status
 
-**Phase:** Phase 2.4 Complete ✅ (Squad Selection System)
-**Next Task:** Phase 2.5 - Enemy Composition (or Phase 3.1 - Battle Initialization if squad UI deferred)
+**Phase:** Phase 2.5 Complete ✅ (Enemy Composition System)
+**Next Task:** Phase 3.1 - Battle Initialization Tests (or continue with Phase 3 battle mechanics)
 **Blockers:** None - All blockers resolved ✅
 
 **Dependencies:**
@@ -857,12 +884,11 @@ This document tracks all tasks for implementing the Combat module following DOMA
   - Squad validation (size, duplicates, availability)
   - Squad statistics aggregation
   - AI-powered squad suggestions (4 strategies)
-- **1000+ total tests passing across project**
-  - CORE: 125 tests (state machine + event system + save system)
-  - TEST: 428 tests (factories, fixtures, matchers)
-  - FARM: 145 tests (54 planting + 38 growth + 53 harvesting) ✅
-  - COMBAT: 333 tests (177 helpers + 57 battle init + 54 targeting + 45 deployment) ✅
-  - UI/UX: 62 tests (component library)
+- **1,372 total tests passing across project** (as of 2025-11-14)
+  - CORE: 393 tests (state machine + event system + save system + resources + time + utilities) ✅
+  - TEST: 428 tests (factories, fixtures, matchers) ✅
+  - FARM: 222 tests (planting + growth + harvesting + zombie management) ✅
+  - COMBAT: 450 tests (helpers + battle init + targeting + deployment + enemy composition + fortifications + waves) ✅
 
 **Previous Updates (2025-11-12):**
 - Core Phase 3.1 (Global Type Definitions) COMPLETE ✅

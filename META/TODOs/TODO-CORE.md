@@ -2,7 +2,7 @@
 title: 'Core Systems TODO'
 module: Core (Infrastructure & Integration)
 priority: Critical (Foundation)
-last updated: 2025-11-13
+last updated: 2025-11-14
 ---
 
 # Core Systems Implementation TODO
@@ -552,7 +552,7 @@ This document tracks all tasks for implementing the core infrastructure, state m
 
 ---
 
-## Phase 8: Utility Libraries ✅ COMPLETE (2025-11-13)
+## Phase 8: Utility Libraries ✅ COMPLETE (2025-11-14)
 
 ### 8.1 Math & Random Utilities - ✅ COMPLETE
 
@@ -606,7 +606,13 @@ Files created:
 - `src/lib/utils/validation.ts` (408 lines)
 - `src/lib/utils/collections.ts` (350 lines)
 - `src/lib/utils/index.ts` (80 lines)
-- Complete test suites in `src/lib/utils/__tests__/`
+- Complete test suites in `src/lib/utils/__tests__/`:
+  - `math.test.ts` (45 tests)
+  - `format.test.ts` (45 tests)
+  - `validation.test.ts` (57 tests)
+  - `collections.test.ts` (62 tests)
+
+**Commit:** 8d4a662 - "feat(core): implement Phase 8 - Utility Libraries"
 
 ---
 
@@ -1051,10 +1057,10 @@ Files created:
 
 ## Current Status
 
-**Phase:** Phase 7 Complete ✅ (Time & Day/Night System)
-**Next Task:** Phase 8 - Utility Libraries
+**Phase:** Phase 8 Complete ✅ (Utility Libraries)
+**Next Task:** Phase 9 - UI Component Library
 **Blockers:** None
-**Priority:** High - Core infrastructure expanding, time system operational
+**Priority:** High - Core infrastructure complete, ready for UI development
 **Notes:**
 
 - Phase 1 foundation complete ✅
@@ -1113,8 +1119,14 @@ Files created:
   - Offline time calculation with 7-day cap
   - Day/night stat modifiers (+15% zombies night, +10% humans day)
   - Event-driven time transitions (hour_changed, day_changed, day_started, night_started)
-- **1,046 total tests passing across project** (as of 2025-11-13)
-  - CORE: 184 tests (31 state machine + 43 event system + 47 save system + 59 resources + 52 time)
+- **Phase 8 utility libraries complete ✅ (2025-11-14):**
+  - math.ts: 45 tests (clamp, lerp, random, seeded random, weighted selection)
+  - format.ts: 45 tests (number, time, percentage, currency, duration formatting)
+  - validation.ts: 57 tests (type guards, schema validation, enum validation, range validation)
+  - collections.ts: 62 tests (array operations, deep clone, deep merge, object diff, pick/omit, groupBy)
+  - Total: 209 tests passing, 97% code coverage
+- **1,255 total tests passing across project** (as of 2025-11-14)
+  - CORE: 393 tests (31 state machine + 43 event system + 47 save system + 59 resources + 52 time + 209 utilities)
   - TEST: 428 tests (factories, fixtures, matchers)
   - FARM: 222 tests (phases 2.1-2.4, 3.1-3.4) ✅
   - COMBAT: 333 tests (phases 2.1-2.4) ✅

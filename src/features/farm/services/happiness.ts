@@ -13,7 +13,6 @@
  */
 
 import type { Zombie, FarmState } from '../../../types/farm';
-import type { TimeState } from '../../../types/global';
 import { gameConfig } from '../../../lib/config/zombieFarmConfig';
 
 /**
@@ -169,7 +168,7 @@ export function getSocialFactor(zombie: Zombie, farmState: FarmState): number {
  * @param farmState - Current farm state
  * @returns Happiness adjustment
  */
-export function getEnvironmentFactor(zombie: Zombie, farmState: FarmState): number {
+export function getEnvironmentFactor(_zombie: Zombie, _farmState: FarmState): number {
   // Future: Check farmState.buildings for decorations near zombie.position
   // For now, assume no decorations
   return 0;
@@ -279,7 +278,7 @@ export function applyHappinessDecay(zombie: Zombie, daysSinceLastFed: number): Z
  * @param farmState - Current farm state
  * @returns Updated zombie with recovered happiness
  */
-export function applyHappinessRecovery(zombie: Zombie, farmState: FarmState): Zombie {
+export function applyHappinessRecovery(zombie: Zombie, _farmState: FarmState): Zombie {
   // Future: implement recovery logic
   // For now, happiness only changes via feeding/petting/decay
   return zombie;
@@ -373,7 +372,7 @@ export function processAllZombiesHappiness(farmState: FarmState): FarmState {
   // Update active zombies
   const updatedActiveZombies = farmState.activeZombies.map((zombie) => {
     // Calculate current happiness with all factors
-    const factors = getHappinessFactors(zombie, farmState);
+    // const factors = getHappinessFactors(zombie, farmState);
 
     // Apply injury penalty if hurt
     let happiness = zombie.happiness;

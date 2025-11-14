@@ -10,10 +10,7 @@
  * - Shelter reduces decay rate
  */
 
-import { describe, test, expect, beforeEach } from '@jest/globals';
-import type { Zombie, ZombieQuality } from '../../../../types/farm';
-import { ZombieType, ZombieAIState } from '../../../../types/farm';
-import { createZombie } from '../../../../lib/test-utils/factories/zombieFactory';
+import { describe, test, expect } from '@jest/globals';
 
 describe('Decay Service', () => {
   describe('calculateDailyDecay', () => {

@@ -250,7 +250,7 @@ export function feedMultipleZombies(
     // Find zombie in active roster
     const zombieIndex = currentFarmState.activeZombies.findIndex((z) => z.id === zombieId);
     if (zombieIndex === -1) {
-      failed.push({ zombieId, reason: 'Zombie not found in active roster' });
+      failed.push({ zombieId, reason: 'Zombie not found in active roster' as string });
       continue;
     }
 
@@ -273,12 +273,12 @@ export function feedMultipleZombies(
 
       // Track resources consumed
       for (const [resource, amount] of Object.entries(result.data.feedResult.resourcesConsumed)) {
-        totalResourcesConsumed[resource] = (totalResourcesConsumed[resource] || 0) + amount;
+        totalResourcesConsumed[resource as string] = (totalResourcesConsumed[resource as string] || 0) + amount;
       }
 
       successfullyFed.push(result.data.feedResult);
     } else {
-      failed.push({ zombieId, reason: result.error });
+      failed.push({ zombieId, reason: result.error as string });
     }
   }
 

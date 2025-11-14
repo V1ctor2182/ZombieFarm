@@ -9,12 +9,7 @@
  * - Crypt storage
  */
 
-import { describe, test, expect, beforeEach } from '@jest/globals';
-import type { Zombie, FarmState, ZombieStats } from '../../../types/farm';
-import { ZombieType, ZombieQuality, ZombieAIState } from '../../../types/farm';
-import type { GameState } from '../../../types/global';
-import { createZombie } from '../../../lib/test-utils/factories/zombieFactory';
-import { createGameState } from '../../../lib/test-utils/factories/gameStateFactory';
+import { describe, test, expect } from '@jest/globals';
 
 describe('Decay System Integration', () => {
   describe('Complete Decay Cycle', () => {
