@@ -74,50 +74,84 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
 
 ## Phase 2: Basic Zombie Lifecycle (Planting & Growth)
 
-### 2.1 Planting System - TEST PHASE
+### 2.1 Planting System - TEST PHASE ✅ COMPLETE (2025-11-13)
 
-- [ ] Write tests for planting validation:
-  - [ ] Test: Cannot plant without seed in inventory
-  - [ ] Test: Cannot plant in occupied plot
-  - [ ] Test: Planting consumes seed from inventory
-  - [ ] Test: Plot state changes to "growing" after plant
-  - [ ] Test: Growth timer is set correctly for zombie type
-  - [ ] Test: Planting fails if no plots available
+- [x] Write tests for planting validation:
+  - [x] Test: Cannot plant without seed in inventory
+  - [x] Test: Cannot plant in occupied plot
+  - [x] Test: Planting consumes seed from inventory
+  - [x] Test: Plot state changes to "growing" after plant
+  - [x] Test: Growth timer is set correctly for zombie type
+  - [x] Test: Planting fails if no plots available
 
-### 2.2 Planting System - IMPLEMENTATION
+**Test Results:**
+- 40 unit tests passing (100%)
+- All planting validation scenarios covered
+- Weather effects on planting tested
+- Integration with farm state verified
 
-- [ ] Create `features/farm/lib/planting.ts`
-  - [ ] Implement validatePlant() function
-  - [ ] Implement plantSeed() function
-  - [ ] Implement consumeSeed() inventory logic
-  - [ ] Set up plot state machine (empty -> growing -> ready)
-- [ ] Create planting event handler
-- [ ] Integrate with game state
+### 2.2 Planting System - IMPLEMENTATION ✅ COMPLETE (2025-11-13)
 
-### 2.3 Growth System - TEST PHASE
+- [x] Create `features/farm/lib/planting.ts`
+  - [x] Implement validatePlant() function
+  - [x] Implement plantSeed() function
+  - [x] Implement consumeSeed() inventory logic
+  - [x] Set up plot state machine (empty -> growing -> ready)
+- [x] Create planting event handler
+- [x] Integrate with game state
 
-- [ ] Write tests for growth mechanics:
-  - [ ] Test: Zombie grows after base time elapsed
-  - [ ] Test: Watering reduces growth time by X%
-  - [ ] Test: Fertilizer (Corpse Dust) speeds growth
-  - [ ] Test: Growth continues during offline (time calculation)
-  - [ ] Test: Multiple zombies grow independently
-  - [ ] Test: Growth completes and plot becomes "ready"
-  - [ ] Test: Weather effects on growth (Blood Rain +25%)
+**Deliverables:**
+- src/features/farm/services/planting.ts implemented
+- 14 integration tests passing
+- Event-driven architecture in place
+- Full validation and error handling
 
-### 2.4 Growth System - IMPLEMENTATION
+### 2.3 Growth System - TEST PHASE ✅ COMPLETE (2025-11-13)
 
-- [ ] Create `features/farm/lib/growth.ts`
-  - [ ] Implement growth timer logic
-  - [ ] Implement watering effect calculation
-  - [ ] Implement fertilizer application
-  - [ ] Create offline progress calculation
-  - [ ] Implement growth completion handler
-- [ ] Add growth modifiers (weather, structures, boosts)
-- [ ] Create growth tick system (update timers)
+- [x] Write tests for growth mechanics:
+  - [x] Test: Zombie grows after base time elapsed
+  - [x] Test: Watering reduces growth time by X%
+  - [x] Test: Fertilizer (Corpse Dust) speeds growth
+  - [x] Test: Growth continues during offline (time calculation)
+  - [x] Test: Multiple zombies grow independently
+  - [x] Test: Growth completes and plot becomes "ready"
+  - [x] Test: Weather effects on growth (Blood Rain +25%)
 
-### 2.5 Watering System - TEST & IMPLEMENTATION
+**Test Results:**
+- 23 unit tests passing (100%)
+- Timer countdown logic validated
+- Offline progress calculation tested
+- Quality determination scenarios covered
+- Weather effects verified
 
+### 2.4 Growth System - IMPLEMENTATION ✅ COMPLETE (2025-11-13)
+
+- [x] Create `features/farm/lib/growth.ts`
+  - [x] Implement growth timer logic
+  - [x] Implement watering effect calculation
+  - [x] Implement fertilizer application
+  - [x] Create offline progress calculation
+  - [x] Implement growth completion handler
+- [x] Add growth modifiers (weather, structures, boosts)
+- [x] Create growth tick system (update timers)
+
+**Deliverables:**
+- src/features/farm/services/growth.ts implemented
+- 15 integration tests passing
+- Quality determination based on growth conditions
+- Event emission for growth completion
+- Full offline progress support
+
+### 2.5 Watering System - TEST & IMPLEMENTATION ⏸️ DEFERRED
+
+**Status:** Deferred until Core Phase 6 (Resource System) and Farm Phase 7 (Buildings) are complete
+
+**Dependencies:**
+- Requires Resource & Inventory System (Core Phase 6) for Blood Water in inventory
+- Requires Building System (Farm Phase 7) for Blood Well structure
+- Growth system already implements watering *effects*, but not the action itself
+
+**Tasks:**
 - [ ] Test: Blood Well generates water over time
 - [ ] Test: Watering requires Blood Water in inventory
 - [ ] Test: Watering plot reduces growth time
@@ -125,6 +159,8 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
 - [ ] Implement Blood Well resource generator
 - [ ] Implement water collection mechanic
 - [ ] Implement watering action
+
+**Note:** This phase should be completed before Phase 2 is considered fully complete. The growth system currently supports watering mechanics, but the player action and resource management are not yet implemented.
 
 ---
 
@@ -158,23 +194,37 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
 - By-product generation operational
 - Event emission confirmed
 
-### 3.3 Active Zombie Management - TEST PHASE
+### 3.3 Active Zombie Management - TEST PHASE ✅ COMPLETE (2025-11-13)
 
-- [ ] Write tests for active zombies:
-  - [ ] Test: Active zombie count respects capacity limit
-  - [ ] Test: Excess zombies auto-send to Crypt
-  - [ ] Test: Active zombies have roaming AI state
-  - [ ] Test: Can interact with active zombie (pet, feed, command)
-  - [ ] Test: Zombie responds to player commands (Follow, Guard)
+- [x] Write tests for active zombies:
+  - [x] Test: Active zombie count respects capacity limit
+  - [x] Test: Excess zombies auto-send to Crypt
+  - [x] Test: Active zombies have roaming AI state
+  - [x] Test: Can interact with active zombie (pet, feed, command)
+  - [x] Test: Zombie responds to player commands (Follow, Guard)
 
-### 3.4 Active Zombie Management - IMPLEMENTATION
+**Test Results:**
+- 28 unit tests passing (zombieManagement.test.ts)
+- 37 unit tests passing (zombieAI.test.ts)
+- 12 integration tests passing (zombieManagement.integration.test.ts)
+- All capacity, AI, and command scenarios covered
 
-- [ ] Create zombie entity system
-  - [ ] Implement capacity checking (starts at 10)
-  - [ ] Implement Crypt storage overflow
-  - [ ] Create basic zombie AI (roaming, idle)
-  - [ ] Implement zombie commands (Follow, Guard, Go to Crypt)
-- [ ] Add zombie personality traits (affects AI behavior)
+### 3.4 Active Zombie Management - IMPLEMENTATION ✅ COMPLETE (2025-11-13)
+
+- [x] Create zombie entity system
+  - [x] Implement capacity checking (starts at 10)
+  - [x] Implement Crypt storage overflow
+  - [x] Create basic zombie AI (roaming, idle)
+  - [x] Implement zombie commands (Follow, Guard, Go to Crypt)
+- [x] Add zombie personality traits (affects AI behavior)
+
+**Deliverables:**
+- src/features/farm/services/zombieManagement.ts implemented
+- src/features/farm/services/zombieAI.ts implemented
+- src/lib/test-utils/factories/plotFactory.ts created
+- 77 tests passing (28 + 37 + 12)
+- Full integration with harvesting system working
+- All personality traits affecting AI behavior properly
 
 ---
 
@@ -671,9 +721,9 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
 
 ## Current Status
 
-**Phase:** Phase 3.2 Complete ✅ (Harvesting System)
-**Next Task:** Phase 3.3 - Active Zombie Management
-**Blockers:** None - All blockers resolved ✅
+**Phase:** Phase 2 Mostly Complete ✅ (Phase 2.5 Deferred), Phase 3.2 Complete ✅
+**Next Task:** Phase 3.3 - Active Zombie Management OR Phase 2.5 - Watering System
+**Blockers:** Phase 2.5 blocked by Core Phase 6 (Resources) and Farm Phase 7 (Buildings)
 **Notes:**
 
 - Project structure created by Core agent ✅
@@ -685,30 +735,42 @@ This document tracks all tasks for implementing the Farm module following DOMAIN
 - src/ directory structure ready per ARCHITECTURE.md
 - Phase 1.3 farm type definitions COMPLETE ✅ (2025-11-12)
 - Mock utilities available for testing (165 tests passing)
-- **Phase 2.1 Planting System COMPLETE ✅ (2025-11-13)**
+
+**Phase 2 Status (Mostly Complete):**
+- **Phase 2.1-2.2 Planting System COMPLETE ✅ (2025-11-13)**
   - 54 tests passing (40 unit + 14 integration)
   - Full validation and weather effects working
-- **Phase 2.2 Growth System COMPLETE ✅ (2025-11-13)**
+- **Phase 2.3-2.4 Growth System COMPLETE ✅ (2025-11-13)**
   - 38 tests passing (23 unit + 15 integration)
   - Offline growth calculation working
   - Quality determination implemented
-- **Phase 3.2 Harvesting System COMPLETE ✅ (2025-11-13)**
+- **Phase 2.5 Watering System DEFERRED ⏸️**
+  - Requires Core Phase 6 (Resource System)
+  - Requires Farm Phase 7 (Building System)
+  - Growth effects implemented, action/inventory not yet
+
+**Phase 3 Status:**
+- **Phase 3.1-3.2 Harvesting System COMPLETE ✅ (2025-11-13)**
   - 53 tests passing (100%)
   - Quality-based stat calculation working
   - By-product generation operational
 
 **Recent Updates (2025-11-13):**
-- Phase 3.2 Harvesting System COMPLETE ✅
+- **Phase 2 Status Update:** Phase 2.1-2.4 Complete, Phase 2.5 Deferred
+  - Planting, Growth, and initial lifecycle complete
+  - Watering System (Phase 2.5) deferred pending Core Phase 6 and Farm Phase 7
+  - 92 tests passing for completed Phase 2 sections
+- Phase 3.1-3.2 Harvesting System COMPLETE ✅
   - 53 comprehensive tests passing
   - harvestZombie() function working
   - Quality-based stat calculation operational
   - By-product loot table generation working
   - Event emission confirmed
-- Phase 2.2 Growth System COMPLETE ✅
+- Phase 2.3-2.4 Growth System COMPLETE ✅
   - 38 comprehensive tests passing
   - Timer countdown, offline progress, quality determination all working
   - Event-driven architecture in place
-- Phase 2.1 Planting System COMPLETE ✅
+- Phase 2.1-2.2 Planting System COMPLETE ✅
   - 54 comprehensive tests passing
   - Weather effects, growth modifiers, validation all working
 - Core Phase 5 (Save System) COMPLETE ✅

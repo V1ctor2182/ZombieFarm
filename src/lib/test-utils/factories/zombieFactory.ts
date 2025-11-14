@@ -80,9 +80,12 @@ export function createTestZombie(overrides?: Partial<Zombie>): Zombie {
     ...defaultZombie,
     ...overrides,
     stats: overrides?.stats ? { ...defaultZombie.stats, ...overrides.stats } : defaultZombie.stats,
-    position: overrides?.position
-      ? { ...defaultZombie.position, ...overrides.position }
-      : defaultZombie.position,
+    position:
+      overrides?.position === null
+        ? null
+        : overrides?.position
+        ? { ...defaultZombie.position, ...overrides.position }
+        : defaultZombie.position,
     equipment: overrides?.equipment
       ? { ...defaultZombie.equipment, ...overrides.equipment }
       : defaultZombie.equipment,

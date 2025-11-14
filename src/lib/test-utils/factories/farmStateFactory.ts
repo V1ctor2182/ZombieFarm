@@ -13,9 +13,9 @@ export function createTestFarmState(overrides?: Partial<FarmState>): FarmState {
     cryptZombies: [],
     buildings: [],
     resourceNodes: [],
-    farmLevel: 1,
-    farmExpansions: 0,
-    lastDecayUpdate: Date.now(),
+    activeZombieCapacity: 10, // Default capacity per DOMAIN-FARM.md
+    expansionLevel: 0,
+    gridSize: { width: 20, height: 20 }, // Default grid size per LAYOUT-FARM.md
   };
 
   return { ...defaultFarmState, ...overrides };
@@ -54,7 +54,8 @@ export function createEmptyFarmState(): FarmState {
 
 export function createAdvancedFarmState(): FarmState {
   return createTestFarmState({
-    farmLevel: 15,
-    farmExpansions: 3,
+    expansionLevel: 3,
+    activeZombieCapacity: 25, // Increased capacity for advanced farm
+    gridSize: { width: 40, height: 40 }, // Larger grid for advanced farm
   });
 }

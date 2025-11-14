@@ -120,29 +120,46 @@ This document tracks all tasks for implementing the Combat module following DOMA
 - AoE target selection for area attacks
 - Ready for Phase 2.3 (Movement System)
 
-### 2.3 Squad Selection - TEST PHASE (TODO)
+### 2.3 Squad Selection - TEST PHASE ✅ COMPLETE (2025-11-13)
 
-- [ ] Write tests for squad deployment:
-  - [ ] Test: Squad size respects limit (3 early, 10+ late)
-  - [ ] Test: Only active farm zombies available
-  - [ ] Test: Deployment order affects formation
-  - [ ] Test: Cannot deploy same zombie twice
-  - [ ] Test: Squad composition tracked correctly
-  - [ ] Test: Command Center level affects squad size
+- [x] Write tests for squad deployment:
+  - [x] Test: Squad size respects limit (3 early, 10+ late)
+  - [x] Test: Only active farm zombies available
+  - [x] Test: Deployment order affects formation
+  - [x] Test: Cannot deploy same zombie twice
+  - [x] Test: Squad composition tracked correctly
+  - [x] Test: Command Center level affects squad size
 
-### 2.4 Squad Selection - IMPLEMENTATION (TODO)
+**Test Results:**
+- 45 deployment tests passing
+- Full coverage of squad selection logic
+- All edge cases and validation tested
 
-- [ ] Create `features/combat/lib/deployment.ts`
-  - [ ] Implement squad size calculation
-  - [ ] Create zombie availability filter
-  - [ ] Implement deployment ordering
-  - [ ] Create squad validation
-- [ ] Create squad selection UI
+### 2.4 Squad Selection - IMPLEMENTATION ✅ COMPLETE (2025-11-13)
+
+- [x] Create `features/combat/services/deployment.ts`
+  - [x] Implement squad size calculation (getMaxSquadSize)
+  - [x] Create zombie availability filter (getAvailableZombies, isZombieAvailable)
+  - [x] Implement deployment ordering (applyDeploymentOrder)
+  - [x] Create squad validation (validateSquadComposition)
+  - [x] Create squad statistics (calculateSquadStats)
+  - [x] Add squad composition suggestions (suggestSquadComposition with strategies)
+- [ ] Create squad selection UI (deferred to UI agent)
   - [ ] Show available zombies
   - [ ] Drag-and-drop or click to select
   - [ ] Show deployment slots
   - [ ] Display zombie stats preview
-- [ ] Add squad composition suggestions
+
+**Deliverables:**
+- deployment.ts service (397 lines)
+- 45 comprehensive tests passing
+- Squad size calculation based on Command Center level (3-10 zombies)
+- Zombie availability tracking (excludes dead, in-combat)
+- Deployment order system with slot indices
+- Squad composition validation (size, duplicates, availability)
+- Squad statistics aggregation (HP, attack, defense, speed, composition)
+- AI-powered squad suggestions (balanced, defensive, aggressive, fast strategies)
+- Full integration with battleInitialization system
 
 ### 2.5 Enemy Composition - TEST & IMPLEMENTATION
 
@@ -784,8 +801,8 @@ This document tracks all tasks for implementing the Combat module following DOMA
 
 ## Current Status
 
-**Phase:** Phase 2.2 Complete ✅ (Target Selection System)
-**Next Task:** Phase 2.3 - Squad Selection
+**Phase:** Phase 2.4 Complete ✅ (Squad Selection System)
+**Next Task:** Phase 2.5 - Enemy Composition (or Phase 3.1 - Battle Initialization if squad UI deferred)
 **Blockers:** None - All blockers resolved ✅
 
 **Dependencies:**
@@ -831,11 +848,20 @@ This document tracks all tasks for implementing the Combat module following DOMA
   - targeting.ts service implementation complete
   - All AI priority behaviors operational
   - LOS and range calculations working
+- **Phase 2.3-2.4 Squad Selection System COMPLETE ✅ (2025-11-13)**
+  - 45 deployment tests passing
+  - deployment.ts service implementation complete (397 lines)
+  - Squad size calculation (3-10 based on Command Center level)
+  - Zombie availability filtering (excludes dead, in-combat)
+  - Deployment order system with slot indices
+  - Squad validation (size, duplicates, availability)
+  - Squad statistics aggregation
+  - AI-powered squad suggestions (4 strategies)
 - **1000+ total tests passing across project**
   - CORE: 125 tests (state machine + event system + save system)
   - TEST: 428 tests (factories, fixtures, matchers)
   - FARM: 145 tests (54 planting + 38 growth + 53 harvesting) ✅
-  - COMBAT: 288 tests (177 helpers + 57 battle init + 54 targeting) ✅
+  - COMBAT: 333 tests (177 helpers + 57 battle init + 54 targeting + 45 deployment) ✅
   - UI/UX: 62 tests (component library)
 
 **Previous Updates (2025-11-12):**
